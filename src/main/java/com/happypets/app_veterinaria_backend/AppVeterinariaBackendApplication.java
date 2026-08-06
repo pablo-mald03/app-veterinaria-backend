@@ -8,6 +8,8 @@ public class AppVeterinariaBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppVeterinariaBackendApplication.class, args);
+
+		System.out.println("Prueba Git Pull Request");
 	}
 
 }
