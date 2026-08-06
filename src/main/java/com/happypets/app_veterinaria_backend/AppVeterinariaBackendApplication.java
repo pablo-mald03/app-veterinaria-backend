@@ -10,6 +10,4 @@ public class AppVeterinariaBackendApplication {
 		SpringApplication.run(AppVeterinariaBackendApplication.class, args);
 
 
-	}
-
 }
