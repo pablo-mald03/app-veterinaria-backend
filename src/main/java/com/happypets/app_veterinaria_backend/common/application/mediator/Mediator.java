@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.common.application;
+package com.happypets.app_veterinaria_backend.common.application.mediator;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 
 /**
  * Principal mediator class to define the dependency inversion for the different ports
- * */
+ *
+ */
 @Component
 @Slf4j
 public class Mediator {
@@ -20,7 +21,8 @@ public class Mediator {
 
     /**
      * Principal mediator constructor
-     * */
+     *
+     */
     public Mediator(List<RequestHandler<?, ?>> requestHandlers) {
         /*
          * CREA UN MAPA CLAVE VALOR DONDE:
@@ -35,7 +37,8 @@ public class Mediator {
 
     /**
      * Principal request dispatcher
-     * */
+     *
+     */
     public <R, T extends Request<R>> R dispatch(T request) {
 
         RequestHandler<T, R> handler = (RequestHandler<T, R>) requestHandlerMap.get(request.getClass());
@@ -50,7 +53,8 @@ public class Mediator {
 
     /**
      * Principal async function dispatcher
-     * */
+     *
+     */
 
     @Async
     public <R, T extends Request<R>> void dispatchAsync(T request) {
