@@ -14,6 +14,7 @@ import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.respons
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response.RegisterUserResponseDto;
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.mapper.UserMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,7 @@ public class UserController implements UserRestController {
      *
      */
     @Operation(summary = "Register new user", description = "Endpoint to register a new user")
+    @SecurityRequirement(name = "cookieAuth")
     @PostMapping("/register")
     public ResponseEntity<RegisterUserResponseDto> registerUser(@RequestBody @Valid RegisterUserRequestDto registerUserRequestDto) {
 
@@ -49,6 +51,7 @@ public class UserController implements UserRestController {
     }
 
     @Operation(summary = "Get all users", description = "Endpoint to Get all products with pagination")
+    @SecurityRequirement(name = "cookieAuth")
     @GetMapping
     public ResponseEntity<GetAllUsersResponseDto> getAll(PaginationQuery paginationQuery) {
         GetAllUsersRequest getAllUsersRequest = new GetAllUsersRequest(paginationQuery);
@@ -61,6 +64,7 @@ public class UserController implements UserRestController {
      *
      */
     @Operation(summary = "Password Recovery", description = "Endpoint to recover the user password")
+    @SecurityRequirement(name = "cookieAuth")
     @PostMapping("/recover-password")
     @Override
     public ResponseEntity<Void> recoverPassword(@RequestBody @Valid RecoverPasswordRequestDto requestDto) {

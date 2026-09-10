@@ -2,8 +2,6 @@ package com.happypets.app_veterinaria_backend.user.infrastructure.api.mapper;
 
 import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.RecoverPasswordRequestDto;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
-import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
-import com.happypets.app_veterinaria_backend.role.infrastructure.api.controller.dto.RoleSummaryDto;
 import com.happypets.app_veterinaria_backend.role.infrastructure.database.mapper.RoleEntityMapper;
 import com.happypets.app_veterinaria_backend.user.application.command.recoverPassword.RecoverPasswordRequest;
 import com.happypets.app_veterinaria_backend.user.application.command.register.RegisterUserRequest;
@@ -14,7 +12,6 @@ import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.request
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response.GetAllUsersResponseDto;
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response.RegisterUserResponseDto;
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response.UserResponseDto;
-import com.happypets.app_veterinaria_backend.user.infrastructure.database.mapper.PermissionEntityMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

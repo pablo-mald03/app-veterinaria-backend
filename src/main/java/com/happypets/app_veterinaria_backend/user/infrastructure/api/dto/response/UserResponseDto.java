@@ -1,6 +1,6 @@
 package com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response;
 
-import com.happypets.app_veterinaria_backend.role.infrastructure.api.controller.dto.RoleSummaryDto;
+import com.happypets.app_veterinaria_backend.role.infrastructure.api.dto.RoleSummaryDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
