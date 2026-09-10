@@ -8,7 +8,10 @@ CREATE TABLE clients
     last_name  VARCHAR(100),
     email      VARCHAR(150),
     phone      VARCHAR(30),
-    address    VARCHAR(255)
+    address    VARCHAR(255),
+
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP
 );
 
 -- =========================================================
@@ -25,6 +28,9 @@ CREATE TABLE pet
     weight      DOUBLE PRECISION NOT NULL,
     species     VARCHAR(50),
     description VARCHAR(255),
+
+    created_at  TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP,
 
     CONSTRAINT fk_pet_client
         FOREIGN KEY (id_client) REFERENCES clients (id)

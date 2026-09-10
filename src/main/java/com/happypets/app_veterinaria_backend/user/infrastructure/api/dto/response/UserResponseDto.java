@@ -24,6 +24,6 @@ public class UserResponseDto {
     private String firstName;
     private String email;
     private String phone;
-    private String username;
+    private String userRegistry;
     private List<RoleSummaryDto> roles;
 }

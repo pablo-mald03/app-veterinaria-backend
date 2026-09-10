@@ -22,7 +22,7 @@ public class User {
     private String password;
     private String email;
     private String phone;
-    private String username;
+    private String userRegistry;
     private Set<Role> roles;
 
     /*Auditable properties*/

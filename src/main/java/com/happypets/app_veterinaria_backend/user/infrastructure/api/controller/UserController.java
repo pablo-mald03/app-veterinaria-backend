@@ -13,7 +13,9 @@ import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.request
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response.GetAllUsersResponseDto;
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response.RegisterUserResponseDto;
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.mapper.UserMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +37,9 @@ public class UserController implements UserRestController {
      * Create user base endpoint request
      *
      */
+    @Operation(summary = "Register new user", description = "Endpoint to register a new user")
     @PostMapping("/register")
-    public ResponseEntity<RegisterUserResponseDto> registerUser(@RequestBody RegisterUserRequestDto registerUserRequestDto) {
+    public ResponseEntity<RegisterUserResponseDto> registerUser(@RequestBody @Valid RegisterUserRequestDto registerUserRequestDto) {
 
         RegisterUserRequest request = userMapper.mapToRegisterUserRequest(registerUserRequestDto);
         RegisterUserResponse response = mediator.dispatch(request);
@@ -45,6 +48,7 @@ public class UserController implements UserRestController {
         return ResponseEntity.ok(registerUserResponseDto);
     }
 
+    @Operation(summary = "Get all users", description = "Endpoint to Get all products with pagination")
     @GetMapping
     public ResponseEntity<GetAllUsersResponseDto> getAll(PaginationQuery paginationQuery) {
         GetAllUsersRequest getAllUsersRequest = new GetAllUsersRequest(paginationQuery);
@@ -56,9 +60,10 @@ public class UserController implements UserRestController {
      * Recover password endpoint request
      *
      */
+    @Operation(summary = "Password Recovery", description = "Endpoint to recover the user password")
     @PostMapping("/recover-password")
     @Override
-    public ResponseEntity<Void> recoverPassword(RecoverPasswordRequestDto requestDto) {
+    public ResponseEntity<Void> recoverPassword(@RequestBody @Valid RecoverPasswordRequestDto requestDto) {
         RecoverPasswordRequest request = userMapper.mapToRecoverPasswordRequest(requestDto);
         mediator.dispatch(request);
         return ResponseEntity.ok().build();

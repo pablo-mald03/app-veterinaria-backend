@@ -122,7 +122,7 @@ WHERE r.name = 'VETERINARIO';
 -- =========================================================
 -- 4. ADMIN INITIAL USERS
 -- =========================================================
-INSERT INTO users (identification, name, first_name, password, email, phone, username)
+INSERT INTO users (identification, name, first_name, password, email, phone, user_registry)
 VALUES ('73891720200', 'Pablo', 'Admin',
         '1d3988e2cba831131d45c039a681c7ba5a1b1fa4215174ba8a13d63537367c2fcc3bec84b83ed9b78b2f0216250ea5be',
         'pabloadmin@gmail.com', '58143215', 'pabloadmin'),

@@ -4,6 +4,7 @@ import com.happypets.app_veterinaria_backend.common.application.mediator.Request
 import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
 import com.happypets.app_veterinaria_backend.role.domain.exeptions.RoleNotFoundException;
 import com.happypets.app_veterinaria_backend.user.domain.entity.User;
+import com.happypets.app_veterinaria_backend.user.domain.exceptions.EmailAlreadyExistsException;
 import com.happypets.app_veterinaria_backend.user.domain.exceptions.UserAlreadyExistsException;
 import com.happypets.app_veterinaria_backend.user.domain.password.PasswordEncoderPort;
 import com.happypets.app_veterinaria_backend.user.domain.port.RoleRepositoryPort;
@@ -24,11 +25,6 @@ public class RegisterUserHandler implements RequestHandler<RegisterUserRequest, 
 
 
     /*
-     * Principal default role
-     * */
-    private final String DEFAULT_ROLE = "USER";
-
-    /*
      * Repositories
      * */
     private final UserRepositoryPort userRepositoryPort;
@@ -43,11 +39,17 @@ public class RegisterUserHandler implements RequestHandler<RegisterUserRequest, 
     public RegisterUserResponse handle(RegisterUserRequest request) {
 
         if (userRepositoryPort.existByEmail(request.getEmail())) {
-            throw new UserAlreadyExistsException(request.getEmail());
+            throw new EmailAlreadyExistsException("El correo ya esta en uso");
+        }
+
+
+        if (userRepositoryPort.existByUsername(request.getUserRegistry())) {
+            throw new UserAlreadyExistsException("El nombre de usuario ya existe");
         }
 
         Role role = roleRepositoryPort.findByName(request.getRole())
                 .orElseThrow(() -> new RoleNotFoundException(request.getRole()));
+
 
         User user = User.builder()
                 .identification(request.getIdentification())
@@ -55,7 +57,7 @@ public class RegisterUserHandler implements RequestHandler<RegisterUserRequest, 
                 .firstName(request.getFirstName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
-                .username(request.getUsername())
+                .userRegistry(request.getUserRegistry())
                 .password(passwordEncoderPort.encode(request.getPassword()))
                 .roles(Set.of(role))
                 .build();

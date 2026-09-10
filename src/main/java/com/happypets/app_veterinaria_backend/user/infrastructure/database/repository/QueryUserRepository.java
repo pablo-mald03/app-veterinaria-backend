@@ -15,5 +15,7 @@ public interface QueryUserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByEmail(String email);
 
+    Optional<UserEntity> findByUserRegistry(String userRegistry);
+
     Optional<UserEntity> findByEmailAndIdentification(String email, String identification);
 }

@@ -31,13 +31,16 @@ public class UserEntity extends AuditableEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String identification;
     private String name;
     private String firstName;
     private String password;
+    @Column(unique = true)
     private String email;
     private String phone;
-    private String username;
+    @Column(unique = true)
+    private String userRegistry;
 
     /*Relationship of many users has many roles*/
     @ManyToMany(fetch = FetchType.EAGER)

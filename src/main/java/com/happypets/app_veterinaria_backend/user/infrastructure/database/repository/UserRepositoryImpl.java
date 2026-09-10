@@ -93,6 +93,17 @@ public class UserRepositoryImpl implements UserRepositoryPort {
         return queryUserRepository.findByEmail(email).isPresent();
     }
 
+
+    /**
+     * Method verify if de user exist by username
+     *
+     */
+    @Override
+    public boolean existByUsername(String username) {
+
+        return queryUserRepository.findByUserRegistry(username).isPresent();
+    }
+
     /**
      * Method insert a user
      *
