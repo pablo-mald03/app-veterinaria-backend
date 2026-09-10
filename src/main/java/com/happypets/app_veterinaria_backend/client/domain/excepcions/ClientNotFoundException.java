@@ -1,6 +1,7 @@
 package com.happypets.app_veterinaria_backend.client.domain.excepcions;
 
-import com.happypets.app_veterinaria_backend.common.application.exception.ResourceNotFoundException;
+
+import com.happypets.app_veterinaria_backend.common.domain.exception.ResourceNotFoundException;
 
 public class ClientNotFoundException extends ResourceNotFoundException {
     public ClientNotFoundException(Long id) {

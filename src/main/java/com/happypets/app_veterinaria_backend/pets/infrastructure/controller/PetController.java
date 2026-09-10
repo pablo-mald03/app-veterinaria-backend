@@ -1,19 +1,19 @@
 package com.happypets.app_veterinaria_backend.pets.infrastructure.controller;
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.Mediator;
-import com.happypets.app_veterinaria_backend.common.domain.PaginationQuery;
-import com.happypets.app_veterinaria_backend.common.domain.PaginationResult;
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
 import com.happypets.app_veterinaria_backend.pets.application.command.create.CreatePetRequest;
 import com.happypets.app_veterinaria_backend.pets.application.command.create.CreatePetResponse;
 import com.happypets.app_veterinaria_backend.pets.application.command.delete.DeletePetRequest;
 import com.happypets.app_veterinaria_backend.pets.application.command.update.UpdatePetRequest;
-import com.happypets.app_veterinaria_backend.pets.infrastructure.dto.PetRequestDTO;
-import com.happypets.app_veterinaria_backend.pets.infrastructure.dto.PetResponseDTO;
 import com.happypets.app_veterinaria_backend.pets.application.query.getall.GetAllPetRequest;
 import com.happypets.app_veterinaria_backend.pets.application.query.getall.GetAllPetResponse;
 import com.happypets.app_veterinaria_backend.pets.application.query.getbyid.GetPetByIdRequest;
 import com.happypets.app_veterinaria_backend.pets.application.query.getbyid.GetPetByIdResponse;
 import com.happypets.app_veterinaria_backend.pets.domain.model.Pet;
+import com.happypets.app_veterinaria_backend.pets.infrastructure.dto.PetRequestDTO;
+import com.happypets.app_veterinaria_backend.pets.infrastructure.dto.PetResponseDTO;
 import com.happypets.app_veterinaria_backend.pets.infrastructure.mapper.PetMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,9 +29,9 @@ import java.net.URI;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/pets")
-@Tag(name = "Pet", description = "Endpoints of pets")
+@Tag(name = "Pets", description = "Endpoints to manage pets")
 @Slf4j
-public class PetController implements PetRestController{
+public class PetController implements PetRestController {
 
     private final Mediator mediator;
     private final PetMapper petMapper;
@@ -53,12 +53,12 @@ public class PetController implements PetRestController{
         PaginationResult<Pet> pets = response.getPetPage();
 
         PaginationResult<PetResponseDTO> petsDtoPage = new PaginationResult<>(
-                        pets.getContent().stream().map(petMapper::toResponseDTO).toList(),
-                        pets.getPage(),
-                        pets.getSize(),
-                        pets.getTotalPages(),
-                        pets.getTotalElements()
-                );
+                pets.getContent().stream().map(petMapper::toResponseDTO).toList(),
+                pets.getPage(),
+                pets.getSize(),
+                pets.getTotalPages(),
+                pets.getTotalElements()
+        );
 
         return ResponseEntity.ok(petsDtoPage);
     }
