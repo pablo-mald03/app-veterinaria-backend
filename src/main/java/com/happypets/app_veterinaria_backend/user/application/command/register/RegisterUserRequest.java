@@ -22,7 +22,9 @@ public class RegisterUserRequest implements Request<RegisterUserResponse> {
 
     private String phone;
 
-    private String username;
+    private String userRegistry;
 
     private String password;
+
+    private String role;
 }

@@ -1,6 +1,8 @@
-package com.happypets.app_veterinaria_backend.user.infrastructure.database.entity;
+package com.happypets.app_veterinaria_backend.role.infrastructure.database.entity;
 
 import com.happypets.app_veterinaria_backend.common.infrastructure.entity.AuditableEntity;
+import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.PermissionEntity;
+import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

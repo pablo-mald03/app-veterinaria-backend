@@ -1,5 +1,6 @@
 package com.happypets.app_veterinaria_backend.client.infrastructure.database.entity;
 
+import com.happypets.app_veterinaria_backend.common.infrastructure.entity.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ClientJPAEntity {
+public class ClientJPAEntity extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

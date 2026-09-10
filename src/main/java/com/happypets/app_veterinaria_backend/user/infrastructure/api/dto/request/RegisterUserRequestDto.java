@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.user.infrastructure.api.dto;
+package com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -34,10 +34,13 @@ public class RegisterUserRequestDto {
     @Size(max = 15, message = "El numero de telefono debe tener como maximo 15 caracteres")
     private String phone;
 
-    @NotBlank
-    private String username;
+    @NotBlank(message = "El nombre de usuario no puede estar vacio")
+    private String userRegistry;
 
     @NotBlank
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     private String password;
+
+    @NotBlank(message = "El rol del usuario no puede ser nulo")
+    private String role;
 }

@@ -1,6 +1,8 @@
 package com.happypets.app_veterinaria_backend.user.domain.port;
 
 
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
 import com.happypets.app_veterinaria_backend.user.domain.entity.User;
 
 import java.util.Optional;
@@ -13,7 +15,13 @@ public interface UserRepositoryPort {
 
     Optional<User> findByEmail(String email);
 
+    PaginationResult<User> findAll(PaginationQuery paginationQuery);
+
+    Optional<User> findByEmailAndIdentification(String email, String identification);
+
     boolean existByEmail(String email);
+
+    boolean existByUsername(String userRegistry);
 
     User insert(User user);
 

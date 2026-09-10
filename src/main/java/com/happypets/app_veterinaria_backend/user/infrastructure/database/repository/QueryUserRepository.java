@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.user.infrastructure.database.repository.user;
+package com.happypets.app_veterinaria_backend.user.infrastructure.database.repository;
 
 import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +14,8 @@ import java.util.Optional;
 public interface QueryUserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByEmail(String email);
+
+    Optional<UserEntity> findByUserRegistry(String userRegistry);
+
+    Optional<UserEntity> findByEmailAndIdentification(String email, String identification);
 }

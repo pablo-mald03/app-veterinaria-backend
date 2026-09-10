@@ -1,5 +1,6 @@
 package com.happypets.app_veterinaria_backend.user.domain.entity;
 
+import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,7 +22,7 @@ public class User {
     private String password;
     private String email;
     private String phone;
-    private String username;
+    private String userRegistry;
     private Set<Role> roles;
 
     /*Auditable properties*/

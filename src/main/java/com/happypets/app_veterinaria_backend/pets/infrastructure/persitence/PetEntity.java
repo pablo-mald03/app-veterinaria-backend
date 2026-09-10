@@ -1,5 +1,6 @@
 package com.happypets.app_veterinaria_backend.pets.infrastructure.persitence;
 
+import com.happypets.app_veterinaria_backend.common.infrastructure.entity.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "pet")
-public class PetEntity {
+public class PetEntity extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

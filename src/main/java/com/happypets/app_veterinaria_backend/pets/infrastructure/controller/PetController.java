@@ -16,6 +16,7 @@ import com.happypets.app_veterinaria_backend.pets.infrastructure.dto.PetRequestD
 import com.happypets.app_veterinaria_backend.pets.infrastructure.dto.PetResponseDTO;
 import com.happypets.app_veterinaria_backend.pets.infrastructure.mapper.PetMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ import java.net.URI;
 @AllArgsConstructor
 @RequestMapping("/pets")
 @Tag(name = "Pets", description = "Endpoints to manage pets")
+@SecurityRequirement(name = "cookieAuth")
 @Slf4j
 public class PetController implements PetRestController {
 

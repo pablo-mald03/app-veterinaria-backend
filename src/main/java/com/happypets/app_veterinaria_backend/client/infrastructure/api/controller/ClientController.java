@@ -11,6 +11,7 @@ import com.happypets.app_veterinaria_backend.common.application.mediator.Mediato
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ public class ClientController implements ClientRestController {
             @ApiResponse(responseCode = "201", description = "Cliente registrado exitosamente"),
             @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos")
     })
+    @SecurityRequirement(name = "cookieAuth")
     @PostMapping
     @Override
     public ResponseEntity<ClientResponseDTO> register(ClientRequestDTO clientRequestDTO) {
@@ -45,6 +47,7 @@ public class ClientController implements ClientRestController {
             @ApiResponse(responseCode = "200", description = "Cliente encontrado"),
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado")
     })
+    @SecurityRequirement(name = "cookieAuth")
     @GetMapping("/{id}")
     @Override
     public ResponseEntity<ClientResponseDTO> findById(Long id) {
@@ -55,6 +58,7 @@ public class ClientController implements ClientRestController {
 
     @Operation(summary = "Obtener todos los clientes", description = "Retorna una lista completa de todos los clientes registrados")
     @ApiResponse(responseCode = "200", description = "Lista de clientes obtenida exitosamente")
+    @SecurityRequirement(name = "cookieAuth")
     @GetMapping
     @Override
     public ResponseEntity<List<ClientResponseDTO>> findAll() {
@@ -69,6 +73,7 @@ public class ClientController implements ClientRestController {
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado"),
             @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos")
     })
+    @SecurityRequirement(name = "cookieAuth")
     @PutMapping("/{id}")
     @Override
     public ResponseEntity<ClientResponseDTO> update(Long id, ClientRequestDTO requestDTO) {
@@ -82,6 +87,7 @@ public class ClientController implements ClientRestController {
             @ApiResponse(responseCode = "204", description = "Cliente eliminado correctamente (Sin contenido)"),
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado")
     })
+    @SecurityRequirement(name = "cookieAuth")
     @DeleteMapping("/{id}")
     @Override
     public ResponseEntity<Void> delete(@PathVariable Long id) {

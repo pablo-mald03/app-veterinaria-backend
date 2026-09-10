@@ -1,6 +1,7 @@
 package com.happypets.app_veterinaria_backend.user.infrastructure.database.entity;
 
 import com.happypets.app_veterinaria_backend.common.infrastructure.entity.AuditableEntity;
+import com.happypets.app_veterinaria_backend.role.infrastructure.database.entity.RoleEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,13 +31,16 @@ public class UserEntity extends AuditableEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String identification;
     private String name;
     private String firstName;
     private String password;
+    @Column(unique = true)
     private String email;
     private String phone;
-    private String username;
+    @Column(unique = true)
+    private String userRegistry;
 
     /*Relationship of many users has many roles*/
     @ManyToMany(fetch = FetchType.EAGER)
