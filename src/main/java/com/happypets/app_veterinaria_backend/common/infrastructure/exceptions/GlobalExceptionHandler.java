@@ -1,14 +1,21 @@
 package com.happypets.app_veterinaria_backend.common.infrastructure.exceptions;
 
-import com.happypets.app_veterinaria_backend.common.application.exception.BusinessRuleException;
-import com.happypets.app_veterinaria_backend.common.application.exception.ConflictException;
-import com.happypets.app_veterinaria_backend.common.application.exception.ResourceNotFoundException;
+import com.happypets.app_veterinaria_backend.common.domain.exception.BusinessRuleException;
+import com.happypets.app_veterinaria_backend.common.domain.exception.ConflictException;
+import com.happypets.app_veterinaria_backend.common.domain.exception.ResourceNotFoundException;
+import com.happypets.app_veterinaria_backend.common.domain.exception.UnauthorizedException;
+import io.jsonwebtoken.JwtException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,6 +97,37 @@ public class GlobalExceptionHandler {
                         "VALIDATION_ERROR",
                         "Validation failed",
                         errors
+                ));
+    }
+
+    /**
+     * Principal handler of the auth denied or not authenticated inside control flow
+     *
+     */
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler({JwtException.class, AuthenticationException.class})
+    @ResponseBody
+    public ErrorResponse unauthorized(HttpServletRequest request, Exception exception) {
+        return new ErrorResponse(
+                "UNAUTHORIZED",
+                "Credenciales invalidas",
+                Collections.emptyMap()
+        );
+    }
+
+    /**
+     * Principal handler when user lacks valid authentication
+     */
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthenticated(
+            UnauthorizedException exception) {
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponse(
+                        "UNAUTHORIZED",
+                        exception.getMessage(),
+                        new HashMap<>()
                 ));
     }
 }

@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.common.application.exception;
+package com.happypets.app_veterinaria_backend.common.domain.exception;
 
 /**
  * Principal exception to represents when a business rule doesn't allow

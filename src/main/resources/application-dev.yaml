@@ -6,11 +6,18 @@ spring:
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
+  flyway:
+    enabled: true
+    execute-in-transaction: false
+    baseline-on-migrate: false
+    validate-on-migrate: true
+    locations: classpath:db/migration
+
   jpa:
     hibernate:
       ddl-auto: validate
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -26,8 +33,22 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
+#Own variables
+cors-site:
+  url: ${URL_ALLOWED}
 
 jwt:
   secret: ${JWT_SECRET}
   expiration: ${JWT_EXPIRATION:900000}
   refresh-window: ${JWT_REFRESH_WINDOW:604800000}
+
+
+server:
+  servlet:
+    session:
+      cookie:
+        #Configuration for the port request (http or https)
+        secure: false
+        http-only: true
+        #Same origin configuration (POST DENIED)
+        same-site: lax
