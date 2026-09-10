@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.common.domain;
+package com.happypets.app_veterinaria_backend.common.domain.pagination;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
