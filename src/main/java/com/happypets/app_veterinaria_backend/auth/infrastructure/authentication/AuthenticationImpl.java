@@ -4,8 +4,8 @@ package com.happypets.app_veterinaria_backend.auth.infrastructure.authentication
 import com.happypets.app_veterinaria_backend.auth.domain.authentication.AuthenticationPort;
 import com.happypets.app_veterinaria_backend.auth.domain.authentication.AuthenticationResult;
 import com.happypets.app_veterinaria_backend.common.infrastructure.service.JwtService;
+import com.happypets.app_veterinaria_backend.role.infrastructure.database.entity.RoleEntity;
 import com.happypets.app_veterinaria_backend.user.domain.exceptions.UserNotFoundException;
-import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.RoleEntity;
 import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

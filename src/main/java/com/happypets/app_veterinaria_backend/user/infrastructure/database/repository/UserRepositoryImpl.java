@@ -1,8 +1,8 @@
-package com.happypets.app_veterinaria_backend.user.infrastructure.database.repository.user;
+package com.happypets.app_veterinaria_backend.user.infrastructure.database.repository;
 
+import com.happypets.app_veterinaria_backend.role.infrastructure.database.entity.RoleEntity;
 import com.happypets.app_veterinaria_backend.user.domain.entity.User;
 import com.happypets.app_veterinaria_backend.user.domain.port.UserRepositoryPort;
-import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.RoleEntity;
 import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.UserEntity;
 import com.happypets.app_veterinaria_backend.user.infrastructure.database.mapper.UserEntityMapper;
 import jakarta.persistence.EntityManager;

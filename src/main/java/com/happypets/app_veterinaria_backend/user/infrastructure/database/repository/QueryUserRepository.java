@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.user.infrastructure.database.repository.user;
+package com.happypets.app_veterinaria_backend.user.infrastructure.database.repository;
 
 import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

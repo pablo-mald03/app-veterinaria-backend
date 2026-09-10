@@ -1,5 +1,6 @@
 package com.happypets.app_veterinaria_backend.user.domain.entity;
 
+import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
 import lombok.Builder;
 import lombok.Data;
 

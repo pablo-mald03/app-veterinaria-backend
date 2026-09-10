@@ -1,7 +1,8 @@
 package com.happypets.app_veterinaria_backend.user.application.command.register;
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
-import com.happypets.app_veterinaria_backend.user.domain.entity.Role;
+import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
+import com.happypets.app_veterinaria_backend.role.domain.exeptions.RoleNotFoundException;
 import com.happypets.app_veterinaria_backend.user.domain.entity.User;
 import com.happypets.app_veterinaria_backend.user.domain.exceptions.UserAlreadyExistsException;
 import com.happypets.app_veterinaria_backend.user.domain.password.PasswordEncoderPort;
@@ -45,9 +46,8 @@ public class RegisterUserHandler implements RequestHandler<RegisterUserRequest, 
             throw new UserAlreadyExistsException(request.getEmail());
         }
 
-        Role defaultRole = roleRepositoryPort.findByName(DEFAULT_ROLE)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Rol '" + DEFAULT_ROLE + "' no encontrado"));
+        Role role = roleRepositoryPort.findByName(request.getRole())
+                .orElseThrow(() -> new RoleNotFoundException(request.getRole()));
 
         User user = User.builder()
                 .identification(request.getIdentification())
@@ -57,7 +57,7 @@ public class RegisterUserHandler implements RequestHandler<RegisterUserRequest, 
                 .phone(request.getPhone())
                 .username(request.getUsername())
                 .password(passwordEncoderPort.encode(request.getPassword()))
-                .roles(Set.of(defaultRole))
+                .roles(Set.of(role))
                 .build();
 
         User insert = userRepositoryPort.insert(user);

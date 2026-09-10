@@ -25,4 +25,6 @@ public class RegisterUserRequest implements Request<RegisterUserResponse> {
     private String username;
 
     private String password;
+
+    private String role;
 }
