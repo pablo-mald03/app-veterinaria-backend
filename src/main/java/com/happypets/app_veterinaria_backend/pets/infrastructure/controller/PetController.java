@@ -7,8 +7,8 @@ import com.happypets.app_veterinaria_backend.pets.application.command.create.Cre
 import com.happypets.app_veterinaria_backend.pets.application.command.create.CreatePetResponse;
 import com.happypets.app_veterinaria_backend.pets.application.command.delete.DeletePetRequest;
 import com.happypets.app_veterinaria_backend.pets.application.command.update.UpdatePetRequest;
-import com.happypets.app_veterinaria_backend.pets.application.dto.PetRequestDTO;
-import com.happypets.app_veterinaria_backend.pets.application.dto.PetResponseDTO;
+import com.happypets.app_veterinaria_backend.pets.infrastructure.dto.PetRequestDTO;
+import com.happypets.app_veterinaria_backend.pets.infrastructure.dto.PetResponseDTO;
 import com.happypets.app_veterinaria_backend.pets.application.query.getall.GetAllPetRequest;
 import com.happypets.app_veterinaria_backend.pets.application.query.getall.GetAllPetResponse;
 import com.happypets.app_veterinaria_backend.pets.application.query.getbyid.GetPetByIdRequest;
@@ -80,7 +80,7 @@ public class PetController implements PetRestController{
     }
 
     @Operation(summary = "Save pet", description = "Save pet create")
-    @PostMapping("")
+    @PostMapping("/create")
     @Override
     public ResponseEntity<Void> savePet(@ModelAttribute @Valid PetRequestDTO pet) {
 

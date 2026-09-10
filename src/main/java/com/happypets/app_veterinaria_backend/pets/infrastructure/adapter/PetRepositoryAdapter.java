@@ -4,6 +4,7 @@ import com.happypets.app_veterinaria_backend.common.domain.PaginationQuery;
 import com.happypets.app_veterinaria_backend.common.domain.PaginationResult;
 import com.happypets.app_veterinaria_backend.pets.domain.model.Pet;
 import com.happypets.app_veterinaria_backend.pets.domain.port.PetRepository;
+import com.happypets.app_veterinaria_backend.pets.infrastructure.database.PetEntityMapper;
 import com.happypets.app_veterinaria_backend.pets.infrastructure.mapper.PetMapper;
 import com.happypets.app_veterinaria_backend.pets.infrastructure.persitence.PetEntity;
 import com.happypets.app_veterinaria_backend.pets.infrastructure.persitence.PetJpaRepository;
@@ -22,7 +23,7 @@ import java.util.Optional;
 public class PetRepositoryAdapter implements PetRepository {
 
     private final PetJpaRepository petJpaRepository;
-    private final PetMapper petMapper;
+    private final PetEntityMapper petMapper;
 
     @Override
     public Pet save(Pet pet) {

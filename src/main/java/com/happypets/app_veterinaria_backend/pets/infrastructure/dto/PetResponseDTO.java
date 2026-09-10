@@ -1,12 +1,15 @@
-package com.happypets.app_veterinaria_backend.pets.application.dto;
+package com.happypets.app_veterinaria_backend.pets.infrastructure.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
-public class PetRequestDTO {
+public class PetResponseDTO {
 
+    private Long idPet;
     private String name;
     private String breed;
     private Long idClient;
@@ -15,4 +18,5 @@ public class PetRequestDTO {
     private double weight;
     private String species;
     private String description;
+
 }
