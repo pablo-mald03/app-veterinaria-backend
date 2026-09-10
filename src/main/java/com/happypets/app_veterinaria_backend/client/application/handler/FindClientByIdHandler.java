@@ -1,7 +1,7 @@
 package com.happypets.app_veterinaria_backend.client.application.handler;
 
-import com.happypets.app_veterinaria_backend.client.application.dto.ClientResponseDTO;
-import com.happypets.app_veterinaria_backend.client.application.mapper.ClientDTOMapper;
+import com.happypets.app_veterinaria_backend.client.infrastructure.api.dto.ClientResponseDTO;
+import com.happypets.app_veterinaria_backend.client.infrastructure.api.mapper.ClientDTOMapper;
 import com.happypets.app_veterinaria_backend.client.application.query.FindClientByIdQuery;
 import com.happypets.app_veterinaria_backend.client.domain.excepcions.ClientNotFoundException;
 import com.happypets.app_veterinaria_backend.client.domain.model.Client;

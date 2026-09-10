@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.client.infrastructure.mapper;
+package com.happypets.app_veterinaria_backend.client.infrastructure.api.mapper;
 
 import com.happypets.app_veterinaria_backend.client.domain.model.Client;
 import com.happypets.app_veterinaria_backend.client.infrastructure.entity.ClientJPAEntity;

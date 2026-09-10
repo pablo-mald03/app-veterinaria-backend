@@ -2,7 +2,7 @@ package com.happypets.app_veterinaria_backend.client.infrastructure.adapter;
 
 import com.happypets.app_veterinaria_backend.client.domain.model.Client;
 import com.happypets.app_veterinaria_backend.client.domain.port.ClientRepositoryPort;
-import com.happypets.app_veterinaria_backend.client.infrastructure.mapper.ClientMapper;
+import com.happypets.app_veterinaria_backend.client.infrastructure.api.mapper.ClientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
-package com.happypets.app_veterinaria_backend.client.application.mapper;
+package com.happypets.app_veterinaria_backend.client.infrastructure.api.mapper;
 
-import com.happypets.app_veterinaria_backend.client.application.dto.ClientRequestDTO;
-import com.happypets.app_veterinaria_backend.client.application.dto.ClientResponseDTO;
+import com.happypets.app_veterinaria_backend.client.infrastructure.api.dto.ClientRequestDTO;
+import com.happypets.app_veterinaria_backend.client.infrastructure.api.dto.ClientResponseDTO;
 import com.happypets.app_veterinaria_backend.client.domain.model.Client;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

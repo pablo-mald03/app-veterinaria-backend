@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.client.application.dto;
+package com.happypets.app_veterinaria_backend.client.infrastructure.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
