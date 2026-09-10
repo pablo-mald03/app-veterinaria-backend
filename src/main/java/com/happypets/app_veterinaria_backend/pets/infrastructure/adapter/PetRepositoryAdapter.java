@@ -1,11 +1,10 @@
 package com.happypets.app_veterinaria_backend.pets.infrastructure.adapter;
 
-import com.happypets.app_veterinaria_backend.common.domain.PaginationQuery;
-import com.happypets.app_veterinaria_backend.common.domain.PaginationResult;
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
 import com.happypets.app_veterinaria_backend.pets.domain.model.Pet;
 import com.happypets.app_veterinaria_backend.pets.domain.port.PetRepository;
 import com.happypets.app_veterinaria_backend.pets.infrastructure.database.PetEntityMapper;
-import com.happypets.app_veterinaria_backend.pets.infrastructure.mapper.PetMapper;
 import com.happypets.app_veterinaria_backend.pets.infrastructure.persitence.PetEntity;
 import com.happypets.app_veterinaria_backend.pets.infrastructure.persitence.PetJpaRepository;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.happypets.app_veterinaria_backend.pets.application.query.getall;
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.Request;
-import com.happypets.app_veterinaria_backend.common.domain.PaginationQuery;
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

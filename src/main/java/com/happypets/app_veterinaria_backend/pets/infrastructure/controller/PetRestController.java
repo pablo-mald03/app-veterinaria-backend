@@ -1,6 +1,7 @@
 package com.happypets.app_veterinaria_backend.pets.infrastructure.controller;
 
-import com.happypets.app_veterinaria_backend.common.domain.PaginationResult;
+
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
 import com.happypets.app_veterinaria_backend.pets.infrastructure.dto.PetRequestDTO;
 import com.happypets.app_veterinaria_backend.pets.infrastructure.dto.PetResponseDTO;
 import jakarta.validation.Valid;
@@ -8,6 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+/**
+ * Principal contest for pets rest controller
+ *
+ */
 public interface PetRestController {
 
     ResponseEntity<PaginationResult<PetResponseDTO>> getAllPets(int pageNumber, int pageSize, String sortBy, String direction);
