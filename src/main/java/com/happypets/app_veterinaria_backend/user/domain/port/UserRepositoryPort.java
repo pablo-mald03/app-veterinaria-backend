@@ -9,7 +9,7 @@ import java.util.Optional;
  * Interface to define the contest of repository with users
  *
  */
-public interface UserRepository {
+public interface UserRepositoryPort {
 
     Optional<User> findByEmail(String email);
 
@@ -18,5 +18,4 @@ public interface UserRepository {
     User insert(User user);
 
     User update(User user);
-
 }

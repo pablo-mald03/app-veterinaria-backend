@@ -1,6 +1,6 @@
 package com.happypets.app_veterinaria_backend.common.infrastructure.config;
 
-import com.happypets.app_veterinaria_backend.user.infrastructure.database.repository.QueryUserRepository;
+import com.happypets.app_veterinaria_backend.user.infrastructure.database.repository.user.QueryUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

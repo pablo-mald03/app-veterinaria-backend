@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.auth.application.command.recoverPassword;
+package com.happypets.app_veterinaria_backend.user.application.command.recoverPassword;
 
 import com.happypets.app_veterinaria_backend.auth.domain.authentication.AuthenticationPort;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;

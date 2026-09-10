@@ -2,7 +2,6 @@ package com.happypets.app_veterinaria_backend.auth.domain.api;
 
 import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.AuthUserDto;
 import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.LoginRequestDto;
-import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.RecoverPasswordRequestDto;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +17,4 @@ public interface AuthenticationRestController {
     ResponseEntity<AuthUserDto> getCurrentUser();
 
     ResponseEntity<Void> logout(HttpServletResponse response);
-
-    ResponseEntity<Void> recoverPassword(@RequestBody RecoverPasswordRequestDto requestDto);
 }

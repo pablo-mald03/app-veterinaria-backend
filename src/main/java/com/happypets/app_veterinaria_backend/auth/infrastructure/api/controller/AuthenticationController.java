@@ -2,7 +2,7 @@ package com.happypets.app_veterinaria_backend.auth.infrastructure.api.controller
 
 import com.happypets.app_veterinaria_backend.auth.application.command.login.LoginUserRequest;
 import com.happypets.app_veterinaria_backend.auth.application.command.login.LoginUserResponse;
-import com.happypets.app_veterinaria_backend.auth.application.command.recoverPassword.RecoverPasswordRequest;
+import com.happypets.app_veterinaria_backend.user.application.command.recoverPassword.RecoverPasswordRequest;
 import com.happypets.app_veterinaria_backend.auth.application.query.AuthVerifyUserRequest;
 import com.happypets.app_veterinaria_backend.auth.application.query.AuthVerifyUserResponse;
 import com.happypets.app_veterinaria_backend.auth.domain.api.AuthenticationRestController;
@@ -75,15 +75,4 @@ public class AuthenticationController implements AuthenticationRestController {
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * Recover password endpoint request
-     *
-     */
-    @PostMapping("/recover-password")
-    @Override
-    public ResponseEntity<Void> recoverPassword(RecoverPasswordRequestDto requestDto) {
-        RecoverPasswordRequest request = authMapper.mapToRecoverPasswordRequest(requestDto);
-        mediator.dispatch(request);
-        return ResponseEntity.ok().build();
-    }
 }

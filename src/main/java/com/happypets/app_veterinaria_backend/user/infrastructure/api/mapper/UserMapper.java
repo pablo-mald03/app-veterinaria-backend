@@ -1,0 +1,39 @@
+package com.happypets.app_veterinaria_backend.user.infrastructure.api.mapper;
+
+import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.RecoverPasswordRequestDto;
+import com.happypets.app_veterinaria_backend.user.application.command.recoverPassword.RecoverPasswordRequest;
+import com.happypets.app_veterinaria_backend.user.application.command.register.RegisterUserRequest;
+import com.happypets.app_veterinaria_backend.user.application.command.register.RegisterUserResponse;
+import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.RegisterUserRequestDto;
+import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.RegisterUserResponseDto;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
+
+/**
+ * Principal mapper class for the user layers
+ *
+ */
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.ERROR)
+public interface UserMapper {
+
+    /**
+     * Method to transform the recover password dto request user request
+     *
+     */
+    RecoverPasswordRequest mapToRecoverPasswordRequest(RecoverPasswordRequestDto recoverPasswordRequestDto);
+
+    /**
+     * Method to transform the recover password dto request user request
+     *
+     */
+    RegisterUserRequest mapToRegisterUserRequest(RegisterUserRequestDto registerUserRequestDto);
+
+    /**
+     * Method to transform the register user dto request
+     *
+     */
+    RegisterUserResponseDto mapToRegisterUserResponseDto(RegisterUserResponse registerUserResponse);
+
+
+}
