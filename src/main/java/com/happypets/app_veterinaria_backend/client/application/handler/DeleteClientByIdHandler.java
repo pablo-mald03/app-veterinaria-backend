@@ -14,9 +14,9 @@ public class DeleteClientByIdHandler implements RequestHandler<DeleteClientByIdC
 
     @Override
     public Boolean handle(final DeleteClientByIdCommand command) {
-        clientRepositoryPort.findById(command.id()).orElseThrow(() -> new ClientNotFoundException(command.id()));
+        clientRepositoryPort.findById(command.getId()).orElseThrow(() -> new ClientNotFoundException(command.getId()));
 
-        clientRepositoryPort.deleteById(command.id());
+        clientRepositoryPort.deleteById(command.getId());
         return true;
     }
 

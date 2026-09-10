@@ -18,8 +18,8 @@ public class UpdateClientHandler implements RequestHandler<UpdateClientCommand, 
 
     @Override
     public ClientResponseDTO handle(UpdateClientCommand updateClientCommand) {
-        Client existingClient = clientRepositoryPort.findById(updateClientCommand.id()).orElseThrow(() -> new ClientNotFoundException(updateClientCommand.id()));
-        Client updateClient = clientDTOMapper.toDomain(updateClientCommand.clientRequestDTO());
+        Client existingClient = clientRepositoryPort.findById(updateClientCommand.getId()).orElseThrow(() -> new ClientNotFoundException(updateClientCommand.getId()));
+        Client updateClient = clientDTOMapper.toDomain(updateClientCommand.getClientRequestDTO());
         updateClient.setId(existingClient.getId());
 
         Client savedClient = clientRepositoryPort.update(updateClient);
