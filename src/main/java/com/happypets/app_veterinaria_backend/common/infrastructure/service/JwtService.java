@@ -32,7 +32,7 @@ public class JwtService {
      * Principal method to generate the token with the authorities and claims
      *
      */
-    public String generateToken(UserDetails userDetails, UUID userId, String name,
+    public String generateToken(UserDetails userDetails, Long userId, String name,
                                 Set<String> roles, Set<String> permissions) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId.toString());

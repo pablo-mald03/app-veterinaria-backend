@@ -1,5 +1,10 @@
 package com.happypets.app_veterinaria_backend.auth.infrastructure.api.controller;
 
+import com.happypets.app_veterinaria_backend.auth.application.command.login.LoginUserRequest;
+import com.happypets.app_veterinaria_backend.auth.application.command.login.LoginUserResponse;
+import com.happypets.app_veterinaria_backend.auth.application.command.recoverPassword.RecoverPasswordRequest;
+import com.happypets.app_veterinaria_backend.auth.application.query.AuthVerifyUserRequest;
+import com.happypets.app_veterinaria_backend.auth.application.query.AuthVerifyUserResponse;
 import com.happypets.app_veterinaria_backend.auth.domain.api.AuthenticationRestController;
 import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.AuthUserDto;
 import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.LoginRequestDto;
@@ -39,6 +44,10 @@ public class AuthenticationController implements AuthenticationRestController {
     @PostMapping("/login")
     @Override
     public ResponseEntity<Void> loginUser(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+
+        LoginUserRequest request = authMapper.mapToLoginRequest(loginRequestDto);
+        LoginUserResponse loginUserResponse = mediator.dispatch(request);
+        jwtFilter.addSessionCookie(response, loginUserResponse.getToken());
         return null;
     }
 
@@ -49,7 +58,10 @@ public class AuthenticationController implements AuthenticationRestController {
     @GetMapping("/me")
     @Override
     public ResponseEntity<AuthUserDto> getCurrentUser() {
-        return null;
+        AuthVerifyUserRequest request = new AuthVerifyUserRequest();
+        AuthVerifyUserResponse response = mediator.dispatch(request);
+        AuthUserDto authUserDto = authMapper.mapToAuthUserDto(response.getAuthUser());
+        return ResponseEntity.ok(authUserDto);
     }
 
     /**
@@ -70,6 +82,8 @@ public class AuthenticationController implements AuthenticationRestController {
     @PostMapping("/recover-password")
     @Override
     public ResponseEntity<Void> recoverPassword(RecoverPasswordRequestDto requestDto) {
-        return null;
+        RecoverPasswordRequest request = authMapper.mapToRecoverPasswordRequest(requestDto);
+        mediator.dispatch(request);
+        return ResponseEntity.ok().build();
     }
 }
