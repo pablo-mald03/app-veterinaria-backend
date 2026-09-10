@@ -82,7 +82,7 @@ public class PetController implements PetRestController {
     @Operation(summary = "Save pet", description = "Save pet create")
     @PostMapping("/create")
     @Override
-    public ResponseEntity<Void> savePet(@ModelAttribute @Valid PetRequestDTO pet) {
+    public ResponseEntity<Void> savePet(@RequestBody @Valid PetRequestDTO pet) {
 
         CreatePetRequest request = petMapper.toCreateRequest(pet);
         CreatePetResponse response = mediator.dispatch(request);
