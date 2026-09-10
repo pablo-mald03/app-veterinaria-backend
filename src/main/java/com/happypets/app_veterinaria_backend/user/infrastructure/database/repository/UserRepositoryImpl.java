@@ -1,5 +1,7 @@
 package com.happypets.app_veterinaria_backend.user.infrastructure.database.repository;
 
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
 import com.happypets.app_veterinaria_backend.role.infrastructure.database.entity.RoleEntity;
 import com.happypets.app_veterinaria_backend.user.domain.entity.User;
 import com.happypets.app_veterinaria_backend.user.domain.port.UserRepositoryPort;
@@ -7,8 +9,13 @@ import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity
 import com.happypets.app_veterinaria_backend.user.infrastructure.database.mapper.UserEntityMapper;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,6 +40,39 @@ public class UserRepositoryImpl implements UserRepositoryPort {
     @Override
     public Optional<User> findByEmail(String email) {
         return queryUserRepository.findByEmail(email).map(userEntityMapper::mapToUser);
+    }
+
+    @Override
+    public PaginationResult<User> findAll(PaginationQuery paginationQuery) {
+        Sort.Direction direction = "DESC".equalsIgnoreCase(paginationQuery.getDirection())
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+
+        Pageable pageable;
+        if (paginationQuery.getSortBy() != null && !paginationQuery.getSortBy().isBlank()) {
+            pageable = PageRequest.of(
+                    paginationQuery.getPage(),
+                    paginationQuery.getSize(),
+                    Sort.by(direction, paginationQuery.getSortBy())
+            );
+        } else {
+            pageable = PageRequest.of(paginationQuery.getPage(), paginationQuery.getSize());
+        }
+
+        Page<UserEntity> pageResult = queryUserRepository.findAll(pageable);
+
+        List<User> roles = pageResult.getContent()
+                .stream()
+                .map(userEntityMapper::mapToUser)
+                .toList();
+
+        return new PaginationResult<>(
+                roles,
+                pageResult.getNumber(),
+                pageResult.getSize(),
+                pageResult.getTotalPages(),
+                pageResult.getTotalElements()
+        );
     }
 
     /**

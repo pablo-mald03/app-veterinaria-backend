@@ -1,6 +1,8 @@
 package com.happypets.app_veterinaria_backend.user.domain.api;
 
 import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.RecoverPasswordRequestDto;
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
+import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.GetAllUsersResponseDto;
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.RegisterUserRequestDto;
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.RegisterUserResponseDto;
 import org.springframework.http.ResponseEntity;
@@ -23,4 +25,10 @@ public interface UserRestController {
      *
      */
     ResponseEntity<RegisterUserResponseDto> registerUser(@RequestBody RegisterUserRequestDto registerUserRequestDto);
+
+    /**
+     * Method to get all users
+     *
+     */
+    ResponseEntity<GetAllUsersResponseDto> getAll(PaginationQuery paginationQuery);
 }

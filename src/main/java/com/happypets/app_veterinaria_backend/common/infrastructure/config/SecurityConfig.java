@@ -43,6 +43,7 @@ public class SecurityConfig {
                         /*Request matcher for the pagest without auth */
                         .requestMatchers(
                                 "/auth/login",
+                                "/users/recover-password",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
