@@ -145,4 +145,16 @@ public class JwtFilter extends OncePerRequestFilter {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }
+
+    /*PRUEBAS PARA EXCLUIR MIENTRAS SE PRUEBA SIN JWT*/
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+
+        String path = request.getServletPath();
+
+        return path.equals("/api/v1/auth/login")
+                || path.equals("/api/v1/auth/register")
+                || path.startsWith("/swagger-ui/")
+                || path.startsWith("/v3/api-docs/");
+    }
 }
