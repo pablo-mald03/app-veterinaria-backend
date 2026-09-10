@@ -1,8 +1,9 @@
 package com.happypets.app_veterinaria_backend.client.application.handler;
 
-import com.happypets.app_veterinaria_backend.client.application.command.RegisterClientCommand;
 import com.happypets.app_veterinaria_backend.client.application.dto.ClientResponseDTO;
 import com.happypets.app_veterinaria_backend.client.application.mapper.ClientDTOMapper;
+import com.happypets.app_veterinaria_backend.client.application.query.FindClientByIdQuery;
+import com.happypets.app_veterinaria_backend.client.domain.excepcions.ClientNotFoundException;
 import com.happypets.app_veterinaria_backend.client.domain.model.Client;
 import com.happypets.app_veterinaria_backend.client.domain.port.ClientRepositoryPort;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
@@ -11,23 +12,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class RegisterClientHandler implements RequestHandler<RegisterClientCommand, ClientResponseDTO> {
+public class FindClientByIdHandler implements RequestHandler<FindClientByIdQuery, ClientResponseDTO> {
     private final ClientRepositoryPort clientRepositoryPort;
     private final ClientDTOMapper clientDTOMapper;
 
     @Override
-    public ClientResponseDTO handle(RegisterClientCommand command) {
-        var dto =  command.getData();
+    public ClientResponseDTO handle(FindClientByIdQuery query) {
+        Client client = clientRepositoryPort.findById(query.getId())
+                .orElseThrow(() -> new ClientNotFoundException(query.getId()));
 
-        Client newClient = clientDTOMapper.toDomain(command.getData());
-
-        Client savedClient = clientRepositoryPort.save(newClient);
-
-        return clientDTOMapper.toDTO(savedClient);
+        return clientDTOMapper.toDTO(client);
     }
 
     @Override
-    public Class<RegisterClientCommand> getRequestType() {
-        return RegisterClientCommand.class;
+    public Class<FindClientByIdQuery> getRequestType() {
+        return FindClientByIdQuery.class;
     }
 }
