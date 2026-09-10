@@ -36,20 +36,20 @@ public class SecurityConfig {
     //Principal method to allows the request forgery
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         /*Request matcher for the pagest without auth */
                         .requestMatchers(
                                 "/auth/login",
                                 "/auth/register",
-                                "/auth/refresh",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/actuator/**"
                         ).permitAll()
                         .anyRequest().authenticated()
-
                 )
                 /*
                  * Custom handlers for unauthenticated (401) and forbidden (403) requests intercepted directly
