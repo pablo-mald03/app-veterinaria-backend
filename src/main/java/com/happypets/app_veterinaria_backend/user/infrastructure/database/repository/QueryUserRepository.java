@@ -14,4 +14,6 @@ import java.util.Optional;
 public interface QueryUserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByEmail(String email);
+
+    Optional<UserEntity> findByEmailAndIdentification(String email, String identification);
 }

@@ -76,6 +76,15 @@ public class UserRepositoryImpl implements UserRepositoryPort {
     }
 
     /**
+     * Method to find by email and identification
+     *
+     */
+    @Override
+    public Optional<User> findByEmailAndIdentification(String email, String identification) {
+        return queryUserRepository.findByEmailAndIdentification(email, identification).map(userEntityMapper::mapToUser);
+    }
+
+    /**
      * Method verify if de user exist by email
      *
      */

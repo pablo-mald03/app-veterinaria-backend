@@ -9,10 +9,9 @@ import com.happypets.app_veterinaria_backend.user.application.command.register.R
 import com.happypets.app_veterinaria_backend.user.application.query.GetAllUsersRequest;
 import com.happypets.app_veterinaria_backend.user.application.query.GetAllUsersResponse;
 import com.happypets.app_veterinaria_backend.user.domain.api.UserRestController;
-import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.GetAllUsersResponseDto;
-import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.RegisterUserRequestDto;
-import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.RegisterUserResponseDto;
-import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.UserResponseDto;
+import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.request.RegisterUserRequestDto;
+import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response.GetAllUsersResponseDto;
+import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response.RegisterUserResponseDto;
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.mapper.UserMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

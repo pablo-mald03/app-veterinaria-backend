@@ -1,7 +1,5 @@
 package com.happypets.app_veterinaria_backend.user.infrastructure.database.mapper;
 
-import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
-import com.happypets.app_veterinaria_backend.role.infrastructure.database.entity.RoleEntity;
 import com.happypets.app_veterinaria_backend.role.infrastructure.database.mapper.RoleEntityMapper;
 import com.happypets.app_veterinaria_backend.user.domain.entity.Permission;
 import com.happypets.app_veterinaria_backend.user.domain.entity.User;
@@ -27,15 +25,6 @@ public interface UserEntityMapper {
     UserEntity mapToUserEntity(User user);
 
     /**
-     * Method to map the role domain to the role entity (nested with user)
-     *
-     */
-    @Named("roleToEntity")
-    @Mapping(target = "users", ignore = true)
-    @Mapping(target = "assignedPermissions", source = "permissions", qualifiedByName = "permissionToEntity")
-    RoleEntity mapToRoleEntity(Role role);
-
-    /**
      * Method to map the permission domain to the permission entity (nested with role)
      *
      */
@@ -48,14 +37,6 @@ public interface UserEntityMapper {
      *
      */
     User mapToUser(UserEntity userEntity);
-
-    /**
-     * Method to map the role domain to the entity
-     *
-     */
-    @Named("roleToDomain")
-    @Mapping(source = "assignedPermissions", target = "permissions", qualifiedByName = "permissionToDomain")
-    Role mapToRole(RoleEntity roleEntity);
 
     /**
      * Method to map the permission domain to the entity

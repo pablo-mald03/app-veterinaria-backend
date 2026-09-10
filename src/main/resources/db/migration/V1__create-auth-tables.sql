@@ -10,8 +10,6 @@ CREATE TABLE roles
 
     created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at  TIMESTAMP,
-    created_by  VARCHAR(100),
-    updated_by  VARCHAR(100),
 
     CONSTRAINT uq_roles_name UNIQUE (name)
 );
@@ -28,8 +26,6 @@ CREATE TABLE permissions
 
     created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at  TIMESTAMP,
-    created_by  VARCHAR(100),
-    updated_by  VARCHAR(100),
 
     CONSTRAINT uq_permissions_module_action UNIQUE (module, action)
 );
@@ -50,8 +46,6 @@ CREATE TABLE users
 
     created_at     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at     TIMESTAMP,
-    created_by     VARCHAR(100),
-    updated_by     VARCHAR(100),
 
     CONSTRAINT uq_users_email UNIQUE (email),
     CONSTRAINT uq_users_username UNIQUE (username)

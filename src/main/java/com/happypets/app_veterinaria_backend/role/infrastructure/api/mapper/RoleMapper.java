@@ -6,6 +6,7 @@ import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
 import com.happypets.app_veterinaria_backend.role.infrastructure.api.controller.dto.GetAllRoleResponseDto;
 import com.happypets.app_veterinaria_backend.role.infrastructure.api.controller.dto.PermissionResponseDto;
 import com.happypets.app_veterinaria_backend.role.infrastructure.api.controller.dto.RoleResponseDto;
+import com.happypets.app_veterinaria_backend.role.infrastructure.api.controller.dto.RoleSummaryDto;
 import com.happypets.app_veterinaria_backend.user.domain.entity.Permission;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -37,6 +38,12 @@ public interface RoleMapper {
      *
      */
     PermissionResponseDto toDto(Permission permission);
+
+    /**
+     * Principal mapper to mapp to the role summary dto
+     *
+     */
+    RoleSummaryDto toRoleSummaryDto(Role role);
 
     /**
      * Default method to transform all the role Response dto from get all role response

@@ -18,6 +18,8 @@ public interface UserRepositoryPort {
 
     PaginationResult<User> findAll(PaginationQuery paginationQuery);
 
+    Optional<User> findByEmailAndIdentification(String email, String identification);
+
     boolean existByEmail(String email);
 
     User insert(User user);

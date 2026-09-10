@@ -4,15 +4,17 @@ import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.Recover
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
 import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
 import com.happypets.app_veterinaria_backend.role.infrastructure.api.controller.dto.RoleSummaryDto;
+import com.happypets.app_veterinaria_backend.role.infrastructure.database.mapper.RoleEntityMapper;
 import com.happypets.app_veterinaria_backend.user.application.command.recoverPassword.RecoverPasswordRequest;
 import com.happypets.app_veterinaria_backend.user.application.command.register.RegisterUserRequest;
 import com.happypets.app_veterinaria_backend.user.application.command.register.RegisterUserResponse;
 import com.happypets.app_veterinaria_backend.user.application.query.GetAllUsersResponse;
 import com.happypets.app_veterinaria_backend.user.domain.entity.User;
-import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.GetAllUsersResponseDto;
-import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.RegisterUserRequestDto;
-import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.RegisterUserResponseDto;
-import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.UserResponseDto;
+import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.request.RegisterUserRequestDto;
+import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response.GetAllUsersResponseDto;
+import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response.RegisterUserResponseDto;
+import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response.UserResponseDto;
+import com.happypets.app_veterinaria_backend.user.infrastructure.database.mapper.PermissionEntityMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
@@ -23,7 +25,11 @@ import java.util.List;
  * Principal mapper class for the user layers
  *
  */
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.ERROR)
+@Mapper(
+        componentModel = MappingConstants.ComponentModel.SPRING,
+        unmappedTargetPolicy = ReportingPolicy.ERROR,
+        uses = {RoleEntityMapper.class}
+)
 public interface UserMapper {
 
     /**
@@ -48,8 +54,6 @@ public interface UserMapper {
     UserResponseDto toUserResponseDto(User user);
 
     List<UserResponseDto> toUserResponseDtoList(List<User> users);
-
-    RoleSummaryDto toRoleSummaryDto(Role role);
 
     default GetAllUsersResponseDto toGetAllUsersResponseDto(GetAllUsersResponse response) {
         PaginationResult<User> result = response.getAllUsers();
