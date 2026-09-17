@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.user.infrastructure.database.entity;
+package com.happypets.app_veterinaria_backend.permissions.infrastructure;
 
 import com.happypets.app_veterinaria_backend.common.infrastructure.entity.AuditableEntity;
 import com.happypets.app_veterinaria_backend.role.infrastructure.database.entity.RoleEntity;
@@ -26,8 +26,9 @@ public class PermissionEntity extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(length = 60)
     private String module;
+    @Column(length = 60)
     private String action;
     private String description;
 

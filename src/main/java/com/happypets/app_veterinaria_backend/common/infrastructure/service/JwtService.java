@@ -71,9 +71,9 @@ public class JwtService {
      * Method to get the user id claim
      *
      */
-    public UUID getUserId(String token) {
+    public Long getUserId(String token) {
         String userIdStr = getClaim(token, claims -> claims.get("userId", String.class));
-        return userIdStr != null ? UUID.fromString(userIdStr) : null;
+        return userIdStr != null ? Long.parseLong(userIdStr) : null;
     }
 
     /**

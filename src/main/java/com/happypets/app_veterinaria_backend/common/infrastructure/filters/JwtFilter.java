@@ -29,11 +29,10 @@ import java.io.IOException;
 @Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
-
-    /*Attributes for jwt filter */
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final HandlerExceptionResolver handlerExceptionResolver;
+    private final SessionCookieService sessionCookieService;
 
     private static final String COOKIE_NAME = "SESSION_TOKEN";
 
@@ -44,7 +43,8 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+                                    @NonNull FilterChain filterChain)
+            throws ServletException, IOException {
 
         try {
             String token = getTokenFromCookie(request);
@@ -59,7 +59,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             /*Remove the cookie from httpOnly*/
             if (tokenExpired && !canBeTokenRenewed) {
-                clearSessionCookie(response);
+                sessionCookieService.clearSessionCookie(response); // antes: clearSessionCookie(response)
                 filterChain.doFilter(request, response);
                 return;
             }
@@ -69,9 +69,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
             boolean validToken = jwtService.isValidToken(token, userDetails);
 
-            /* If the token doesn't match remove the token*/
+            /* If the token doesnt match remove the token*/
             if (!validToken) {
-                clearSessionCookie(response);
+                sessionCookieService.clearSessionCookie(response);
                 filterChain.doFilter(request, response);
                 return;
             }
@@ -79,7 +79,7 @@ public class JwtFilter extends OncePerRequestFilter {
             /* Renew if its expired and can be renewed */
             if (tokenExpired && canBeTokenRenewed) {
                 token = jwtService.renewToken(token);
-                addSessionCookie(response, token);
+                sessionCookieService.addSessionCookie(response, token);
             }
 
             /* Register the  auth in spring configurations */
@@ -97,7 +97,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         } catch (Exception e) {
             log.error("Error while processing request: {}", e.getMessage());
-            clearSessionCookie(response);
+            sessionCookieService.clearSessionCookie(response);
             handlerExceptionResolver.resolveException(request, response, null, e);
         }
 
@@ -118,43 +118,5 @@ public class JwtFilter extends OncePerRequestFilter {
             }
         }
         return null;
-    }
-
-    /**
-     * This method set the session cookie
-     *
-     */
-    public void addSessionCookie(HttpServletResponse response, String token) {
-        Cookie cookie = new Cookie(COOKIE_NAME, token);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false);
-        cookie.setPath("/");
-        cookie.setMaxAge(7 * 24 * 60 * 60);
-        response.addCookie(cookie);
-    }
-
-    /**
-     * Delete the cookie (logout)
-     *
-     */
-    public void clearSessionCookie(HttpServletResponse response) {
-        Cookie cookie = new Cookie(COOKIE_NAME, null);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false);
-        cookie.setPath("/");
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-    }
-
-    /*PRUEBAS PARA EXCLUIR MIENTRAS SE PRUEBA SIN JWT*/
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-
-        String path = request.getServletPath();
-
-        return path.equals("/api/v1/auth/login")
-                || path.equals("/api/v1/auth/register")
-                || path.startsWith("/swagger-ui/")
-                || path.startsWith("/v3/api-docs/");
     }
 }

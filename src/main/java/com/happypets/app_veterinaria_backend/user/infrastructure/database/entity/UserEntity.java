@@ -1,6 +1,7 @@
 package com.happypets.app_veterinaria_backend.user.infrastructure.database.entity;
 
 import com.happypets.app_veterinaria_backend.common.infrastructure.entity.AuditableEntity;
+import com.happypets.app_veterinaria_backend.permissions.infrastructure.PermissionEntity;
 import com.happypets.app_veterinaria_backend.role.infrastructure.database.entity.RoleEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,20 +28,24 @@ import java.util.Set;
 @Table(name = "users")
 public class UserEntity extends AuditableEntity implements UserDetails {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+    @Column(length = 13, unique = true)
     private String identification;
+    @Column(length = 100)
     private String name;
+    @Column(length = 100)
     private String firstName;
-    private String password;
-    @Column(unique = true)
-    private String email;
-    private String phone;
-    @Column(unique = true)
+    @Column(length = 80, unique = true)
     private String userRegistry;
+    @Column(length = 20, unique = true)
+    private String phone;
+    private String password;
+    @Column(length = 150, unique = true)
+    private String email;
+    private boolean status;
+
 
     /*Relationship of many users has many roles*/
     @ManyToMany(fetch = FetchType.EAGER)
@@ -60,7 +65,7 @@ public class UserEntity extends AuditableEntity implements UserDetails {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 
         for (RoleEntity role : roles) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName().toUpperCase()));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getAlias().toUpperCase()));
 
             if (role.getAssignedPermissions() != null) {
                 for (PermissionEntity permission : role.getAssignedPermissions()) {

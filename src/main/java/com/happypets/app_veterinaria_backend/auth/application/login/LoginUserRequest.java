@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.auth.application.command.login;
+package com.happypets.app_veterinaria_backend.auth.application.login;
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.Request;
 import lombok.AllArgsConstructor;

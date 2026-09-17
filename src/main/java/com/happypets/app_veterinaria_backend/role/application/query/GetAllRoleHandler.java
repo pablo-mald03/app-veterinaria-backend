@@ -3,7 +3,7 @@ package com.happypets.app_veterinaria_backend.role.application.query;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
 import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
-import com.happypets.app_veterinaria_backend.user.domain.port.RoleRepositoryPort;
+import com.happypets.app_veterinaria_backend.role.domain.port.RoleRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

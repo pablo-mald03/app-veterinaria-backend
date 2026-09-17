@@ -11,4 +11,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class RegisterUserResponse {
     private String name;
+    private String email;
 }

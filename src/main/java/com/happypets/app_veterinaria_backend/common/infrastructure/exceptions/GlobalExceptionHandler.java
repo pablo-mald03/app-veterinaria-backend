@@ -1,11 +1,12 @@
 package com.happypets.app_veterinaria_backend.common.infrastructure.exceptions;
 
-import com.happypets.app_veterinaria_backend.common.domain.exception.BusinessRuleException;
-import com.happypets.app_veterinaria_backend.common.domain.exception.ConflictException;
-import com.happypets.app_veterinaria_backend.common.domain.exception.ResourceNotFoundException;
-import com.happypets.app_veterinaria_backend.common.domain.exception.UnauthorizedException;
+import com.happypets.app_veterinaria_backend.common.domain.exception.*;
+import com.happypets.app_veterinaria_backend.common.infrastructure.filters.SessionCookieService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -23,7 +24,10 @@ import java.util.Map;
  * Global interceptor handler
  */
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class GlobalExceptionHandler {
+
+    private final SessionCookieService sessionCookieService;
 
     /**
      * Principal handler for any entity not found or any resource
@@ -56,6 +60,21 @@ public class GlobalExceptionHandler {
                         new HashMap<>()
                 ));
     }
+
+    /**
+     * Principal handler for conflict when the user is already disabled
+     */
+    @ExceptionHandler(UserDisabledException.class)
+    public ResponseEntity<ErrorResponse> handleDisabled(
+            UserDisabledException exception,
+            HttpServletResponse response) {
+        sessionCookieService.clearSessionCookie(response);
+
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(new ErrorResponse("FORBIDDEN", exception.getMessage(), new HashMap<>()));
+    }
+
 
     /**
      * Principal handler for any business rule exceptions
@@ -91,11 +110,12 @@ public class GlobalExceptionHandler {
                         )
                 );
 
+        String formattedMessage = String.join(", ", errors.values());
         return ResponseEntity
                 .badRequest()
                 .body(new ErrorResponse(
                         "VALIDATION_ERROR",
-                        "Validation failed",
+                        formattedMessage.isEmpty() ? "Campos invalidos" : formattedMessage,
                         errors
                 ));
     }
@@ -127,6 +147,37 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(
                         "UNAUTHORIZED",
                         exception.getMessage(),
+                        new HashMap<>()
+                ));
+    }
+
+    /**
+     * Principal handler for Database constraints violations
+     */
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataIntegrityViolation(
+            DataIntegrityViolationException exception) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(
+                        "DATABASE_CONFLICT",
+                        "Ocurrió un conflicto con los datos enviados.",
+                        new HashMap<>()
+                ));
+    }
+
+    /**
+     * Fallback handler for ANY unhandled exception
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGenericException(
+            Exception exception) {
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse(
+                        "INTERNAL_SERVER_ERROR",
+                        "Ocurrió un error inesperado en el servidor. Por favor, intente más tarde.",
                         new HashMap<>()
                 ));
     }

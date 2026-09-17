@@ -15,15 +15,29 @@ public interface UserRepositoryPort {
 
     Optional<User> findByEmail(String email);
 
+    Optional<User> findById(Long id);
+
     PaginationResult<User> findAll(PaginationQuery paginationQuery);
 
     Optional<User> findByEmailAndIdentification(String email, String identification);
 
-    boolean existByEmail(String email);
+    boolean existsByEmail(String email);
 
-    boolean existByUsername(String userRegistry);
+    boolean existsByIdentification(String identification);
 
-    User insert(User user);
+    boolean existsByUserRegistry(String userRegistry);
+
+    User save(User user);
 
     User update(User user);
+
+    void recoverPassword(User user);
+
+    boolean existsByEmailAndIdNot(String email, Long id);
+
+    boolean existsByUserRegistryAndIdNot(String userRegistry, Long id);
+
+    boolean existsByIdentificationAndIdNot(String identification, Long id);
+
+    long countActiveUsersByRoleAlias(String alias);
 }

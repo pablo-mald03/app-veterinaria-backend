@@ -1,7 +1,6 @@
-package com.happypets.app_veterinaria_backend.user.infrastructure.database.mapper;
+package com.happypets.app_veterinaria_backend.permissions.infrastructure;
 
-import com.happypets.app_veterinaria_backend.user.domain.entity.Permission;
-import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.PermissionEntity;
+import com.happypets.app_veterinaria_backend.permissions.domain.Permission;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -15,12 +14,14 @@ public interface PermissionEntityMapper {
 
     /**
      * Mapper from entity layer to domain
-     * */
+     *
+     */
     Permission toDomain(PermissionEntity entity);
 
     /**
      * Mapper from domain layer to entity
-     * */
+     *
+     */
     @Mapping(target = "roles", ignore = true)
     PermissionEntity toEntity(Permission domain);
 }

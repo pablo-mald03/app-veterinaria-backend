@@ -1,8 +1,9 @@
-package com.happypets.app_veterinaria_backend.auth.application.command.login;
+package com.happypets.app_veterinaria_backend.auth.application.login;
 
 import com.happypets.app_veterinaria_backend.auth.domain.authentication.AuthenticationPort;
 import com.happypets.app_veterinaria_backend.auth.domain.authentication.AuthenticationResult;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class LoginUserHandler implements RequestHandler<LoginUserRequest, LoginU
     private final AuthenticationPort authenticationPort;
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public LoginUserResponse handle(LoginUserRequest request) {
         AuthenticationResult result = authenticationPort.authenticate(
                 request.getEmail(),

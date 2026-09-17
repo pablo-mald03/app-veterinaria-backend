@@ -1,9 +1,10 @@
 package com.happypets.app_veterinaria_backend.user.infrastructure.database.mapper;
 
+import com.happypets.app_veterinaria_backend.permissions.domain.Permission;
+import com.happypets.app_veterinaria_backend.permissions.infrastructure.PermissionEntity;
+import com.happypets.app_veterinaria_backend.permissions.infrastructure.PermissionEntityMapper;
 import com.happypets.app_veterinaria_backend.role.infrastructure.database.mapper.RoleEntityMapper;
-import com.happypets.app_veterinaria_backend.user.domain.entity.Permission;
 import com.happypets.app_veterinaria_backend.user.domain.entity.User;
-import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.PermissionEntity;
 import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.UserEntity;
 import org.mapstruct.*;
 

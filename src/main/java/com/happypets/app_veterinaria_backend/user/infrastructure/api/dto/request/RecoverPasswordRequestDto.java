@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto;
+package com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -21,10 +21,12 @@ public class RecoverPasswordRequestDto {
     private String dpi;
 
     @NotBlank(message = "El correo es obligatorio")
+    @Size(max = 150, message = "El correo no puede tener mas de 150 caracteres")
     @Email(message = "El correo no tiene un formato valido")
     private String email;
 
     @NotBlank(message = "La contraseña es obligatoria")
+    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     private String password;
 
     @NotBlank(message = "La confirmacion de contraseña es obligatoria")

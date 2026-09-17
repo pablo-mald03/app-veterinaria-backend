@@ -5,6 +5,7 @@ import com.happypets.app_veterinaria_backend.user.domain.entity.User;
 import com.happypets.app_veterinaria_backend.user.domain.exceptions.InvalidPasswordRecoveryOperation;
 import com.happypets.app_veterinaria_backend.user.domain.password.PasswordEncoderPort;
 import com.happypets.app_veterinaria_backend.user.domain.port.UserRepositoryPort;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,8 @@ public class RecoverPasswordHandler implements RequestHandler<RecoverPasswordReq
     private final UserRepositoryPort userRepositoryPort;
     private final PasswordEncoderPort passwordEncoder;
 
-
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Void handle(RecoverPasswordRequest request) {
 
         User user = userRepositoryPort
@@ -33,11 +34,10 @@ public class RecoverPasswordHandler implements RequestHandler<RecoverPasswordReq
         }
 
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        userRepositoryPort.update(user);
+        userRepositoryPort.recoverPassword(user);
 
         return null;
     }
-
     @Override
     public Class<RecoverPasswordRequest> getRequestType() {
         return RecoverPasswordRequest.class;

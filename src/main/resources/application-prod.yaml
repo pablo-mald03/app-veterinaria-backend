@@ -1,11 +1,10 @@
 spring:
 
   datasource:
-    url: jdbc:postgresql://${DB_HOST}:${DB_PORT:5432}/${DB_NAME}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
-
   flyway:
     enabled: true
     execute-in-transaction: false
@@ -23,6 +22,8 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: false
         format_sql: false
+        jdbc:
+          time_zone: UTC
 
   servlet:
     multipart:
@@ -33,14 +34,18 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
-#Own variables
-cors-site:
-  url: ${URL_ALLOWED}
 
 jwt:
   secret: ${JWT_SECRET}
   expiration: ${JWT_EXPIRATION:900000}
   refresh-window: ${JWT_REFRESH_WINDOW:604800000}
+
+#Own variables
+cors-site:
+  url: ${URL_ALLOWED}
+
+reserved:
+  super-role: ${RESERVED_ROLE1}
 
 
 server:
@@ -52,3 +57,4 @@ server:
         http-only: true
         #Same origin configuration (POST DENIED)
         same-site: lax
+

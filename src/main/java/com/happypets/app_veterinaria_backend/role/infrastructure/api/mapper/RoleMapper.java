@@ -1,13 +1,13 @@
 package com.happypets.app_veterinaria_backend.role.infrastructure.api.mapper;
 
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
+import com.happypets.app_veterinaria_backend.permissions.domain.Permission;
 import com.happypets.app_veterinaria_backend.role.application.query.GetAllRoleResponse;
 import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
 import com.happypets.app_veterinaria_backend.role.infrastructure.api.dto.GetAllRoleResponseDto;
 import com.happypets.app_veterinaria_backend.role.infrastructure.api.dto.PermissionResponseDto;
 import com.happypets.app_veterinaria_backend.role.infrastructure.api.dto.RoleResponseDto;
 import com.happypets.app_veterinaria_backend.role.infrastructure.api.dto.RoleSummaryDto;
-import com.happypets.app_veterinaria_backend.user.domain.entity.Permission;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

@@ -19,10 +19,11 @@ public class User {
     private String identification;
     private String name;
     private String firstName;
+    private String userRegistry;
+    private String phone;
     private String password;
     private String email;
-    private String phone;
-    private String userRegistry;
+    private boolean status;
     private Set<Role> roles;
 
     /*Auditable properties*/

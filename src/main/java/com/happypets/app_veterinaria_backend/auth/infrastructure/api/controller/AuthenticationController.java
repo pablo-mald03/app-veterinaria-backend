@@ -1,7 +1,7 @@
 package com.happypets.app_veterinaria_backend.auth.infrastructure.api.controller;
 
-import com.happypets.app_veterinaria_backend.auth.application.command.login.LoginUserRequest;
-import com.happypets.app_veterinaria_backend.auth.application.command.login.LoginUserResponse;
+import com.happypets.app_veterinaria_backend.auth.application.login.LoginUserRequest;
+import com.happypets.app_veterinaria_backend.auth.application.login.LoginUserResponse;
 import com.happypets.app_veterinaria_backend.auth.application.query.AuthVerifyUserRequest;
 import com.happypets.app_veterinaria_backend.auth.application.query.AuthVerifyUserResponse;
 import com.happypets.app_veterinaria_backend.auth.domain.api.AuthenticationRestController;
@@ -9,7 +9,7 @@ import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.AuthUse
 import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.LoginRequestDto;
 import com.happypets.app_veterinaria_backend.auth.infrastructure.api.mapper.AuthMapper;
 import com.happypets.app_veterinaria_backend.common.application.mediator.Mediator;
-import com.happypets.app_veterinaria_backend.common.infrastructure.filters.JwtFilter;
+import com.happypets.app_veterinaria_backend.common.infrastructure.filters.SessionCookieService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,7 +33,7 @@ public class AuthenticationController implements AuthenticationRestController {
     private final AuthMapper authMapper;
 
     /*Principal web dependency filter*/
-    private final JwtFilter jwtFilter;
+    private final SessionCookieService sessionCookieService;
 
     /**
      * Login endpoint request
@@ -42,11 +42,11 @@ public class AuthenticationController implements AuthenticationRestController {
     @Operation(summary = "Login", description = "Endpoint to login at the API")
     @PostMapping("/login")
     @Override
-    public ResponseEntity<Void> loginUser(@RequestBody @Valid  LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public ResponseEntity<Void> loginUser(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpServletResponse response) {
 
         LoginUserRequest request = authMapper.mapToLoginRequest(loginRequestDto);
         LoginUserResponse loginUserResponse = mediator.dispatch(request);
-        jwtFilter.addSessionCookie(response, loginUserResponse.getToken());
+        sessionCookieService.addSessionCookie(response, loginUserResponse.getToken());
         return null;
     }
 
@@ -74,7 +74,7 @@ public class AuthenticationController implements AuthenticationRestController {
     @PostMapping("/logout")
     @Override
     public ResponseEntity<Void> logout(HttpServletResponse response) {
-        jwtFilter.clearSessionCookie(response);
+        sessionCookieService.clearSessionCookie(response);
         return ResponseEntity.ok().build();
     }
 

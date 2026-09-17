@@ -1,11 +1,9 @@
 package com.happypets.app_veterinaria_backend.auth.infrastructure.api.mapper;
 
-import com.happypets.app_veterinaria_backend.auth.application.command.login.LoginUserRequest;
+import com.happypets.app_veterinaria_backend.auth.application.login.LoginUserRequest;
 import com.happypets.app_veterinaria_backend.auth.domain.entity.AuthUser;
 import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.AuthUserDto;
 import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.LoginRequestDto;
-import com.happypets.app_veterinaria_backend.auth.infrastructure.api.dto.RecoverPasswordRequestDto;
-import com.happypets.app_veterinaria_backend.user.application.command.recoverPassword.RecoverPasswordRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

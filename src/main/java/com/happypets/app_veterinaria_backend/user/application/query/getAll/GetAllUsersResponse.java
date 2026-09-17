@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.user.application.query;
+package com.happypets.app_veterinaria_backend.user.application.query.getAll;
 
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
 import com.happypets.app_veterinaria_backend.user.domain.entity.User;
