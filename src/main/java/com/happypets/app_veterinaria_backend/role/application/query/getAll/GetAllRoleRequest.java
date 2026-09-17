@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.role.application.query;
+package com.happypets.app_veterinaria_backend.role.application.query.getAll;
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.Request;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;

@@ -1,6 +1,6 @@
 package com.happypets.app_veterinaria_backend.role.infrastructure.database.mapper;
 
-import com.happypets.app_veterinaria_backend.permissions.infrastructure.PermissionEntityMapper;
+import com.happypets.app_veterinaria_backend.permissions.infrastructure.database.mapper.PermissionEntityMapper;
 import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
 import com.happypets.app_veterinaria_backend.role.infrastructure.database.entity.RoleEntity;
 import org.mapstruct.Mapper;

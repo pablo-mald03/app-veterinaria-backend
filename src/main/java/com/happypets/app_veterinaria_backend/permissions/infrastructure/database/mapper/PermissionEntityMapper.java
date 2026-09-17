@@ -1,6 +1,7 @@
-package com.happypets.app_veterinaria_backend.permissions.infrastructure;
+package com.happypets.app_veterinaria_backend.permissions.infrastructure.database.mapper;
 
-import com.happypets.app_veterinaria_backend.permissions.domain.Permission;
+import com.happypets.app_veterinaria_backend.permissions.domain.entity.Permission;
+import com.happypets.app_veterinaria_backend.permissions.infrastructure.database.entity.PermissionEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;

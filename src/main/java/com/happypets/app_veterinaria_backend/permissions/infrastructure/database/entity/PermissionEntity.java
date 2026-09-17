@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.permissions.infrastructure;
+package com.happypets.app_veterinaria_backend.permissions.infrastructure.database.entity;
 
 import com.happypets.app_veterinaria_backend.common.infrastructure.entity.AuditableEntity;
 import com.happypets.app_veterinaria_backend.role.infrastructure.database.entity.RoleEntity;

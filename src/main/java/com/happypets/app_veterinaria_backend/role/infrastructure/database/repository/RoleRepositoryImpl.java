@@ -2,7 +2,7 @@ package com.happypets.app_veterinaria_backend.role.infrastructure.database.repos
 
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
-import com.happypets.app_veterinaria_backend.permissions.infrastructure.PermissionEntity;
+import com.happypets.app_veterinaria_backend.permissions.infrastructure.database.entity.PermissionEntity;
 import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
 import com.happypets.app_veterinaria_backend.role.domain.exeptions.RoleNotFoundException;
 import com.happypets.app_veterinaria_backend.role.domain.port.RoleRepositoryPort;

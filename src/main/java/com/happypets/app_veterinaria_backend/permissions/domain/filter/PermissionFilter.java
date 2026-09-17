@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.role.infrastructure.api.dto;
+package com.happypets.app_veterinaria_backend.permissions.domain.filter;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,16 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Permission class dto
+ * Principal permission filter domain representation
  *
  */
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class PermissionResponseDto {
-    private Long id;
+public class PermissionFilter {
     private String module;
     private String action;
-    private String description;
 }

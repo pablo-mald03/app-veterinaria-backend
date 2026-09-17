@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.permissions.domain;
+package com.happypets.app_veterinaria_backend.permissions.domain.entity;
 
 
 import lombok.AllArgsConstructor;
