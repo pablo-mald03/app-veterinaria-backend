@@ -1,6 +1,6 @@
 package com.happypets.app_veterinaria_backend.role.domain.entity;
 
-import com.happypets.app_veterinaria_backend.user.domain.entity.Permission;
+import com.happypets.app_veterinaria_backend.permissions.domain.entity.Permission;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +22,7 @@ public class Role {
     private String alias;
     private String name;
     private String description;
+    private boolean active;
     private Set<Permission> permissions;
 
     /*Auditable properties*/

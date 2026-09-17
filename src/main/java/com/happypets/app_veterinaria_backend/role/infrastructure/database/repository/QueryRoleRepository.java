@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Persistence layer for roles
@@ -17,5 +18,19 @@ public interface QueryRoleRepository extends JpaRepository<RoleEntity, Long> {
      * Find by name method
      *
      */
-    Optional<RoleEntity> findByName(String name);
+    Optional<RoleEntity> findByAlias(String alias);
+
+
+    /**
+     * Exists by alias method
+     *
+     */
+    boolean existsByAlias(String alias);
+
+
+    /**
+     * Method to find by alias only if it is active
+     *
+     */
+    Set<RoleEntity> findByAliasInAndActiveTrue(Set<String> aliases);
 }

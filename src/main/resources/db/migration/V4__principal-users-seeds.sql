@@ -1,78 +1,78 @@
 -- =========================================================
 -- 1. ROLES
 -- =========================================================
-INSERT INTO roles (alias, name, description)
-VALUES ('admin', 'ADMIN', 'Acceso total al sistema'),
-       ('recepcionista', 'RECEPCIONISTA', 'Gestion de clientes, mascotas, citas y facturacion'),
-       ('veterinario', 'VETERINARIO', 'Gestion clinica: mascotas, citas y vacunacion');
+INSERT INTO roles (alias, name, description, created_at)
+VALUES ('admin', 'ADMIN', 'Acceso total al sistema', NOW()),
+       ('recepcionista', 'RECEPCIONISTA', 'Gestion de clientes, mascotas, citas y facturacion', NOW()),
+       ('veterinario', 'VETERINARIO', 'Gestion clinica: mascotas, citas y vacunacion', NOW());
 
 -- =========================================================
 -- 2. PERMISSIONS (module, action, description)
 -- =========================================================
-INSERT INTO permissions (module, action, description)
-VALUES ('usuarios', 'ver', 'Ver usuarios'),
-       ('usuarios', 'crear', 'Crear usuarios'),
-       ('usuarios', 'editar', 'Editar usuarios'),
-       ('usuarios', 'eliminar', 'Eliminar usuarios'),
+INSERT INTO permissions (module, action, description, created_at)
+VALUES ('usuarios', 'ver', 'Ver usuarios', NOW()),
+       ('usuarios', 'crear', 'Crear usuarios', NOW()),
+       ('usuarios', 'editar', 'Editar usuarios', NOW()),
+       ('usuarios', 'eliminar', 'Eliminar usuarios', NOW()),
 
-       ('roles', 'ver', 'Ver roles'),
-       ('roles', 'crear', 'Crear roles'),
-       ('roles', 'editar', 'Editar roles'),
-       ('roles', 'eliminar', 'Eliminar roles'),
+       ('roles', 'ver', 'Ver roles', NOW()),
+       ('roles', 'crear', 'Crear roles', NOW()),
+       ('roles', 'editar', 'Editar roles', NOW()),
+       ('roles', 'eliminar', 'Eliminar roles', NOW()),
 
-       ('permisos', 'ver', 'Ver permisos'),
-       ('permisos', 'asignar', 'Asignar permisos a roles'),
+       ('permisos', 'ver', 'Ver permisos', NOW()),
+       ('permisos', 'asignar', 'Asignar permisos a roles', NOW()),
 
-       ('clientes', 'ver', 'Ver clientes'),
-       ('clientes', 'crear', 'Crear clientes'),
-       ('clientes', 'editar', 'Editar clientes'),
-       ('clientes', 'eliminar', 'Eliminar clientes'),
+       ('clientes', 'ver', 'Ver clientes', NOW()),
+       ('clientes', 'crear', 'Crear clientes', NOW()),
+       ('clientes', 'editar', 'Editar clientes', NOW()),
+       ('clientes', 'eliminar', 'Eliminar clientes', NOW()),
 
-       ('mascotas', 'ver', 'Ver mascotas'),
-       ('mascotas', 'crear', 'Crear mascotas'),
-       ('mascotas', 'editar', 'Editar mascotas'),
-       ('mascotas', 'eliminar', 'Eliminar mascotas'),
+       ('mascotas', 'ver', 'Ver mascotas', NOW()),
+       ('mascotas', 'crear', 'Crear mascotas', NOW()),
+       ('mascotas', 'editar', 'Editar mascotas', NOW()),
+       ('mascotas', 'eliminar', 'Eliminar mascotas', NOW()),
 
-       ('citas', 'ver', 'Ver citas'),
-       ('citas', 'crear', 'Crear citas'),
-       ('citas', 'editar', 'Editar citas'),
-       ('citas', 'cancelar', 'Cancelar citas'),
-       ('citas', 'eliminar', 'Eliminar citas'),
+       ('citas', 'ver', 'Ver citas', NOW()),
+       ('citas', 'crear', 'Crear citas', NOW()),
+       ('citas', 'editar', 'Editar citas', NOW()),
+       ('citas', 'cancelar', 'Cancelar citas', NOW()),
+       ('citas', 'eliminar', 'Eliminar citas', NOW()),
 
-       ('salas', 'ver', 'Ver salas'),
-       ('salas', 'crear', 'Crear salas'),
-       ('salas', 'editar', 'Editar salas'),
-       ('salas', 'eliminar', 'Eliminar salas'),
+       ('salas', 'ver', 'Ver salas', NOW()),
+       ('salas', 'crear', 'Crear salas', NOW()),
+       ('salas', 'editar', 'Editar salas', NOW()),
+       ('salas', 'eliminar', 'Eliminar salas', NOW()),
 
-       ('inventario', 'ver', 'Ver inventario'),
-       ('inventario', 'crear', 'Crear items de inventario'),
-       ('inventario', 'editar', 'Editar items de inventario'),
-       ('inventario', 'eliminar', 'Eliminar items de inventario'),
+       ('inventario', 'ver', 'Ver inventario', NOW()),
+       ('inventario', 'crear', 'Crear items de inventario', NOW()),
+       ('inventario', 'editar', 'Editar items de inventario', NOW()),
+       ('inventario', 'eliminar', 'Eliminar items de inventario', NOW()),
 
-       ('categorias', 'ver', 'Ver categorias'),
-       ('categorias', 'crear', 'Crear categorias'),
-       ('categorias', 'editar', 'Editar categorias'),
-       ('categorias', 'eliminar', 'Eliminar categorias'),
+       ('categorias', 'ver', 'Ver categorias', NOW()),
+       ('categorias', 'crear', 'Crear categorias', NOW()),
+       ('categorias', 'editar', 'Editar categorias', NOW()),
+       ('categorias', 'eliminar', 'Eliminar categorias', NOW()),
 
-       ('compras', 'ver', 'Ver compras'),
-       ('compras', 'crear', 'Crear compras'),
-       ('compras', 'editar', 'Editar compras'),
-       ('compras', 'eliminar', 'Eliminar compras'),
+       ('compras', 'ver', 'Ver compras', NOW()),
+       ('compras', 'crear', 'Crear compras', NOW()),
+       ('compras', 'editar', 'Editar compras', NOW()),
+       ('compras', 'eliminar', 'Eliminar compras', NOW()),
 
-       ('facturacion', 'ver', 'Ver facturas'),
-       ('facturacion', 'crear', 'Crear facturas'),
-       ('facturacion', 'anular', 'Anular facturas'),
+       ('facturacion', 'ver', 'Ver facturas', NOW()),
+       ('facturacion', 'crear', 'Crear facturas', NOW()),
+       ('facturacion', 'anular', 'Anular facturas', NOW()),
 
-       ('pagos', 'ver', 'Ver pagos'),
-       ('pagos', 'registrar', 'Registrar pagos'),
-       ('pagos', 'anular', 'Anular pagos'),
+       ('pagos', 'ver', 'Ver pagos', NOW()),
+       ('pagos', 'registrar', 'Registrar pagos', NOW()),
+       ('pagos', 'anular', 'Anular pagos', NOW()),
 
-       ('vacunacion', 'ver', 'Ver vacunaciones'),
-       ('vacunacion', 'crear', 'Registrar vacunaciones'),
-       ('vacunacion', 'editar', 'Editar vacunaciones'),
-       ('vacunacion', 'eliminar', 'Eliminar vacunaciones'),
+       ('vacunacion', 'ver', 'Ver vacunaciones', NOW()),
+       ('vacunacion', 'crear', 'Registrar vacunaciones', NOW()),
+       ('vacunacion', 'editar', 'Editar vacunaciones', NOW()),
+       ('vacunacion', 'eliminar', 'Eliminar vacunaciones', NOW()),
 
-       ('logs', 'ver', 'Ver logs de auditoria');
+       ('logs', 'ver', 'Ver logs de auditoria', NOW());
 
 -- =========================================================
 -- 3. ROLE_PERMISSIONS MAPPING
@@ -122,13 +122,13 @@ WHERE r.name = 'VETERINARIO';
 -- =========================================================
 -- 4. ADMIN INITIAL USERS
 -- =========================================================
-INSERT INTO users (identification, name, first_name, password, email, phone, user_registry)
+INSERT INTO users (identification, name, first_name, password, email, phone, user_registry, status, created_at)
 VALUES ('73891720200', 'Pablo', 'Admin',
         '1d3988e2cba831131d45c039a681c7ba5a1b1fa4215174ba8a13d63537367c2fcc3bec84b83ed9b78b2f0216250ea5be',
-        'pabloadmin@gmail.com', '58143215', 'pabloadmin'),
+        'pabloadmin@gmail.com', '58143215', 'pabloadmin', TRUE, NOW()),
        ('63892120211', 'Cristian', 'Admin',
         'c57b95d5ec5c7f5e19926e2317062f8b01ef2ba7feeb7a09234a13d232be445e402dc84413dcd10144c4965122830f9d',
-        'cristianadmin@gmail.com', '59113213', 'cristianadmin');
+        'cristianadmin@gmail.com', '59113213', 'cristianadmin', TRUE, NOW());
 
 -- =========================================================
 -- 5. GRANT ROLE ADMINS FOR USERS

@@ -1,6 +1,6 @@
 package com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.response;
 
-import com.happypets.app_veterinaria_backend.role.infrastructure.api.dto.RoleSummaryDto;
+import com.happypets.app_veterinaria_backend.role.infrastructure.api.dto.response.RoleSummaryResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,8 +22,9 @@ public class UserResponseDto {
     private String identification;
     private String name;
     private String firstName;
-    private String email;
     private String phone;
     private String userRegistry;
-    private List<RoleSummaryDto> roles;
+    private String email;
+    private boolean status;
+    private List<RoleSummaryResponseDto> roles;
 }

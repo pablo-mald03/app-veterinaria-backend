@@ -3,6 +3,7 @@ package com.happypets.app_veterinaria_backend.auth.infrastructure.authentication
 
 import com.happypets.app_veterinaria_backend.auth.domain.authentication.AuthenticationPort;
 import com.happypets.app_veterinaria_backend.auth.domain.authentication.AuthenticationResult;
+import com.happypets.app_veterinaria_backend.common.domain.exception.UserDisabledException;
 import com.happypets.app_veterinaria_backend.common.infrastructure.service.JwtService;
 import com.happypets.app_veterinaria_backend.role.infrastructure.database.entity.RoleEntity;
 import com.happypets.app_veterinaria_backend.user.domain.exceptions.UserNotFoundException;
@@ -16,6 +17,10 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Authentication provider class
+ *
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationImpl implements AuthenticationPort {
@@ -48,6 +53,10 @@ public class AuthenticationImpl implements AuthenticationPort {
             throw new UserNotFoundException("Usuario no registrado en el sistema");
         }
 
+        if (!userEntity.isStatus()) {
+            throw new UserDisabledException("El usuario se encuentra deshabilitado en el sistema");
+        }
+
         //Map the permissions and roles
         Set<String> roles = getRoles(userEntity);
 
@@ -77,9 +86,9 @@ public class AuthenticationImpl implements AuthenticationPort {
      *
      */
     private Set<String> getRoles(UserEntity userEntity) {
-
         return userEntity.getRoles().stream()
-                .map(RoleEntity::getName)
+                .filter(RoleEntity::isActive)
+                .map(RoleEntity::getAlias)
                 .collect(Collectors.toSet());
     }
 
@@ -88,8 +97,8 @@ public class AuthenticationImpl implements AuthenticationPort {
      *
      */
     private Set<String> getPermissions(UserEntity userEntity) {
-
         return userEntity.getRoles().stream()
+                .filter(RoleEntity::isActive)
                 .filter(r -> r.getAssignedPermissions() != null)
                 .flatMap(r -> r.getAssignedPermissions().stream())
                 .map(p -> p.getModule().toLowerCase() + ":" + p.getAction().toLowerCase())
