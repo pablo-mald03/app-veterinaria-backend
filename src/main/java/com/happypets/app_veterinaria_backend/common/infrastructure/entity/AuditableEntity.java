@@ -25,7 +25,7 @@ public abstract class AuditableEntity {
      *
      */
     @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column( nullable = false, updatable = false)
     private Instant createdAt;
 
     /**
@@ -34,6 +34,5 @@ public abstract class AuditableEntity {
      *
      */
     @LastModifiedDate
-    @Column(name = "updated_at")
     private Instant updatedAt;
 }

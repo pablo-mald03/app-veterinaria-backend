@@ -35,12 +35,11 @@ import org.springframework.context.annotation.Configuration;
 
 /*DECORATOR FOR THE PROTECTED ENDPOINTS*/
 @SecurityScheme(
-        name = "Bearer Authentication",
-        description = "Authentication with JWT",
-        bearerFormat = "JWT",
-        scheme = "bearer",
-        in = SecuritySchemeIn.HEADER,
-        type = SecuritySchemeType.HTTP
+        name = "cookieAuth",
+        description = "Autenticacion mediante cookie httpOnly con JWT",
+        type = SecuritySchemeType.APIKEY,
+        in = SecuritySchemeIn.COOKIE,
+        paramName = "SESSION_TOKEN"
 )
 @Configuration
 //Principal config for open api documentation
