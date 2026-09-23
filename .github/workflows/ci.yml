@@ -1,10 +1,10 @@
-name: CI - Integración Continua
+name: CI - Integracion Continua
 
 on:
   push:
-    branches: [ "**" ]
+    branches: [ "main", "develop" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main", "develop" ]
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Checkout del código
+      - name: Checkout del codigo
         uses: actions/checkout@v4
 
       - name: Configurar Java 21
@@ -33,5 +33,5 @@ jobs:
       - name: Dar permisos al wrapper
         run: chmod +x ./mvnw
 
-      - name: Verificar compilación de Spring Boot
+      - name: Verificar compilacion de Spring Boot
         run: ./mvnw clean compile --batch-mode --no-transfer-progress
