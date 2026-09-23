@@ -39,6 +39,7 @@ public class PetController implements PetRestController {
     private final PetMapper petMapper;
 
     @Override
+    @GetMapping("/all-pets")
     public ResponseEntity<PaginationResult<PetResponseDTO>> getAllPets(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "5") int pageSize,
