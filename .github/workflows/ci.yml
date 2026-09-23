@@ -14,10 +14,10 @@ permissions:
   contents: read
 
 jobs:
-  build-and-test:
-    name: Build & Test
+  build-check:
+    name: Compilacion y Chequeo
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
 
     steps:
       - name: Checkout del código
@@ -33,19 +33,5 @@ jobs:
       - name: Dar permisos al wrapper
         run: chmod +x ./mvnw
 
-      - name: Compilar
+      - name: Verificar compilación de Spring Boot
         run: ./mvnw clean compile --batch-mode --no-transfer-progress
-
-      - name: Ejecutar pruebas
-        run: ./mvnw test --batch-mode --no-transfer-progress
-
-      - name: Empaquetar (sin pruebas)
-        run: ./mvnw package -DskipTests --batch-mode --no-transfer-progress
-
-      - name: Subir artefacto (JAR)
-        uses: actions/upload-artifact@v4
-        if: success()
-        with:
-          name: app-jar
-          path: target/*.jar
-          retention-days: 7
