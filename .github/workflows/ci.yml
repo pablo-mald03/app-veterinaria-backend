@@ -1,17 +1,26 @@
-name: CI - Integracion Continua
+name: CI - Integración Continua
 
 on:
   push:
-    branches: [ "**" ] # Excecute in all branches
+    branches: [ "**" ]
   pull_request:
     branches: [ "main", "master" ]
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   build-and-test:
+    name: Build & Test
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
-      - name: Checkout del codigo
+      - name: Checkout del código
         uses: actions/checkout@v4
 
       - name: Configurar Java 21
@@ -21,5 +30,22 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Compilar y ejecutar pruebas básicas con Maven
-        run: ./mvnw clean test-compile
+      - name: Dar permisos al wrapper
+        run: chmod +x ./mvnw
+
+      - name: Compilar
+        run: ./mvnw clean compile --batch-mode --no-transfer-progress
+
+      - name: Ejecutar pruebas
+        run: ./mvnw test --batch-mode --no-transfer-progress
+
+      - name: Empaquetar (sin pruebas)
+        run: ./mvnw package -DskipTests --batch-mode --no-transfer-progress
+
+      - name: Subir artefacto (JAR)
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: app-jar
+          path: target/*.jar
+          retention-days: 7
