@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -178,6 +179,22 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(
                         "INTERNAL_SERVER_ERROR",
                         "Ocurrió un error inesperado en el servidor. Por favor, intente más tarde.",
+                        new HashMap<>()
+                ));
+    }
+
+    /**
+     * Principal handler when user lacks permissions/authorities
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDenied(
+            AccessDeniedException exception) {
+
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(new ErrorResponse(
+                        "FORBIDDEN",
+                        "No cuentas con los permisos necesarios para realizar esta acción.",
                         new HashMap<>()
                 ));
     }

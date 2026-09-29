@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetAllPermissionQueryDto {
-    private String module;
-    private String action;
+    private String moduleTarget;
+    private String actionTarget;
 
 }

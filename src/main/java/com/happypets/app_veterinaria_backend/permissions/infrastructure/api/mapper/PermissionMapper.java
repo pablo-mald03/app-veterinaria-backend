@@ -2,11 +2,13 @@ package com.happypets.app_veterinaria_backend.permissions.infrastructure.api.map
 
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
-import com.happypets.app_veterinaria_backend.permissions.application.GetAllPermissionsRequest;
-import com.happypets.app_veterinaria_backend.permissions.application.GetAllPermissionsResponse;
+import com.happypets.app_veterinaria_backend.permissions.application.getAll.GetAllPermissionsRequest;
+import com.happypets.app_veterinaria_backend.permissions.application.getAll.GetAllPermissionsResponse;
+import com.happypets.app_veterinaria_backend.permissions.application.getCatalog.GetPermissionCatalogResponse;
 import com.happypets.app_veterinaria_backend.permissions.domain.entity.Permission;
 import com.happypets.app_veterinaria_backend.permissions.infrastructure.api.dto.request.GetAllPermissionQueryDto;
 import com.happypets.app_veterinaria_backend.permissions.infrastructure.api.dto.response.GetAllPermissionsResponseDto;
+import com.happypets.app_veterinaria_backend.permissions.infrastructure.api.dto.response.GetPermissionCatalogResponseDto;
 import com.happypets.app_veterinaria_backend.permissions.infrastructure.api.dto.response.PermissionResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,6 +22,12 @@ import java.util.List;
  */
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface PermissionMapper {
+
+    /**
+     * Method to map the permission catalog response to the response dto
+     *
+     */
+    GetPermissionCatalogResponseDto toGetPermissionCatalogResponseDto(GetPermissionCatalogResponse response);
 
     /**
      * Method to map the request dto to the request

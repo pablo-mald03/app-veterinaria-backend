@@ -15,6 +15,8 @@ import com.happypets.app_veterinaria_backend.user.application.query.getAll.GetAl
 import com.happypets.app_veterinaria_backend.user.application.query.getAll.GetAllUsersResponse;
 import com.happypets.app_veterinaria_backend.user.application.query.getById.GetUserByIdRequest;
 import com.happypets.app_veterinaria_backend.user.application.query.getById.GetUserByIdResponse;
+import com.happypets.app_veterinaria_backend.user.application.query.getProfile.GetProfileRequest;
+import com.happypets.app_veterinaria_backend.user.application.query.getProfile.GetProfileResponse;
 import com.happypets.app_veterinaria_backend.user.application.query.getRoles.GetUserRolesRequest;
 import com.happypets.app_veterinaria_backend.user.application.query.getRoles.GetUserRolesResponse;
 import com.happypets.app_veterinaria_backend.user.domain.api.UserRestController;
@@ -146,4 +148,17 @@ public class UserController implements UserRestController {
         ChangeUserStatusResponse response = mediator.dispatch(request);
         return ResponseEntity.ok(userMapper.toChangeStatusUserResponseDto(response));
     }
+
+    /**
+     * Find user profile endpoint request
+     *
+     */
+    @Operation(summary = "Get user profile", description = "Get all the user profile data")
+    @GetMapping("/profile")
+    public ResponseEntity<UserDetailResponseDto> getProfile() {
+        GetProfileRequest request = new GetProfileRequest();
+        GetProfileResponse response = mediator.dispatch(request);
+        return ResponseEntity.ok(userMapper.toUserProfileResponseDto(response));
+    }
+
 }

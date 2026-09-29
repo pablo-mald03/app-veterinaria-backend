@@ -5,6 +5,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -39,10 +40,22 @@ public class JwtService {
         claims.put("name", name);
         claims.put("roles", roles);
         claims.put("permissions", permissions);
-        claims.put("authorities", userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).toList());
 
         return generateToken(claims, userDetails.getUsername());
+    }
+
+    public List<GrantedAuthority> getAuthorities(String token) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+
+        for (String role : getRoles(token)) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
+        }
+
+        for (String permission : getPermissions(token)) {
+            authorities.add(new SimpleGrantedAuthority(permission));
+        }
+
+        return authorities;
     }
 
     /**
@@ -177,10 +190,8 @@ public class JwtService {
 
         Claims oldClaims = getAllClaims(oldToken);
 
-        //Copy de old claims
         Map<String, Object> claims = new HashMap<>(oldClaims);
 
-        // Remove the claims of expiration data (for renew)
         claims.remove(Claims.SUBJECT);
         claims.remove(Claims.ISSUED_AT);
         claims.remove(Claims.EXPIRATION);

@@ -75,4 +75,22 @@ public class PermissionRepositoryImpl implements PermissionRepositoryPort {
         return new PaginationResult<>(content, page.getNumber(), page.getSize(),
                 page.getTotalPages(), page.getTotalElements());
     }
+
+    /**
+     * Method to return the distinct modules
+     *
+     */
+    @Override
+    public List<String> findDistinctModules() {
+        return queryPermissionRepository.findDistinctModules();
+    }
+
+    /**
+     * Method to return the distinct actions
+     *
+     */
+    @Override
+    public List<String> findDistinctActions() {
+        return queryPermissionRepository.findDistinctActions();
+    }
 }

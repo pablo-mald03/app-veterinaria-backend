@@ -15,6 +15,7 @@ import com.happypets.app_veterinaria_backend.user.application.command.update.Upd
 import com.happypets.app_veterinaria_backend.user.application.command.update.UpdateUserResponse;
 import com.happypets.app_veterinaria_backend.user.application.query.getAll.GetAllUsersResponse;
 import com.happypets.app_veterinaria_backend.user.application.query.getById.GetUserByIdResponse;
+import com.happypets.app_veterinaria_backend.user.application.query.getProfile.GetProfileResponse;
 import com.happypets.app_veterinaria_backend.user.application.query.getRoles.GetUserRolesResponse;
 import com.happypets.app_veterinaria_backend.user.domain.entity.User;
 import com.happypets.app_veterinaria_backend.user.infrastructure.api.dto.request.*;
@@ -36,6 +37,21 @@ import java.util.stream.Collectors;
 )
 public interface UserMapper {
 
+
+    /**
+     * Method to transform a domain user to the user detail dto response
+     *
+     */
+    @Mapping(target = "roles", source = "roles", qualifiedByName = "rolesToAliases")
+    UserDetailResponseDto toUserDetailResponseDto(User user);
+
+    /**
+     * Method to transform the get profile response to the user detail dto response
+     *
+     */
+    default UserDetailResponseDto toUserProfileResponseDto(GetProfileResponse response) {
+        return toUserDetailResponseDto(response.getUser());
+    }
 
     /**
      * Method to transform the user details response application to user detail dto response
