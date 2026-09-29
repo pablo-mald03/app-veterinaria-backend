@@ -1,29 +1,23 @@
-package com.happypets.app_veterinaria_backend.role.application.query.findById;
+package com.happypets.app_veterinaria_backend.permissions.application.getCatalog;
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.Request;
 import com.happypets.app_veterinaria_backend.common.domain.auditable.AuditableRequest;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Principal get by id role request
+ * Get permission catalog request class
  *
  */
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class GetRoleByIdRequest implements Request<GetRoleByIdResponse>, AuditableRequest {
-    private Long roleId;
-
+public class GetPermissionCatalogRequest implements Request<GetPermissionCatalogResponse>, AuditableRequest {
     /**
      * Log module
      */
     @Override
     public String getModule() {
-        return "ROLES";
+        return "PERMISOS";
     }
 
     /**
@@ -31,7 +25,7 @@ public class GetRoleByIdRequest implements Request<GetRoleByIdResponse>, Auditab
      */
     @Override
     public String getAction() {
-        return "BUSCAR ROL POR ID";
+        return "CONSULTAR CATALOGO DE PERMISOS";
     }
 
     /**
@@ -39,7 +33,7 @@ public class GetRoleByIdRequest implements Request<GetRoleByIdResponse>, Auditab
      */
     @Override
     public String getDetail(Object response) {
-        GetRoleByIdResponse result = (GetRoleByIdResponse) response;
-        return "Se consulto el rol con ID: '" + result.getId() + "' en el sistema";
+        GetPermissionCatalogResponse result = (GetPermissionCatalogResponse) response;
+        return "Se obtuvieron '" + result.getModules().size() + "' modulos y '" + result.getActions().size() + "' acciones";
     }
 }

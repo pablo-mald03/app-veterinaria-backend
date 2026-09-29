@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.permissions.application;
+package com.happypets.app_veterinaria_backend.permissions.application.getAll;
 
 import com.happypets.app_veterinaria_backend.auth.domain.port.AuthenticatedUserPort;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;

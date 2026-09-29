@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class ClientController implements ClientRestController {
     @SecurityRequirement(name = "cookieAuth")
     @PostMapping
     @Override
-    public ResponseEntity<ClientResponseDTO> register(ClientRequestDTO clientRequestDTO) {
+    public ResponseEntity<ClientResponseDTO> register(@RequestBody @Valid ClientRequestDTO clientRequestDTO) {
         var command = new RegisterClientCommand(clientRequestDTO);
         ClientResponseDTO response = mediator.dispatch(command);
         return new ResponseEntity<>(response, HttpStatus.CREATED);

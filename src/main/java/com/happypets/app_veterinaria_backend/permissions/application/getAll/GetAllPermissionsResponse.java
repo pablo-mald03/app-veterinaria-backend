@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.permissions.application;
+package com.happypets.app_veterinaria_backend.permissions.application.getAll;
 
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
 import com.happypets.app_veterinaria_backend.permissions.domain.entity.Permission;

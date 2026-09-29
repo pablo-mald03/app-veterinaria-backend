@@ -3,11 +3,14 @@ package com.happypets.app_veterinaria_backend.permissions.infrastructure.api.con
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.Mediator;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
-import com.happypets.app_veterinaria_backend.permissions.application.GetAllPermissionsRequest;
-import com.happypets.app_veterinaria_backend.permissions.application.GetAllPermissionsResponse;
+import com.happypets.app_veterinaria_backend.permissions.application.getAll.GetAllPermissionsRequest;
+import com.happypets.app_veterinaria_backend.permissions.application.getAll.GetAllPermissionsResponse;
+import com.happypets.app_veterinaria_backend.permissions.application.getCatalog.GetPermissionCatalogRequest;
+import com.happypets.app_veterinaria_backend.permissions.application.getCatalog.GetPermissionCatalogResponse;
 import com.happypets.app_veterinaria_backend.permissions.domain.api.PermissionRestController;
 import com.happypets.app_veterinaria_backend.permissions.infrastructure.api.dto.request.GetAllPermissionQueryDto;
 import com.happypets.app_veterinaria_backend.permissions.infrastructure.api.dto.response.GetAllPermissionsResponseDto;
+import com.happypets.app_veterinaria_backend.permissions.infrastructure.api.dto.response.GetPermissionCatalogResponseDto;
 import com.happypets.app_veterinaria_backend.permissions.infrastructure.api.mapper.PermissionMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -45,5 +48,17 @@ public class PermissionController implements PermissionRestController {
         GetAllPermissionsRequest request = permissionMapper.toGetAllPermissionRequest(queryDto, paginationQuery);
         GetAllPermissionsResponse response = mediator.dispatch(request);
         return ResponseEntity.ok(permissionMapper.toGetAllPermissionsResponseDto(response));
+    }
+
+    /**
+     * Get the permission catalog (distinct modules and actions) endpoint
+     *
+     */
+    @Operation(summary = "Get permission catalog", description = "Get the distinct modules and actions available in the permissions")
+    @GetMapping("/catalog")
+    @Override
+    public ResponseEntity<GetPermissionCatalogResponseDto> getCatalog() {
+        GetPermissionCatalogResponse response = mediator.dispatch(new GetPermissionCatalogRequest());
+        return ResponseEntity.ok(permissionMapper.toGetPermissionCatalogResponseDto(response));
     }
 }

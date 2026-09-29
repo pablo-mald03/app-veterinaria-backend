@@ -1,7 +1,6 @@
 package com.happypets.app_veterinaria_backend.role.application.command.create;
 
 
-import com.happypets.app_veterinaria_backend.auth.domain.port.AuthenticatedUserPort;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
 import com.happypets.app_veterinaria_backend.permissions.domain.entity.Permission;
 import com.happypets.app_veterinaria_backend.permissions.domain.exeptions.InvalidPermissionIdsException;
@@ -29,8 +28,6 @@ public class CreateRoleHandler implements RequestHandler<CreateRoleRequest, Crea
     private final RoleRepositoryPort roleRepositoryPort;
     private final PermissionRepositoryPort permissionRepositoryPort;
     private final RoleAssignmentPolicyService roleAssignmentPolicyService;
-
-    private final AuthenticatedUserPort authenticatedUserPort;
 
     @Override
     @Transactional(rollbackOn = Exception.class)

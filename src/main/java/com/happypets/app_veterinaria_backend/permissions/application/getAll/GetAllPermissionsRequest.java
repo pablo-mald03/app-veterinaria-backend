@@ -1,19 +1,24 @@
-package com.happypets.app_veterinaria_backend.role.application.query.getAll;
+package com.happypets.app_veterinaria_backend.permissions.application.getAll;
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.Request;
 import com.happypets.app_veterinaria_backend.common.domain.auditable.AuditableRequest;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * Get all role request
+ * Get all permission modules request class
  *
  */
 @Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class GetAllRoleRequest implements Request<GetAllRoleResponse>, AuditableRequest {
-
+public class GetAllPermissionsRequest implements Request<GetAllPermissionsResponse>, AuditableRequest {
+    private String moduleTarget;
+    private String actionTarget;
     private PaginationQuery paginationQuery;
 
     /**
@@ -21,7 +26,7 @@ public class GetAllRoleRequest implements Request<GetAllRoleResponse>, Auditable
      */
     @Override
     public String getModule() {
-        return "ROLES";
+        return "PERMISOS";
     }
 
     /**
@@ -29,7 +34,7 @@ public class GetAllRoleRequest implements Request<GetAllRoleResponse>, Auditable
      */
     @Override
     public String getAction() {
-        return "CONSULTAR ROLES";
+        return "CONSULTAR PERMISOS";
     }
 
     /**
@@ -37,7 +42,7 @@ public class GetAllRoleRequest implements Request<GetAllRoleResponse>, Auditable
      */
     @Override
     public String getDetail(Object response) {
-        GetAllRoleResponse result = (GetAllRoleResponse) response;
-        return "Se obtuvieron '" + result.getRoles().getContent().size() + "' roles";
+        GetAllPermissionsResponse result = (GetAllPermissionsResponse) response;
+        return "Se obtuvieron '" + result.getPermissions().getContent().size() + "' permisos";
     }
 }
