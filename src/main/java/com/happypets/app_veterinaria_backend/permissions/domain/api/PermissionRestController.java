@@ -4,6 +4,7 @@ package com.happypets.app_veterinaria_backend.permissions.domain.api;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
 import com.happypets.app_veterinaria_backend.permissions.infrastructure.api.dto.request.GetAllPermissionQueryDto;
 import com.happypets.app_veterinaria_backend.permissions.infrastructure.api.dto.response.GetAllPermissionsResponseDto;
+import com.happypets.app_veterinaria_backend.permissions.infrastructure.api.dto.response.GetPermissionCatalogResponseDto;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 
@@ -14,4 +15,6 @@ import org.springframework.http.ResponseEntity;
 public interface PermissionRestController {
 
     ResponseEntity<GetAllPermissionsResponseDto> getAll(@ParameterObject PaginationQuery paginationQuery, @ParameterObject GetAllPermissionQueryDto queryDto);
+
+    ResponseEntity<GetPermissionCatalogResponseDto> getCatalog();
 }

@@ -1,7 +1,6 @@
 package com.happypets.app_veterinaria_backend.role.application.command.delete;
 
 
-import com.happypets.app_veterinaria_backend.auth.domain.port.AuthenticatedUserPort;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
 import com.happypets.app_veterinaria_backend.role.domain.entity.Role;
 import com.happypets.app_veterinaria_backend.role.domain.exeptions.RoleNotFoundException;
@@ -23,7 +22,6 @@ public class ChangeStatusRoleHandler implements RequestHandler<ChangeStatusRoleR
     //Attributes
     private final RoleRepositoryPort roleRepositoryPort;
     private final RoleAssignmentPolicyService roleAssignmentPolicyService;
-    private final AuthenticatedUserPort authenticatedUserPort;
 
 
     @Override

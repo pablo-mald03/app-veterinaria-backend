@@ -59,7 +59,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             /*Remove the cookie from httpOnly*/
             if (tokenExpired && !canBeTokenRenewed) {
-                sessionCookieService.clearSessionCookie(response); // antes: clearSessionCookie(response)
+                sessionCookieService.clearSessionCookie(response);
                 filterChain.doFilter(request, response);
                 return;
             }
@@ -69,7 +69,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             boolean validToken = jwtService.isValidToken(token, userDetails);
 
-            /* If the token doesnt match remove the token*/
+            /* If the token doesn't match remove the token*/
             if (!validToken) {
                 sessionCookieService.clearSessionCookie(response);
                 filterChain.doFilter(request, response);
@@ -99,6 +99,7 @@ public class JwtFilter extends OncePerRequestFilter {
             log.error("Error while processing request: {}", e.getMessage());
             sessionCookieService.clearSessionCookie(response);
             handlerExceptionResolver.resolveException(request, response, null, e);
+            return;
         }
 
         filterChain.doFilter(request, response);

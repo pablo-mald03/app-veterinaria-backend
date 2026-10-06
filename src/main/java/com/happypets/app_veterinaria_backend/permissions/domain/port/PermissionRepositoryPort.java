@@ -6,6 +6,7 @@ import com.happypets.app_veterinaria_backend.common.domain.pagination.Pagination
 import com.happypets.app_veterinaria_backend.permissions.domain.entity.Permission;
 import com.happypets.app_veterinaria_backend.permissions.domain.filter.PermissionFilter;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,5 +30,18 @@ public interface PermissionRepositoryPort {
      * Method to return the permissions by filters
      */
     PaginationResult<Permission> findAll(PermissionFilter filter, PaginationQuery pagination);
+
+
+    /**
+     * Method to return the distinct modules
+     *
+     */
+    List<String> findDistinctModules();
+
+    /**
+     * Method to return the distinct actions
+     *
+     */
+    List<String> findDistinctActions();
 
 }

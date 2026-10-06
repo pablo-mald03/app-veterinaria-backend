@@ -2,9 +2,9 @@
 -- 1. ROLES
 -- =========================================================
 INSERT INTO roles (alias, name, description, created_at)
-VALUES ('admin', 'ADMIN', 'Acceso total al sistema', NOW()),
-       ('recepcionista', 'RECEPCIONISTA', 'Gestion de clientes, mascotas, citas y facturacion', NOW()),
-       ('veterinario', 'VETERINARIO', 'Gestion clinica: mascotas, citas y vacunacion', NOW());
+VALUES ('ADMIN', 'ADMIN', 'Acceso total al sistema', NOW()),
+       ('RECEPCIONIST', 'RECEPCIONISTA', 'Gestion de clientes, mascotas, citas y facturacion', NOW()),
+       ('VETERINARY', 'VETERINARIO', 'Gestion clinica: mascotas, citas y vacunacion', NOW());
 
 -- =========================================================
 -- 2. PERMISSIONS (module, action, description)

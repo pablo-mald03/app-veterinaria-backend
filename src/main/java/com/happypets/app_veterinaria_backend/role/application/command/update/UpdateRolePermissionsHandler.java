@@ -1,7 +1,6 @@
 package com.happypets.app_veterinaria_backend.role.application.command.update;
 
 
-import com.happypets.app_veterinaria_backend.auth.domain.port.AuthenticatedUserPort;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
 import com.happypets.app_veterinaria_backend.permissions.domain.entity.Permission;
 import com.happypets.app_veterinaria_backend.permissions.domain.exeptions.InvalidPermissionIdsException;
@@ -15,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -30,7 +28,6 @@ public class UpdateRolePermissionsHandler implements RequestHandler<UpdateRolePe
     private final RoleRepositoryPort roleRepositoryPort;
     private final PermissionRepositoryPort permissionRepositoryPort;
     private final RoleAssignmentPolicyService roleAssignmentPolicyService;
-    private final AuthenticatedUserPort authenticatedUserPort;
 
 
     @Override

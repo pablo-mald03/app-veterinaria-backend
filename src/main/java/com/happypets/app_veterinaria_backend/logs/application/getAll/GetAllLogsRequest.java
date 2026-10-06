@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.permissions.application;
+package com.happypets.app_veterinaria_backend.logs.application.getAll;
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.Request;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
@@ -7,16 +7,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 /**
- * Get all permission modules request class
+ * Get all log modules request class
  *
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetAllPermissionsRequest implements Request<GetAllPermissionsResponse> {
+public class GetAllLogsRequest implements Request<GetAllLogsResponse> {
     private String module;
-    private String action;
+    private LocalDate createdFrom;
+    private LocalDate createdTo;
     private PaginationQuery paginationQuery;
 }

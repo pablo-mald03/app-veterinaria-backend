@@ -14,4 +14,10 @@ public interface AuthenticatedUserPort {
      *
      */
     AuthUser getAuthenticatedUser();
+
+    /**
+     * Method to get the user id
+     *
+     */
+    Long getUserId();
 }
