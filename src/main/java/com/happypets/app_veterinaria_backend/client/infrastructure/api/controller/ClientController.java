@@ -51,7 +51,7 @@ public class ClientController implements ClientRestController {
     @SecurityRequirement(name = "cookieAuth")
     @GetMapping("/{id}")
     @Override
-    public ResponseEntity<ClientResponseDTO> findById(Long id) {
+    public ResponseEntity<ClientResponseDTO> findById(@PathVariable Long id) {
         var query = new FindClientByIdQuery(id);
         ClientResponseDTO response = mediator.dispatch(query);
         return ResponseEntity.ok(response);
@@ -77,7 +77,7 @@ public class ClientController implements ClientRestController {
     @SecurityRequirement(name = "cookieAuth")
     @PutMapping("/{id}")
     @Override
-    public ResponseEntity<ClientResponseDTO> update(Long id, ClientRequestDTO requestDTO) {
+    public ResponseEntity<ClientResponseDTO> update(@RequestBody @Valid @PathVariable Long id, ClientRequestDTO requestDTO) {
         var command = new UpdateClientCommand(id, requestDTO);
         ClientResponseDTO response = mediator.dispatch(command);
         return ResponseEntity.ok(response);

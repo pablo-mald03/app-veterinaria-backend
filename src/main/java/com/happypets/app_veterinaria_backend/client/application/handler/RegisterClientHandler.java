@@ -17,12 +17,8 @@ public class RegisterClientHandler implements RequestHandler<RegisterClientComma
 
     @Override
     public ClientResponseDTO handle(RegisterClientCommand command) {
-        var dto =  command.getData();
-
         Client newClient = clientDTOMapper.toDomain(command.getData());
-
         Client savedClient = clientRepositoryPort.save(newClient);
-
         return clientDTOMapper.toDTO(savedClient);
     }
 
