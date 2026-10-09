@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class CreateVaccineHandler implements RequestHandler<CreateVaccineRequest, CreateVaccineResponse> {
 
-    private VaccineRepository vaccineRepository;
+    private final VaccineRepository vaccineRepository;
 
     @Override
     public CreateVaccineResponse handle(CreateVaccineRequest request) {
