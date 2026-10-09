@@ -45,9 +45,9 @@ class ClientControllerTest extends AbstractControllerTest {
             {
               "dpi": "1234567890123",
               "firstName": "Juan",
-              "lastName": "Pérez",
+              "lastName": "Perez",
               "email": "juan.perez@example.com",
-              "phone": "+502 1234 5678",
+              "phone": "12345678",
               "address": "Calle 1, Zona 1"
             }
             """;
@@ -73,9 +73,9 @@ class ClientControllerTest extends AbstractControllerTest {
                 1L,
                 "1234567890123",
                 "Juan",
-                "Pérez",
+                "Perez",
                 "juan.perez@example.com",
-                "+502 1234 5678",
+                "12345678",
                 "Calle 1, Zona 1"
         );
     }
@@ -97,7 +97,7 @@ class ClientControllerTest extends AbstractControllerTest {
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.dpi").value("1234567890123"))
                 .andExpect(jsonPath("$.firstName").value("Juan"))
-                .andExpect(jsonPath("$.lastName").value("Pérez"))
+                .andExpect(jsonPath("$.lastName").value("Perez"))
                 .andExpect(jsonPath("$.email").value("juan.perez@example.com"));
 
         verify(mediator).dispatch(any(RegisterClientCommand.class));
@@ -132,9 +132,9 @@ class ClientControllerTest extends AbstractControllerTest {
                 {
                   "dpi": "123",
                   "firstName": "Juan",
-                  "lastName": "Pérez",
+                  "lastName": "Perez",
                   "email": "juan@example.com",
-                  "phone": "+502 1234 5678"
+                  "phone": "12345678"
                 }
                 """;
 
@@ -159,7 +159,7 @@ class ClientControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.firstName").value("Juan"))
-                .andExpect(jsonPath("$.lastName").value("Pérez"));
+                .andExpect(jsonPath("$.lastName").value("Perez"));
 
         verify(mediator).dispatch(any(FindClientByIdQuery.class));
     }
