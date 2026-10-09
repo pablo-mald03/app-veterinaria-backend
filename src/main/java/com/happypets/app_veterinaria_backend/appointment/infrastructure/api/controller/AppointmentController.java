@@ -1,12 +1,12 @@
 package com.happypets.app_veterinaria_backend.appointment.infrastructure.api.controller;
 
-import com.happypets.app_veterinaria_backend.appointment.application.command.DeleteAppointmentByIdCommand;
-import com.happypets.app_veterinaria_backend.appointment.application.command.RegisterAppointmentCommand;
-import com.happypets.app_veterinaria_backend.appointment.application.command.UpdateAppointmentCommand;
+import com.happypets.app_veterinaria_backend.appointment.application.command.*;
 import com.happypets.app_veterinaria_backend.appointment.application.query.FindAllAppointmentsQuery;
 import com.happypets.app_veterinaria_backend.appointment.application.query.FindAppointmentByIdQuery;
+import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentDiagnosisRequestDTO;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentRequestDTO;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentResponseDTO;
+import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentStatusRequestDTO;
 import com.happypets.app_veterinaria_backend.common.application.mediator.Mediator;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -61,5 +61,23 @@ public class AppointmentController {
         var command = new DeleteAppointmentByIdCommand(id);
         mediator.dispatch(command);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/diagnosis")
+    public ResponseEntity<AppointmentResponseDTO> updateDiagnosis(
+            @PathVariable Long id,
+            @RequestBody @Valid AppointmentDiagnosisRequestDTO requestDTO) {
+        var command = new UpdateAppointmentDiagnosisCommand(id, requestDTO);
+        AppointmentResponseDTO response = mediator.dispatch(command);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<AppointmentResponseDTO> changeStatus(
+            @PathVariable Long id,
+            @RequestBody @Valid AppointmentStatusRequestDTO requestDTO) {
+        var command = new ChangeAppointmentStatusCommand(id, requestDTO);
+        AppointmentResponseDTO response = mediator.dispatch(command);
+        return ResponseEntity.ok(response);
     }
 }
