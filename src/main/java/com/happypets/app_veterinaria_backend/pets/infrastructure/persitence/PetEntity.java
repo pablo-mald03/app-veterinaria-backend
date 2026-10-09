@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "pet")
+@Table(name = "pets")
 public class PetEntity extends AuditableEntity {
 
     @Id
