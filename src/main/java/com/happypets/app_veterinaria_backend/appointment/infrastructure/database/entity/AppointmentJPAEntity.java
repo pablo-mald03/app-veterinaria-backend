@@ -1,5 +1,8 @@
 package com.happypets.app_veterinaria_backend.appointment.infrastructure.database.entity;
 
+import com.happypets.app_veterinaria_backend.pets.infrastructure.persitence.PetEntity;
+import com.happypets.app_veterinaria_backend.room.infrastructure.database.entity.RoomEntity;
+import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,14 +21,17 @@ public class AppointmentJPAEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "pet_id", nullable = false)
-    private Long petId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pet_id", nullable = false)
+    private PetEntity pet;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
-    @Column(name = "room_id")
-    private Long roomId; // La sala de atención
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private RoomEntity room;
 
     @Column(name = "appointment_date", nullable = false)
     private LocalDate date;
