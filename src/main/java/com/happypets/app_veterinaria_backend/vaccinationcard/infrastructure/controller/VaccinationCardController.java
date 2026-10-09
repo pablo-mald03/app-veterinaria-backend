@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/vaccination-cards")
+@RequestMapping("/vaccination-cards")
 @RequiredArgsConstructor
 public class VaccinationCardController {
 
