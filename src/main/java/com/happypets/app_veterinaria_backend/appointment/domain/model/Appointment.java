@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -21,5 +22,7 @@ public class Appointment {
     private LocalTime hour;
     private String description;
     private String diagnosis;
+    private String treatment;
+    private BigDecimal cost;
     private String status;
 }

@@ -1,6 +1,7 @@
 package com.happypets.app_veterinaria_backend.appointment.application.handler;
 
 import com.happypets.app_veterinaria_backend.appointment.application.command.ChangeAppointmentStatusCommand;
+import com.happypets.app_veterinaria_backend.appointment.domain.exception.AppointmentNotFoundException;
 import com.happypets.app_veterinaria_backend.appointment.domain.model.Appointment;
 import com.happypets.app_veterinaria_backend.appointment.domain.port.AppointmentRepositoryPort;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentResponseDTO;
@@ -19,7 +20,7 @@ public class ChangeAppointmentStatusHandler implements RequestHandler<ChangeAppo
     @Override
     public AppointmentResponseDTO handle(ChangeAppointmentStatusCommand command) {
         Appointment appointment = repositoryPort.findById(command.getId())
-                .orElseThrow(() -> new RuntimeException("Cita no encontrada con ID: " + command.getId()));
+                .orElseThrow(() -> new AppointmentNotFoundException("Cita no encontrada con ID: " + command.getId()));
 
         appointment.setStatus(command.getData().getStatus());
 

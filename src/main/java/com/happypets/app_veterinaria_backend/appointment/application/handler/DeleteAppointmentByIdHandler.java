@@ -1,6 +1,7 @@
 package com.happypets.app_veterinaria_backend.appointment.application.handler;
 
 import com.happypets.app_veterinaria_backend.appointment.application.command.DeleteAppointmentByIdCommand;
+import com.happypets.app_veterinaria_backend.appointment.domain.exception.AppointmentNotFoundException;
 import com.happypets.app_veterinaria_backend.appointment.domain.port.AppointmentRepositoryPort;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentResponseDTO;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
@@ -15,7 +16,7 @@ public class DeleteAppointmentByIdHandler implements RequestHandler<DeleteAppoin
     @Override
     public Void handle(DeleteAppointmentByIdCommand command) {
         repositoryPort.findById(command.getId())
-                .orElseThrow(() -> new RuntimeException("Cita no encontrada con ID: " + command.getId()));
+                .orElseThrow(() -> new AppointmentNotFoundException("Cita no encontrada con ID: " + command.getId()));
 
         repositoryPort.deleteById(command.getId());
         return null;
