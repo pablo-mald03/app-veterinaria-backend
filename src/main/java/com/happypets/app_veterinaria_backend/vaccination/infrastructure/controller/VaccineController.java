@@ -26,6 +26,7 @@ import com.happypets.app_veterinaria_backend.vaccination.infrastructure.mapper.V
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -74,24 +75,18 @@ public class VaccineController implements VaccineRestController{
     @Operation(summary = "Get product by id", description = "Get product by id")
     @GetMapping("/{id}")
     @Override
-    public ResponseEntity<VaccineResponseDTO> getVaccineById(Long id) {
-
-        log.info("Getting pet with id: {}", id);
-
+    public ResponseEntity<VaccineResponseDTO> getVaccineById(@PathVariable Long id) {
+        log.info("Getting vaccine with id: {}", id);
         GetVaccineByIdResponse response = mediator.dispatch(new GetVaccineByIdRequest(id));
-
-
         VaccineResponseDTO vaccine = vaccineMapper.toResponseDTO(response.getVaccine());
-
         log.info("Found vaccine with id: {}", vaccine.getIdVaccine());
         return ResponseEntity.ok(vaccine);
     }
 
-    @Operation(summary = "Save pet", description = "Save pet create")
+    @Operation(summary = "Save vaccine", description = "Save vaccine create")
     @PostMapping
     @Override
-    public ResponseEntity<Void> saveVaccine(VaccineRequestDTO vaccine) {
-
+    public ResponseEntity<Void> saveVaccine(@RequestBody @Valid VaccineRequestDTO vaccine) {
 
         CreateVaccineRequest request = vaccineMapper.toCreateRequest(vaccine);
         CreateVaccineResponse response = mediator.dispatch(request);
@@ -99,24 +94,22 @@ public class VaccineController implements VaccineRestController{
         Vaccine saveVaccine = response.getVaccine();
         log.info("Vaccine with id {} was saved", saveVaccine.getIdVaccine());
 
-        return ResponseEntity.created(URI.create("/vaccines/".concat(saveVaccine.getIdVaccine().toString()))).build();
-
+        return ResponseEntity.created(
+                URI.create("/vaccines/".concat(saveVaccine.getIdVaccine().toString()))
+        ).build();
     }
 
     @Override
-    public ResponseEntity<Void> updateVaccine(Long id, VaccineRequestDTO vaccine) {
+    public ResponseEntity<Void> updateVaccine(@PathVariable Long id, @RequestBody @Valid VaccineRequestDTO vaccine) {
         return null;
     }
 
     @Operation(summary = "Desactivate vaccine", description = "Desactivate a vaccine by id")
     @DeleteMapping("/{id}")
     @Override
-    public ResponseEntity<Void> deleteVaccine(Long id) {
-
+    public ResponseEntity<Void> deleteVaccine(@PathVariable Long id) {
         log.info("Deactivating vaccine with id {}", id);
-
         mediator.dispatchAsync(new DeleteVaccineRequest(id));
-
         log.info("Vaccine with id {} accepted for deactivation", id);
         return ResponseEntity.accepted().build();
     }
