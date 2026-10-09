@@ -3,13 +3,14 @@ package com.happypets.app_veterinaria_backend.vaccination.infrastructure.persist
 import com.happypets.app_veterinaria_backend.common.infrastructure.entity.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "vaccine")
+@Table(name = "vaccines")
+@NoArgsConstructor
 public class VaccineEntity extends AuditableEntity {
 
     @Id
