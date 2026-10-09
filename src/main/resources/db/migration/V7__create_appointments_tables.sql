@@ -14,3 +14,4 @@ CREATE TABLE appointments (
     CONSTRAINT fk_appointments_pet FOREIGN KEY (pet_id) REFERENCES  pets (id_pet) ON DELETE CASCADE,
     CONSTRAINT fk_appointments_room FOREIGN KEY (room_id) REFERENCES rooms (id)
 );
+
