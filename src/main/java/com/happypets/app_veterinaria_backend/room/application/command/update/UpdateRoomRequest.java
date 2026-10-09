@@ -23,7 +23,7 @@ public class UpdateRoomRequest implements Request<UpdateRoomResponse>, Auditable
      */
     @Override
     public String getModule() {
-        return "HABITACION";
+        return "HABITACIONES";
     }
 
     /**
