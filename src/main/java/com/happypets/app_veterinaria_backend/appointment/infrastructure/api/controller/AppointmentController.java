@@ -3,11 +3,13 @@ package com.happypets.app_veterinaria_backend.appointment.infrastructure.api.con
 import com.happypets.app_veterinaria_backend.appointment.application.command.*;
 import com.happypets.app_veterinaria_backend.appointment.application.query.FindAllAppointmentsQuery;
 import com.happypets.app_veterinaria_backend.appointment.application.query.FindAppointmentByIdQuery;
-import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentDiagnosisRequestDTO;
+import com.happypets.app_veterinaria_backend.appointment.application.query.FindMedicalHistoryByPetIdQuery;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentRequestDTO;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentResponseDTO;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentStatusRequestDTO;
+import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.MedicalConsultationRequestDTO;
 import com.happypets.app_veterinaria_backend.common.application.mediator.Mediator;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -66,7 +68,7 @@ public class AppointmentController {
     @PatchMapping("/{id}/diagnosis")
     public ResponseEntity<AppointmentResponseDTO> updateDiagnosis(
             @PathVariable Long id,
-            @RequestBody @Valid AppointmentDiagnosisRequestDTO requestDTO) {
+            @RequestBody @Valid MedicalConsultationRequestDTO requestDTO) {
         var command = new UpdateAppointmentDiagnosisCommand(id, requestDTO);
         AppointmentResponseDTO response = mediator.dispatch(command);
         return ResponseEntity.ok(response);
@@ -79,5 +81,17 @@ public class AppointmentController {
         var command = new ChangeAppointmentStatusCommand(id, requestDTO);
         AppointmentResponseDTO response = mediator.dispatch(command);
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Obtener el historial médico de una mascota")
+    @GetMapping("/pet/{petId}/history")
+    public ResponseEntity<List<AppointmentResponseDTO>> getMedicalHistory(@PathVariable Long petId) {
+        var query = new FindMedicalHistoryByPetIdQuery(petId);
+        List<AppointmentResponseDTO> history = mediator.dispatch(query);
+
+        if (history.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(history);
     }
 }

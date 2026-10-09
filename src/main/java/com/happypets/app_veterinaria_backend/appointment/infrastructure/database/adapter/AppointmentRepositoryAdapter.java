@@ -8,6 +8,8 @@ import com.happypets.app_veterinaria_backend.appointment.infrastructure.database
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +38,25 @@ public class AppointmentRepositoryAdapter implements AppointmentRepositoryPort{
         return jpaRepository.findAll().stream()
                 .map(mapper::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Appointment> findMedicalHistoryByPetId(Long petId) {
+        List<AppointmentJPAEntity> entities = jpaRepository.findByPet_IdPetAndStatusOrderByDateDescHourDesc(petId, "COMPLETED");
+        return entities.stream()
+                .map(mapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public boolean isVetBusyAt(Long vetId, LocalDate date, LocalTime time) {
+        return jpaRepository.existsByUser_IdAndDateAndHourAndStatusNot(vetId, date, time, "CANCELLED");
+    }
+
+    @Override
+    public boolean isRoomOccupiedAt(Long roomId, LocalDate date, LocalTime time) {
+        if (roomId == null) return false;
+        return jpaRepository.existsByRoom_IdAndDateAndHourAndStatusNot(roomId, date, time, "CANCELLED");
     }
 
     @Override
