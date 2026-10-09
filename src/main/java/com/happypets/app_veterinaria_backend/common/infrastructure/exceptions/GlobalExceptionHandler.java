@@ -9,12 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.nio.file.AccessDeniedException;
 import java.util.Collections;
@@ -196,6 +198,34 @@ public class GlobalExceptionHandler {
                         "FORBIDDEN",
                         "No cuentas con los permisos necesarios para realizar esta acción.",
                         new HashMap<>()
+                ));
+    }
+
+
+    /**
+     * PRINCIPAL HANDLER WHEN VALOR INVALID
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleTypeMismatch(
+            MethodArgumentTypeMismatchException ex) {
+        String message = "El valor '%s' no es válido para el parámetro '%s'"
+                .formatted(ex.getValue(), ex.getName());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse("BAD_REQUEST", message, Map.of()));
+    }
+
+
+    /**
+     *PRINCIPAL HANDLER WHEN BODY BAD
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleNotReadable(HttpMessageNotReadableException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(
+                        "BAD_REQUEST",
+                        "El cuerpo de la petición no es válido o está malformado",
+                        Map.of()
                 ));
     }
 }
