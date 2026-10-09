@@ -20,6 +20,9 @@ public class RoomEntity extends AuditableEntity {
     @Column(nullable = false, length = 120)
     private String name;
 
+    @Column(nullable = false, length = 120)
+    private String normalizedName;
+
     @Column(length = 150)
     private String location;
 

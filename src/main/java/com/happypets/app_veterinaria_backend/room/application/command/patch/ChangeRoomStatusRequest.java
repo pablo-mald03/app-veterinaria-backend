@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.room.application.command;
+package com.happypets.app_veterinaria_backend.room.application.command.patch;
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.Request;
 import com.happypets.app_veterinaria_backend.common.domain.auditable.AuditableRequest;
@@ -20,7 +20,7 @@ public class ChangeRoomStatusRequest implements Request<ChangeRoomStatusResponse
      */
     @Override
     public String getModule() {
-        return "HABITACION";
+        return "HABITACIONES";
     }
 
     /**

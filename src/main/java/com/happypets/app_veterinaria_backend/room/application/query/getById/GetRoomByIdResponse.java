@@ -1,21 +1,19 @@
-package com.happypets.app_veterinaria_backend.room.domain.entity;
+package com.happypets.app_veterinaria_backend.room.application.query.getById;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * Room domain entity
+ * Principal get room by id response class
+ *
  */
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Room {
+public class GetRoomByIdResponse {
     private Long id;
     private String name;
-    private String normalizedName;
     private String location;
     private String description;
     private int number;

@@ -11,5 +11,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface QueryRoomRepository extends JpaRepository<RoomEntity, Long>, JpaSpecificationExecutor<RoomEntity> {
-    
+
+    boolean existsByNumber(int number);
+
+    boolean existsByNormalizedName(String normalizedName);
+
+    boolean existsByNumberAndIdNot(int number, Long id);
+
+    boolean existsByNormalizedNameAndIdNot(String normalizedName, Long id);
 }

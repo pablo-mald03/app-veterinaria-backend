@@ -55,6 +55,7 @@ public class RoomRepositoryImpl implements RoomRepositoryPort {
                 .orElseThrow(() -> new RoomNotFoundException("Sala no encontrada: " + room.getId()));
 
         entity.setName(room.getName());
+        entity.setNormalizedName(room.getNormalizedName());
         entity.setLocation(room.getLocation());
         entity.setDescription(room.getDescription());
         entity.setNumber(room.getNumber());
@@ -97,6 +98,42 @@ public class RoomRepositoryImpl implements RoomRepositoryPort {
                 pageResult.getTotalPages(),
                 pageResult.getTotalElements()
         );
+    }
+
+    /**
+     * Validation exist by number method
+     *
+     */
+    @Override
+    public boolean existsByNumber(int number) {
+        return queryRoomRepository.existsByNumber(number);
+    }
+
+    /**
+     * Validation exist by normalized name method
+     *
+     */
+    @Override
+    public boolean existsByNormalizedName(String normalizedName) {
+        return queryRoomRepository.existsByNormalizedName(normalizedName);
+    }
+
+    /**
+     * Validation exist by number method without itself
+     *
+     */
+    @Override
+    public boolean existsByNumberAndIdNot(int number, Long id) {
+        return queryRoomRepository.existsByNumberAndIdNot(number, id);
+    }
+
+    /**
+     * Validation exist by normalized name method without itself
+     *
+     */
+    @Override
+    public boolean existsByNormalizedNameAndIdNot(String normalizedName, Long id) {
+        return queryRoomRepository.existsByNormalizedNameAndIdNot(normalizedName, id);
     }
 
     /**

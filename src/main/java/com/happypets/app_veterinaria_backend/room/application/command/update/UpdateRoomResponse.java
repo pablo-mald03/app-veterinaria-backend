@@ -1,21 +1,19 @@
-package com.happypets.app_veterinaria_backend.room.domain.entity;
+package com.happypets.app_veterinaria_backend.room.application.command.update;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * Room domain entity
+ * Principal update room response class
+ *
  */
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Room {
+public class UpdateRoomResponse {
     private Long id;
     private String name;
-    private String normalizedName;
     private String location;
     private String description;
     private int number;

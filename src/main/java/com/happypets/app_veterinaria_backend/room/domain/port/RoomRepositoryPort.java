@@ -20,4 +20,12 @@ public interface RoomRepositoryPort {
     Optional<Room> findById(Long id);
 
     PaginationResult<Room> findAll(RoomFilter filter, PaginationQuery paginationQuery);
+
+    boolean existsByNumber(int number);
+
+    boolean existsByNormalizedName(String normalizedName);
+
+    boolean existsByNumberAndIdNot(int number, Long id);
+
+    boolean existsByNormalizedNameAndIdNot(String normalizedName, Long id);
 }

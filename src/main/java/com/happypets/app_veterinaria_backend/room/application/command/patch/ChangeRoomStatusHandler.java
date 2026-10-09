@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.room.application.command;
+package com.happypets.app_veterinaria_backend.room.application.command.patch;
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
 import com.happypets.app_veterinaria_backend.room.domain.entity.Room;

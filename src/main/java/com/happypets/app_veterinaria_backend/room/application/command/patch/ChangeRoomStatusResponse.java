@@ -1,4 +1,4 @@
-package com.happypets.app_veterinaria_backend.room.application.command;
+package com.happypets.app_veterinaria_backend.room.application.command.patch;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
