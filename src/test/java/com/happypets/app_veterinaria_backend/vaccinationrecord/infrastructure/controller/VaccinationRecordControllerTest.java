@@ -67,22 +67,28 @@ class VaccinationRecordControllerTest extends AbstractControllerTest {
     @Test
     @DisplayName("POST /vaccination-records devuelve 201 al registrar una aplicación")
     void debeRegistrarAplicacion() throws Exception {
+        RegisterVaccinationRecordCommand command = new RegisterVaccinationRecordCommand(
+                1L, 1L, 1L, LocalDate.of(2026, 10, 9), null, null
+        );
+        when(mapper.toCommand(any())).thenReturn(command);
+
+        // ✅ Mockear mapper.toResponse
         when(mapper.toResponse(any())).thenReturn(crearDtoRespuesta());
 
         String cuerpo = """
-            {
-              "idCard": 1,
-              "idVaccine": 1,
-              "idDoctor": 1,
-              "applicationDate": "2026-10-09"
-            }
-            """;
+        {
+          "idCard": 1,
+          "idVaccine": 1,
+          "idDoctor": 1,
+          "applicationDate": "2026-10-09"
+        }
+        """;
 
         mockMvc.perform(post("/vaccination-records")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(cuerpo))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.idRecord").value(1))   // ✅ idRecord, no id
+                .andExpect(jsonPath("$.idRecord").value(1))
                 .andExpect(jsonPath("$.idCard").value(1))
                 .andExpect(jsonPath("$.idVaccine").value(1))
                 .andExpect(jsonPath("$.idDoctor").value(1))
@@ -92,11 +98,13 @@ class VaccinationRecordControllerTest extends AbstractControllerTest {
                 .andExpect(jsonPath("$.batchNumber").value("LOTE-001"))
                 .andExpect(jsonPath("$.notes").value("Primera dosis aplicada sin reacciones adversas"));
 
+        // ✅ Capturar y verificar el command que recibió el handler
         ArgumentCaptor<RegisterVaccinationRecordCommand> captor =
                 ArgumentCaptor.forClass(RegisterVaccinationRecordCommand.class);
         verify(registrarHandler).execute(captor.capture());
 
         RegisterVaccinationRecordCommand cmd = captor.getValue();
+        assertThat(cmd).isNotNull();
         assertThat(cmd.idCard()).isEqualTo(1L);
         assertThat(cmd.idVaccine()).isEqualTo(1L);
         assertThat(cmd.idDoctor()).isEqualTo(1L);

@@ -58,6 +58,8 @@ jobs:
         run: chmod +x ./mvnw
 
       - name: Ejecutar pruebas
+        env:
+          SPRING_PROFILES_ACTIVE: test
         run: ./mvnw test --batch-mode --no-transfer-progress
 
       - name: Publicar reportes de Surefire
