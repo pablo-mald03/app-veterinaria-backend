@@ -6,6 +6,7 @@ import com.happypets.app_veterinaria_backend.user.infrastructure.database.entity
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -44,6 +45,12 @@ public class AppointmentJPAEntity {
 
     @Column(columnDefinition = "TEXT")
     private String diagnosis;
+
+    @Column(columnDefinition = "TEXT")
+    private String treatment;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal cost;
 
     private String status;
 }
