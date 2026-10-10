@@ -5,7 +5,6 @@ import com.happypets.app_veterinaria_backend.vaccinationcard.application.query.g
 import com.happypets.app_veterinaria_backend.vaccinationcard.infrastructure.dto.VaccinationCardResponseDTO;
 import com.happypets.app_veterinaria_backend.vaccinationcard.infrastructure.mapper.VaccinationCardMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +19,9 @@ public class VaccinationCardController {
 
     @PostMapping("/pet/{idPet}")
     public ResponseEntity<VaccinationCardResponseDTO> create(@PathVariable Long idPet) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(createHandler.execute(idPet)));
+//        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(createHandler.execute(idPet)));
+
+        return null;
     }
 
     @GetMapping("/pet/{idPet}")
