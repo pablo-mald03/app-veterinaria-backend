@@ -1,8 +1,9 @@
 package com.happypets.app_veterinaria_backend.category.application.query.getAll;
 
-import com.pablocompany.proyecto.no1.archivos.app_proyecto_no1_backend.common.application.mediator.Request;
-import com.pablocompany.proyecto.no1.archivos.app_proyecto_no1_backend.common.domain.auditable.AuditableRequest;
-import com.pablocompany.proyecto.no1.archivos.app_proyecto_no1_backend.common.domain.pagination.PaginationQuery;
+
+import com.happypets.app_veterinaria_backend.common.application.mediator.Request;
+import com.happypets.app_veterinaria_backend.common.domain.auditable.AuditableRequest;
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,8 @@
-package com.happypets.app_veterinaria_backend.vaccination.domain.port;
+package com.happypets.app_veterinaria_backend.product.domain.port;
 
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
-import com.happypets.app_veterinaria_backend.vaccination.domain.model.Vaccine;
+import com.happypets.app_veterinaria_backend.vaccination.domain.entity.Vaccine;
 
 import java.util.Optional;
 

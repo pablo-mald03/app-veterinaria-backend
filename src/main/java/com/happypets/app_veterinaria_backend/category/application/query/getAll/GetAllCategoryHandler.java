@@ -1,10 +1,11 @@
 package com.happypets.app_veterinaria_backend.category.application.query.getAll;
 
-import com.pablocompany.proyecto.no1.archivos.app_proyecto_no1_backend.category.domain.entity.Category;
-import com.pablocompany.proyecto.no1.archivos.app_proyecto_no1_backend.category.domain.filter.CategoryFilter;
-import com.pablocompany.proyecto.no1.archivos.app_proyecto_no1_backend.category.domain.port.CategoryRepositoryPort;
-import com.pablocompany.proyecto.no1.archivos.app_proyecto_no1_backend.common.application.mediator.RequestHandler;
-import com.pablocompany.proyecto.no1.archivos.app_proyecto_no1_backend.common.domain.pagination.PaginationResult;
+
+import com.happypets.app_veterinaria_backend.category.domain.entity.Category;
+import com.happypets.app_veterinaria_backend.category.domain.filter.CategoryFilter;
+import com.happypets.app_veterinaria_backend.category.domain.port.CategoryRepositoryPort;
+import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
+import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

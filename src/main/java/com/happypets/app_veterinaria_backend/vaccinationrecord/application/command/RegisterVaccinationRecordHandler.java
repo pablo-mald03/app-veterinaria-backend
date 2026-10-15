@@ -1,8 +1,8 @@
 package com.happypets.app_veterinaria_backend.vaccinationrecord.application.command;
 
+import com.happypets.app_veterinaria_backend.product.domain.port.VaccineRepository;
+import com.happypets.app_veterinaria_backend.vaccination.domain.entity.Vaccine;
 import com.happypets.app_veterinaria_backend.vaccination.domain.exception.VaccineNotFoundException;
-import com.happypets.app_veterinaria_backend.vaccination.domain.model.Vaccine;
-import com.happypets.app_veterinaria_backend.vaccination.domain.port.VaccineRepository;
 import com.happypets.app_veterinaria_backend.vaccinationcard.domain.exception.VaccinationCardNotFoundException;
 import com.happypets.app_veterinaria_backend.vaccinationcard.domain.port.VaccinationCardRepositoryPort;
 import com.happypets.app_veterinaria_backend.vaccinationrecord.domain.exception.VaccinationSchemeCompletedException;

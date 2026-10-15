@@ -5,6 +5,7 @@ import com.happypets.app_veterinaria_backend.category.domain.exception.CategoryI
 import com.happypets.app_veterinaria_backend.category.domain.exception.CategoryNotFoundException;
 import com.happypets.app_veterinaria_backend.category.domain.port.CategoryRepositoryPort;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
+import com.happypets.app_veterinaria_backend.product.domain.port.ProductRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
