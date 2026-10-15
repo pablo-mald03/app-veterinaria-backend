@@ -7,6 +7,7 @@ import com.happypets.app_veterinaria_backend.vaccinationcard.domain.model.Vaccin
 import com.happypets.app_veterinaria_backend.vaccinationcard.infrastructure.pdf.VaccinationCardPdfGenerator;
 import com.happypets.app_veterinaria_backend.vaccinationcard.infrastructure.dto.VaccinationCardResponseDTO;
 import com.happypets.app_veterinaria_backend.vaccinationcard.infrastructure.mapper.VaccinationCardMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/vaccination-cards")
+@Tag(name = "Vaccination Card", description = "Module to manage the application vaccination card")
 @RequiredArgsConstructor
 public class VaccinationCardController {
 
