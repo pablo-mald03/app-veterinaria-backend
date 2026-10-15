@@ -101,7 +101,7 @@ public class InventoryMovementRepositoryImpl implements InventoryMovementReposit
                 .and(InventoryMovementSpecifications.hasProductId(filter.getProductId()))
                 .and(InventoryMovementSpecifications.hasBatchId(filter.getBatchId()))
                 .and(InventoryMovementSpecifications.hasPurchaseId(filter.getPurchaseId()))
-                .and(InventoryMovementSpecifications.hasSaleId(filter.getSaleId()))
+//                .and(InventoryMovementSpecifications.hasSaleId(filter.getSaleId()))
                 .and(InventoryMovementSpecifications.hasType(filter.getType()))
                 .and(InventoryMovementSpecifications.createdBetween(filter.getDateFrom(), filter.getDateTo()));
 

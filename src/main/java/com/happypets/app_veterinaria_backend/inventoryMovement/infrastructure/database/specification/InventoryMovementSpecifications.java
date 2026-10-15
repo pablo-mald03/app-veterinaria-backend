@@ -62,9 +62,9 @@ public class InventoryMovementSpecifications {
      * Filter to find by sale id
      *
      */
-    public static Specification<InventoryMovementEntity> hasSaleId(Long saleId) {
+   /* public static Specification<InventoryMovementEntity> hasSaleId(Long saleId) {
         return (root, query, cb) -> saleId == null ? cb.conjunction() : cb.equal(root.get("sale").get("id"), saleId);
-    }
+    }*/
 
     /**
      * Filter to find by types
