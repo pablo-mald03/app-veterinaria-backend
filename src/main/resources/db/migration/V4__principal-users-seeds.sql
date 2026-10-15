@@ -33,11 +33,13 @@ VALUES ('usuarios', 'ver', 'Ver usuarios', NOW()),
        ('mascotas', 'editar', 'Editar mascotas', NOW()),
        ('mascotas', 'eliminar', 'Eliminar mascotas', NOW()),
 
-       ('citas', 'ver', 'Ver citas', NOW()),
-       ('citas', 'crear', 'Crear citas', NOW()),
-       ('citas', 'editar', 'Editar citas', NOW()),
+       ('citas', 'ver', 'Ver listado y detalle de citas', NOW()),
+       ('citas', 'crear', 'Agendar nuevas citas', NOW()),
+       ('citas', 'editar', 'Modificar datos generales de citas', NOW()),
        ('citas', 'cancelar', 'Cancelar citas', NOW()),
-       ('citas', 'eliminar', 'Eliminar citas', NOW()),
+       ('citas', 'eliminar', 'Eliminar citas del sistema', NOW()),
+       ('citas', 'diagnosticar', 'Completar consulta y emitir diagnostico medico', NOW()),
+       ('citas', 'agregar_insumos', 'Registrar uso de insumos durante la consulta', NOW()),
 
        ('salas', 'ver', 'Ver salas', NOW()),
        ('salas', 'crear', 'Crear salas', NOW()),
@@ -67,6 +69,9 @@ VALUES ('usuarios', 'ver', 'Ver usuarios', NOW()),
        ('pagos', 'registrar', 'Registrar pagos', NOW()),
        ('pagos', 'anular', 'Anular pagos', NOW()),
 
+       ('facturacion', 'ver', 'Ver e imprimir facturas', NOW()),
+       ('facturacion', 'crear', 'Generar facturas', NOW()),
+
        ('vacunacion', 'ver', 'Ver vacunaciones', NOW()),
        ('vacunacion', 'crear', 'Registrar vacunaciones', NOW()),
        ('vacunacion', 'editar', 'Editar vacunaciones', NOW()),
@@ -94,12 +99,11 @@ FROM roles r
                                                         ('clientes', 'editar'),
                                                         ('mascotas', 'ver'), ('mascotas', 'crear'),
                                                         ('mascotas', 'editar'),
-                                                        ('citas', 'ver'), ('citas', 'crear'), ('citas', 'editar'),
-                                                        ('citas', 'cancelar'),
+                                                        ('citas', 'ver'), ('citas', 'crear'), ('citas', 'editar'), ('citas', 'cancelar'),
                                                         ('salas', 'ver'),
                                                         ('inventario', 'ver'),
-                                                        ('facturacion', 'ver'), ('facturacion', 'crear'),
                                                         ('pagos', 'ver'), ('pagos', 'registrar'),
+                                                        ('facturacion', 'ver'), ('facturacion', 'crear'),
                                                         ('vacunacion', 'ver')
     )
 WHERE r.name = 'RECEPCIONISTA';
@@ -111,7 +115,7 @@ FROM roles r
          JOIN permissions p ON (p.module, p.action) IN (
                                                         ('clientes', 'ver'),
                                                         ('mascotas', 'ver'), ('mascotas', 'editar'),
-                                                        ('citas', 'ver'), ('citas', 'editar'), ('citas', 'cancelar'),
+                                                        ('citas', 'ver'), ('citas', 'diagnosticar'), ('citas', 'agregar_insumos'),
                                                         ('salas', 'ver'),
                                                         ('inventario', 'ver'),
                                                         ('vacunacion', 'ver'), ('vacunacion', 'crear'),

@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class AppointmentController {
 
     private final Mediator mediator;
 
+    @PreAuthorize("hasAuthority('citas:crear')")
     @PostMapping
     public ResponseEntity<AppointmentResponseDTO> register(@RequestBody @Valid AppointmentRequestDTO requestDTO) {
         var command = new RegisterAppointmentCommand(requestDTO);
@@ -34,6 +36,7 @@ public class AppointmentController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('citas:ver')")
     @GetMapping
     public ResponseEntity<List<AppointmentResponseDTO>> findAll() {
         var query = new FindAllAppointmentsQuery();
@@ -41,6 +44,7 @@ public class AppointmentController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('citas:ver')")
     @GetMapping("/{id}")
     public ResponseEntity<AppointmentResponseDTO> findById(@PathVariable Long id) {
         var query = new FindAppointmentByIdQuery(id);
@@ -48,6 +52,7 @@ public class AppointmentController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('citas:editar')")
     @PutMapping("/{id}")
     public ResponseEntity<AppointmentResponseDTO> update(
             @PathVariable Long id,
@@ -57,6 +62,7 @@ public class AppointmentController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('citas:eliminar')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         var command = new DeleteAppointmentByIdCommand(id);
@@ -64,6 +70,7 @@ public class AppointmentController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAuthority('citas:diagnosticar')")
     @PatchMapping("/{id}/diagnosis")
     public ResponseEntity<AppointmentResponseDTO> updateDiagnosis(
             @PathVariable Long id,
@@ -73,6 +80,7 @@ public class AppointmentController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('citas:editar', 'citas:cancelar')")
     @PatchMapping("/{id}/status")
     public ResponseEntity<AppointmentResponseDTO> changeStatus(
             @PathVariable Long id,
@@ -82,6 +90,7 @@ public class AppointmentController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('citas:ver')")
     @Operation(summary = "Obtener el historial médico de una mascota")
     @GetMapping("/pet/{petId}/history")
     public ResponseEntity<List<AppointmentResponseDTO>> getMedicalHistory(@PathVariable Long petId) {
