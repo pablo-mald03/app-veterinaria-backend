@@ -13,21 +13,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class VaccinationCardRepositoryAdapter implements VaccinationCardRepositoryPort {
 
-    private final VaccinationCardJpaRepository vaccinationCardJpaRepository;
-    private final VaccinationCardEntityMapper vaccinationCardEntityMapper;
+    private final VaccinationCardJpaRepository jpaRepository;
+    private final VaccinationCardEntityMapper entityMapper;
 
     @Override
     public VaccinationCard save(VaccinationCard card) {
-        return vaccinationCardEntityMapper.toDomain(vaccinationCardJpaRepository.save(vaccinationCardEntityMapper.toEntity(card)));
+        return entityMapper.toDomain(jpaRepository.save(entityMapper.toEntity(card)));
     }
 
     @Override
     public Optional<VaccinationCard> findById(Long idCard) {
-        return vaccinationCardJpaRepository.findById(idCard).map(vaccinationCardEntityMapper::toDomain);
+        return jpaRepository.findById(idCard).map(entityMapper::toDomain);
     }
 
     @Override
     public Optional<VaccinationCard> findByIdPet(Long idPet) {
-        return vaccinationCardJpaRepository.findByIdPet(idPet).map(vaccinationCardEntityMapper::toDomain);
+        return jpaRepository.findByIdPet(idPet).map(entityMapper::toDomain);
     }
 }

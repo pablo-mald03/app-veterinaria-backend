@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class GetVaccinationCardByPetHandler {
 
-    private final VaccinationCardRepositoryPort vaccinationCardRepositoryPort;
+    private final VaccinationCardRepositoryPort cardPort;
 
     public VaccinationCard execute(Long idPet) {
-        return vaccinationCardRepositoryPort.findByIdPet(idPet).orElseThrow(() -> new VaccinationCardNotFoundException(idPet));
+        return cardPort.findByIdPet(idPet).orElseThrow(() -> new VaccinationCardNotFoundException(idPet));
     }
 }

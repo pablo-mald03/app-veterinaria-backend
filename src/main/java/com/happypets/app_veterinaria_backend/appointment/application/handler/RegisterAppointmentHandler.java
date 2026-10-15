@@ -3,7 +3,6 @@ package com.happypets.app_veterinaria_backend.appointment.application.handler;
 import com.happypets.app_veterinaria_backend.appointment.application.command.RegisterAppointmentCommand;
 import com.happypets.app_veterinaria_backend.appointment.domain.exception.RoomOccupiedException;
 import com.happypets.app_veterinaria_backend.appointment.domain.exception.VetScheduleConflictException;
-import com.happypets.app_veterinaria_backend.appointment.domain.exception.TimeAppointmentRuleException;
 import com.happypets.app_veterinaria_backend.appointment.domain.model.Appointment;
 import com.happypets.app_veterinaria_backend.appointment.domain.port.AppointmentRepositoryPort;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentResponseDTO;
@@ -11,9 +10,6 @@ import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.mapp
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Component
 @RequiredArgsConstructor
@@ -24,13 +20,7 @@ public class RegisterAppointmentHandler implements RequestHandler<RegisterAppoin
     @Override
     public AppointmentResponseDTO handle(RegisterAppointmentCommand command) {
         Appointment appointmentToCreate = appointmentDTOMapper.toDomain(command.getData());
-        if (appointmentToCreate.getDate().equals(LocalDate.now())) {
-            if (appointmentToCreate.getHour().isBefore(LocalTime.now())) {
-                throw new TimeAppointmentRuleException("No puedes agendar una cita en una hora que ya pasó el día de hoy.");
-            }
-        }
-
-        // Validar choque de horario del veterinario
+        // 1. Validar choque de horario del veterinario
         if (appointmentRepositoryPort.isVetBusyAt(
                 appointmentToCreate.getUserId(),
                 appointmentToCreate.getDate(),
@@ -39,7 +29,7 @@ public class RegisterAppointmentHandler implements RequestHandler<RegisterAppoin
                     "El veterinario seleccionado ya tiene una cita agendada en ese horario.");
         }
 
-        // Validar disponibilidad de la sala
+        // 2. Validar disponibilidad de la sala
         if (appointmentRepositoryPort.isRoomOccupiedAt(
                 appointmentToCreate.getRoomId(),
                 appointmentToCreate.getDate(),
