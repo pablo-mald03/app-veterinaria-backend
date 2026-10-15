@@ -14,6 +14,8 @@ import java.util.Optional;
 public class VaccinationCardRepositoryAdapter implements VaccinationCardRepositoryPort {
 
     private final VaccinationCardJpaRepository vaccinationCardJpaRepository;
+
+    /*MAPPER VACCINATION*/
     private final VaccinationCardEntityMapper vaccinationCardEntityMapper;
 
     @Override
