@@ -1,5 +1,10 @@
 package com.happypets.app_veterinaria_backend.purchase.application.service;
 
+import com.happypets.app_veterinaria_backend.inventoryBatch.domain.entity.InventoryBatch;
+import com.happypets.app_veterinaria_backend.inventoryBatch.domain.port.InventoryBatchRepositoryPort;
+import com.happypets.app_veterinaria_backend.inventoryMovement.domain.entity.InventoryMovement;
+import com.happypets.app_veterinaria_backend.inventoryMovement.domain.entity.MovementType;
+import com.happypets.app_veterinaria_backend.inventoryMovement.domain.port.InventoryMovementRepositoryPort;
 import com.happypets.app_veterinaria_backend.purchase.domain.entity.Purchase;
 import com.happypets.app_veterinaria_backend.purchase.domain.entity.PurchaseDetail;
 import lombok.RequiredArgsConstructor;
