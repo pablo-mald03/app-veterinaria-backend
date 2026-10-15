@@ -8,21 +8,28 @@ import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.mapper.AppointmentDTOMapper;
 import com.happypets.app_veterinaria_backend.common.application.mediator.Mediator;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
-import com.happypets.app_veterinaria_backend.common.domain.exception.BusinessRuleException;
 import com.happypets.app_veterinaria_backend.payment.application.command.AddPaymentItemCommand;
 import com.happypets.app_veterinaria_backend.payment.infrastructure.api.dto.PaymentItemRequestDTO;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
 @Component
-@RequiredArgsConstructor
 public class UpdateAppointmentDiagnosisHandler implements RequestHandler<UpdateAppointmentDiagnosisCommand, AppointmentResponseDTO> {
 
     private final AppointmentRepositoryPort repositoryPort;
     private final AppointmentDTOMapper mapper;
     private final Mediator mediator;
+
+    public UpdateAppointmentDiagnosisHandler(
+            AppointmentRepositoryPort repositoryPort,
+            AppointmentDTOMapper mapper,
+            @Lazy Mediator mediator) {
+        this.repositoryPort = repositoryPort;
+        this.mapper = mapper;
+        this.mediator = mediator;
+    }
 
     @Override
     public AppointmentResponseDTO handle(UpdateAppointmentDiagnosisCommand command) {

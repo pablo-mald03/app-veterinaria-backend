@@ -9,16 +9,24 @@ import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.mapp
 import com.happypets.app_veterinaria_backend.common.application.mediator.Mediator;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
 import com.happypets.app_veterinaria_backend.payment.application.command.OpenPaymentCommand;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class ChangeAppointmentStatusHandler implements RequestHandler<ChangeAppointmentStatusCommand, AppointmentResponseDTO> {
 
     private final AppointmentRepositoryPort repositoryPort;
     private final AppointmentDTOMapper mapper;
     private final Mediator mediator;
+
+    public ChangeAppointmentStatusHandler(
+            AppointmentRepositoryPort repositoryPort,
+            AppointmentDTOMapper mapper,
+            @Lazy Mediator mediator) {
+        this.repositoryPort = repositoryPort;
+        this.mapper = mapper;
+        this.mediator = mediator;
+    }
 
     @Override
     public AppointmentResponseDTO handle(ChangeAppointmentStatusCommand command) {

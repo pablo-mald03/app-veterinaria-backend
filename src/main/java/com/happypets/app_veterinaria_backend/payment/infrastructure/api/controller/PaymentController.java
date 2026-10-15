@@ -3,19 +3,22 @@ package com.happypets.app_veterinaria_backend.payment.infrastructure.api.control
 import com.happypets.app_veterinaria_backend.common.application.mediator.Mediator;
 import com.happypets.app_veterinaria_backend.payment.application.command.AddPaymentItemCommand;
 import com.happypets.app_veterinaria_backend.payment.application.command.OpenPaymentCommand;
+import com.happypets.app_veterinaria_backend.payment.application.command.ProcessPaymentCommand;
+import com.happypets.app_veterinaria_backend.payment.application.query.DownloadInvoiceQuery;
+import com.happypets.app_veterinaria_backend.payment.application.query.FindPaymentByAppointmentIdQuery;
 import com.happypets.app_veterinaria_backend.payment.infrastructure.api.dto.PaymentItemRequestDTO;
 import com.happypets.app_veterinaria_backend.payment.infrastructure.api.dto.PaymentResponseDTO;
+import com.happypets.app_veterinaria_backend.payment.infrastructure.api.dto.ProcessPaymentRequestDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,5 +44,39 @@ public class PaymentController {
         var command = new AddPaymentItemCommand(appointmentId, request);
         PaymentResponseDTO response = mediator.dispatch(command);
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Obtener cuenta por Cita", description = "Retorna el ticket completo y sus cargos asociados a una cita específica.")
+    @GetMapping("/appointment/{appointmentId}")
+    public ResponseEntity<PaymentResponseDTO> getByAppointmentId(@PathVariable Long appointmentId) {
+        var query = new FindPaymentByAppointmentIdQuery(appointmentId);
+        PaymentResponseDTO response = mediator.dispatch(query);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Procesar pago de cuenta", description = "Marca la cuenta como pagada y registra el método de pago.")
+    @PatchMapping("/{paymentId}/pay")
+    public ResponseEntity<PaymentResponseDTO> processPayment(
+            @PathVariable Long paymentId,
+            @Valid @RequestBody ProcessPaymentRequestDTO requestDTO) {
+        var command = new ProcessPaymentCommand(paymentId, requestDTO);
+        PaymentResponseDTO response = mediator.dispatch(command);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Descargar Factura PDF", description = "Genera y descarga el PDF de la factura pagada.")
+    @GetMapping("/{paymentId}/invoice")
+    public ResponseEntity<byte[]> downloadInvoice(@PathVariable Long paymentId) {
+        var query = new DownloadInvoiceQuery(paymentId);
+        byte[] pdfBytes = mediator.dispatch(query);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        // Esto le dice al navegador que descargue el archivo con este nombre
+        headers.setContentDispositionFormData("attachment", "factura_" + paymentId + ".pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(pdfBytes);
     }
 }
