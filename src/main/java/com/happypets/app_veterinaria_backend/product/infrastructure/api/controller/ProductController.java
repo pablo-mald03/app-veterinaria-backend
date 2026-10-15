@@ -10,14 +10,14 @@ import com.happypets.app_veterinaria_backend.product.application.command.udpate.
 import com.happypets.app_veterinaria_backend.product.application.command.udpate.UpdateProductResponse;
 import com.happypets.app_veterinaria_backend.product.application.query.getAll.GetAllProductRequest;
 import com.happypets.app_veterinaria_backend.product.application.query.getAll.GetAllProductResponse;
+import com.happypets.app_veterinaria_backend.product.application.query.getAllVaccination.GetAllVaccinateRequest;
+import com.happypets.app_veterinaria_backend.product.application.query.getAllVaccination.GetAllVaccinateResponse;
 import com.happypets.app_veterinaria_backend.product.application.query.getById.GetProductByIdRequest;
 import com.happypets.app_veterinaria_backend.product.application.query.getById.GetProductByIdResponse;
 import com.happypets.app_veterinaria_backend.product.domain.api.ProductRestController;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.ChangeStatusProductRequestDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.CreateProductRequestDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.GetAllProductQueryDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.UpdateProductRequestDto;
+import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.*;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.GetAllProductResponseDto;
+import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.GetAllVaccinationResponseDto;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.ProductDataResponseDto;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.ProductDetailResponseDto;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.mapper.ProductMapper;
@@ -72,15 +72,15 @@ public class ProductController implements ProductRestController {
     }
 
 
- /*   @Operation(summary = "Get all vaccinates", description = "List all registered vaccinates")
-    @GetMapping
+    @Operation(summary = "Get all vaccinates", description = "List all registered vaccinates")
+    @GetMapping("/vaccines")
     @Override
-    public ResponseEntity<GetAllProductResponseDto> findAll(@ParameterObject PaginationQuery paginationQuery, @ParameterObject GetAllProductQueryDto queryDto) {
+    public ResponseEntity<GetAllVaccinationResponseDto> findAllVaccinates(@ParameterObject PaginationQuery paginationQuery, @ParameterObject GetAllVaccinateQueryDto queryDto) {
 
-        GetAllVaccinateRequest request = productMapper.toGetAllProductRequest(queryDto, paginationQuery);
+        GetAllVaccinateRequest request = productMapper.toGetAllVaccinationRequest(queryDto, paginationQuery);
         GetAllVaccinateResponse response = mediator.dispatch(request);
-        return ResponseEntity.ok(productMapper.toGetAllProductsResponseDto(response));
-    }*/
+        return ResponseEntity.ok(productMapper.toGetAllVaccinationResponseDto(response));
+    }
 
 
     @Operation(summary = "Change product status", description = "Change product status")
