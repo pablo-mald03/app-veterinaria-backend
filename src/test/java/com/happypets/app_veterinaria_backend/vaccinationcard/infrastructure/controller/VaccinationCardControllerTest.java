@@ -27,6 +27,9 @@ import com.happypets.app_veterinaria_backend.vaccinationcard.application.command
 import com.happypets.app_veterinaria_backend.vaccinationcard.application.query.getbyid.GetVaccinationCardByPetHandler;
 import com.happypets.app_veterinaria_backend.vaccinationcard.infrastructure.dto.VaccinationCardResponseDTO;
 import com.happypets.app_veterinaria_backend.vaccinationcard.infrastructure.mapper.VaccinationCardMapper;
+import com.happypets.app_veterinaria_backend.vaccinationcard.application.query.report.GetVaccinationCardReportHandler;
+import com.happypets.app_veterinaria_backend.vaccinationcard.infrastructure.pdf.VaccinationCardPdfGenerator;
+import com.happypets.app_veterinaria_backend.vaccinationcard.domain.model.VaccinationCardReport;
 
 @WebMvcTest(VaccinationCardController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -43,6 +46,12 @@ class VaccinationCardControllerTest extends AbstractControllerTest {
 
     @MockitoBean
     private VaccinationCardMapper mapper;
+
+    @MockitoBean
+    private GetVaccinationCardReportHandler reportHandler;
+
+    @MockitoBean
+    private VaccinationCardPdfGenerator pdfGenerator;
 
 
     private VaccinationCardResponseDTO crearDtoRespuesta() {
@@ -92,5 +101,22 @@ class VaccinationCardControllerTest extends AbstractControllerTest {
                 .andExpect(status().isBadRequest());
 
         verifyNoInteractions(obtenerPorMascotaHandler, mapper);
+    }
+
+    @Test
+    @DisplayName("GET /vaccination-cards/pet/{idPet}/pdf devuelve 200 con el PDF como adjunto")
+    void debeDescargarCarnetEnPdf() throws Exception {
+        VaccinationCardReport report = new VaccinationCardReport(1L, LocalDate.of(2026, 10, 9), 1L,
+                "Firulais", "Perro", "Labrador", 3, 25.5, java.util.List.of());
+        byte[] fakePdf = "%PDF-1.4 test".getBytes();
+        when(reportHandler.execute(1L)).thenReturn(report);
+        when(pdfGenerator.generate(report)).thenReturn(fakePdf);
+
+        mockMvc.perform(get("/vaccination-cards/pet/1/pdf"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/pdf"))
+                .andExpect(header().string("Content-Disposition", org.hamcrest.Matchers.containsString("attachment")));
+
+        verify(reportHandler).execute(1L);
     }
 }
