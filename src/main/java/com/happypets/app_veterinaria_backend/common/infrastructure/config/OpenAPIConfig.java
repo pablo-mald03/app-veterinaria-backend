@@ -26,14 +26,18 @@ import org.springframework.context.annotation.Configuration;
                         url = "https://www.apache.org/licenses/LICENSE-2.0"
                 )
         ),
-        /*SERVERS TO TEST THE API*/
-        servers = @Server(
-                url = "http://localhost:8080/api/v1",
-                description = "Local development"
-        )
+        servers = {
+                @Server(
+                        url = "/api/v1",
+                        description = "Current Environment (Nginx / Relative)"
+                ),
+                @Server(
+                        url = "http://localhost:8080/api/v1",
+                        description = "Local Direct Development"
+                )
+        }
 )
-
-/*DECORATOR FOR THE PROTECTED ENDPOINTS*/
+/* DECORATOR FOR THE PROTECTED ENDPOINTS */
 @SecurityScheme(
         name = "cookieAuth",
         description = "Autenticacion mediante cookie httpOnly con JWT",
@@ -42,6 +46,6 @@ import org.springframework.context.annotation.Configuration;
         paramName = "SESSION_TOKEN"
 )
 @Configuration
-//Principal config for open api documentation
+// Principal config for open api documentation
 public class OpenAPIConfig {
 }
