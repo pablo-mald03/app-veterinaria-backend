@@ -23,7 +23,6 @@ public class AppointmentRequestDTO {
     private Long roomId;
 
     @NotNull(message = "La fecha de la cita es obligatoria")
-    @FutureOrPresent(message = "No puede agendar citas en el pasado")
     private LocalDate date;
 
     @NotNull(message = "La hora de la cita es obligatoria")
