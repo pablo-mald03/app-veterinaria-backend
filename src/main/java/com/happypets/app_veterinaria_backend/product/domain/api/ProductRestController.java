@@ -3,7 +3,7 @@ package com.happypets.app_veterinaria_backend.product.domain.api;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationQuery;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.*;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.GetAllProductResponseDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.GetAllVaccinationResponseDto;
+import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.GetAllSpecificResponseDto;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.ProductDataResponseDto;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.ProductDetailResponseDto;
 import jakarta.validation.Valid;
@@ -24,7 +24,9 @@ public interface ProductRestController {
 
     ResponseEntity<GetAllProductResponseDto> findAll(@ParameterObject PaginationQuery paginationQuery, @ParameterObject GetAllProductQueryDto queryDto);
 
-    ResponseEntity<GetAllVaccinationResponseDto> findAllVaccinates(@ParameterObject PaginationQuery paginationQuery, @ParameterObject GetAllVaccinateQueryDto queryDto);
+    ResponseEntity<GetAllSpecificResponseDto> findAllVaccinates(@ParameterObject PaginationQuery paginationQuery, @ParameterObject GetAllSpecificQueryDto queryDto);
+
+    ResponseEntity<GetAllSpecificResponseDto> findAllDewormers(@ParameterObject PaginationQuery paginationQuery, @ParameterObject GetAllSpecificQueryDto queryDto);
 
     ResponseEntity<Void> changeStatus(@PathVariable Long id, @Valid @RequestBody ChangeStatusProductRequestDto request);
 

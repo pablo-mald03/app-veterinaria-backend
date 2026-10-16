@@ -14,10 +14,12 @@ import com.happypets.app_veterinaria_backend.product.application.query.getAllVac
 import com.happypets.app_veterinaria_backend.product.application.query.getAllVaccination.GetAllVaccinateResponse;
 import com.happypets.app_veterinaria_backend.product.application.query.getById.GetProductByIdRequest;
 import com.happypets.app_veterinaria_backend.product.application.query.getById.GetProductByIdResponse;
+import com.happypets.app_veterinaria_backend.product.application.query.getDewormer.GetAllDewormerRequest;
+import com.happypets.app_veterinaria_backend.product.application.query.getDewormer.GetAllDewormerResponse;
 import com.happypets.app_veterinaria_backend.product.domain.api.ProductRestController;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.*;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.GetAllProductResponseDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.GetAllVaccinationResponseDto;
+import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.GetAllSpecificResponseDto;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.ProductDataResponseDto;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.ProductDetailResponseDto;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.mapper.ProductMapper;
@@ -75,11 +77,21 @@ public class ProductController implements ProductRestController {
     @Operation(summary = "Get all vaccinates", description = "List all registered vaccinates")
     @GetMapping("/vaccines")
     @Override
-    public ResponseEntity<GetAllVaccinationResponseDto> findAllVaccinates(@ParameterObject PaginationQuery paginationQuery, @ParameterObject GetAllVaccinateQueryDto queryDto) {
+    public ResponseEntity<GetAllSpecificResponseDto> findAllVaccinates(@ParameterObject PaginationQuery paginationQuery, @ParameterObject GetAllSpecificQueryDto queryDto) {
 
         GetAllVaccinateRequest request = productMapper.toGetAllVaccinationRequest(queryDto, paginationQuery);
         GetAllVaccinateResponse response = mediator.dispatch(request);
-        return ResponseEntity.ok(productMapper.toGetAllVaccinationResponseDto(response));
+        return ResponseEntity.ok(productMapper.toGetAllSpecificResponseDto(response));
+    }
+
+    @Operation(summary = "Get all dewormers", description = "List all registered dewormers")
+    @GetMapping("/dewormers")
+    @Override
+    public ResponseEntity<GetAllSpecificResponseDto> findAllDewormers(@ParameterObject PaginationQuery paginationQuery, @ParameterObject GetAllSpecificQueryDto queryDto) {
+
+        GetAllDewormerRequest request = productMapper.toGetAllDewormerRequest(queryDto, paginationQuery);
+        GetAllDewormerResponse response = mediator.dispatch(request);
+        return ResponseEntity.ok(productMapper.toGetAllSpecificResponseDto(response));
     }
 
 
