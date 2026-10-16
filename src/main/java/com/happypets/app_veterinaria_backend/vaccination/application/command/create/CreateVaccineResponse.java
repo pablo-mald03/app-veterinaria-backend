@@ -1,6 +1,6 @@
 package com.happypets.app_veterinaria_backend.vaccination.application.command.create;
 
-import com.happypets.app_veterinaria_backend.vaccination.domain.model.Vaccine;
+import com.happypets.app_veterinaria_backend.vaccination.domain.entity.Vaccine;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

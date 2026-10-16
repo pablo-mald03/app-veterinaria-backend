@@ -2,8 +2,8 @@ package com.happypets.app_veterinaria_backend.vaccination.application.query.geta
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
-import com.happypets.app_veterinaria_backend.vaccination.domain.model.Vaccine;
-import com.happypets.app_veterinaria_backend.vaccination.domain.port.VaccineRepository;
+import com.happypets.app_veterinaria_backend.product.domain.port.VaccineRepository;
+import com.happypets.app_veterinaria_backend.vaccination.domain.entity.Vaccine;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

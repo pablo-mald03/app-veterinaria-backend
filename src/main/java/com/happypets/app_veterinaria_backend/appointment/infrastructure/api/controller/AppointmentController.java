@@ -29,6 +29,10 @@ public class AppointmentController {
     private final Mediator mediator;
 
     @PreAuthorize("hasAuthority('citas:crear')")
+    @Operation(
+            summary = "Agendar una nueva cita",
+            description = "Crea una nueva cita médica validando la disponibilidad de horario del veterinario y la sala."
+    )
     @PostMapping
     public ResponseEntity<AppointmentResponseDTO> register(@RequestBody @Valid AppointmentRequestDTO requestDTO) {
         var command = new RegisterAppointmentCommand(requestDTO);
@@ -37,6 +41,10 @@ public class AppointmentController {
     }
 
     @PreAuthorize("hasAuthority('citas:ver')")
+    @Operation(
+            summary = "Listar todas las citas",
+            description = "Obtiene un listado completo de todas las citas registradas en el sistema, ordenadas por fecha."
+    )
     @GetMapping
     public ResponseEntity<List<AppointmentResponseDTO>> findAll() {
         var query = new FindAllAppointmentsQuery();
@@ -45,6 +53,10 @@ public class AppointmentController {
     }
 
     @PreAuthorize("hasAuthority('citas:ver')")
+    @Operation(
+            summary = "Obtener detalle de cita",
+            description = "Busca y retorna los detalles completos de una cita específica utilizando su ID."
+    )
     @GetMapping("/{id}")
     public ResponseEntity<AppointmentResponseDTO> findById(@PathVariable Long id) {
         var query = new FindAppointmentByIdQuery(id);
@@ -53,6 +65,10 @@ public class AppointmentController {
     }
 
     @PreAuthorize("hasAuthority('citas:editar')")
+    @Operation(
+            summary = "Actualizar una cita existente",
+            description = "Modifica los datos generales de una cita agendada (fecha, hora, veterinario, sala o motivo)."
+    )
     @PutMapping("/{id}")
     public ResponseEntity<AppointmentResponseDTO> update(
             @PathVariable Long id,
@@ -63,6 +79,10 @@ public class AppointmentController {
     }
 
     @PreAuthorize("hasAuthority('citas:eliminar')")
+    @Operation(
+            summary = "Eliminar una cita",
+            description = "Realiza la eliminación de una cita específica en el sistema."
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         var command = new DeleteAppointmentByIdCommand(id);
@@ -71,6 +91,10 @@ public class AppointmentController {
     }
 
     @PreAuthorize("hasAuthority('citas:diagnosticar')")
+    @Operation(
+            summary = "Registrar diagnóstico de consulta",
+            description = "Añade o actualiza el diagnóstico, tratamiento y costo al finalizar una consulta médica."
+    )
     @PatchMapping("/{id}/diagnosis")
     public ResponseEntity<AppointmentResponseDTO> updateDiagnosis(
             @PathVariable Long id,
@@ -81,6 +105,10 @@ public class AppointmentController {
     }
 
     @PreAuthorize("hasAnyAuthority('citas:editar', 'citas:cancelar')")
+    @Operation(
+            summary = "Cambiar estado de cita",
+            description = "Actualiza el estado actual de la cita (ej. SCHEDULED, IN_PROGRESS, COMPLETED, CANCELLED)."
+    )
     @PatchMapping("/{id}/status")
     public ResponseEntity<AppointmentResponseDTO> changeStatus(
             @PathVariable Long id,
@@ -91,7 +119,10 @@ public class AppointmentController {
     }
 
     @PreAuthorize("hasAuthority('citas:ver')")
-    @Operation(summary = "Obtener el historial médico de una mascota")
+    @Operation(
+            summary = "Obtener el historial médico de una mascota",
+            description = "Retorna el registro completo de citas previas asociadas al ID de una mascota específica."
+    )
     @GetMapping("/pet/{petId}/history")
     public ResponseEntity<List<AppointmentResponseDTO>> getMedicalHistory(@PathVariable Long petId) {
         var query = new FindMedicalHistoryByPetIdQuery(petId);

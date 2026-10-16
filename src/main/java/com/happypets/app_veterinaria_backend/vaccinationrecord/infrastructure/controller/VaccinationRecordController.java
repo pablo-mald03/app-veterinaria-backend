@@ -6,6 +6,7 @@ import com.happypets.app_veterinaria_backend.vaccinationrecord.application.query
 import com.happypets.app_veterinaria_backend.vaccinationrecord.infrastructure.dto.VaccinationRecordRequestDTO;
 import com.happypets.app_veterinaria_backend.vaccinationrecord.infrastructure.dto.VaccinationRecordResponseDTO;
 import com.happypets.app_veterinaria_backend.vaccinationrecord.infrastructure.mapper.VaccinationRecordMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/vaccination-records")
+@Tag(name = "Vaccination Record", description = "Module to manage the application vaccination records")
 @RequiredArgsConstructor
 public class VaccinationRecordController {
 

@@ -1,10 +1,8 @@
 package com.happypets.app_veterinaria_backend.vaccination.application.command.create;
 
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
-import com.happypets.app_veterinaria_backend.pets.application.command.create.CreatePetResponse;
-import com.happypets.app_veterinaria_backend.pets.domain.model.Pet;
-import com.happypets.app_veterinaria_backend.vaccination.domain.model.Vaccine;
-import com.happypets.app_veterinaria_backend.vaccination.domain.port.VaccineRepository;
+import com.happypets.app_veterinaria_backend.product.domain.port.VaccineRepository;
+import com.happypets.app_veterinaria_backend.vaccination.domain.entity.Vaccine;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
