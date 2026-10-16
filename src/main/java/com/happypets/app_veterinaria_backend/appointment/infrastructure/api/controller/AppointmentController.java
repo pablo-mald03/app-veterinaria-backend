@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class AppointmentController {
 
     private final Mediator mediator;
 
+    @PreAuthorize("hasAuthority('citas:crear')")
     @Operation(
             summary = "Agendar una nueva cita",
             description = "Crea una nueva cita médica validando la disponibilidad de horario del veterinario y la sala."
@@ -38,6 +40,7 @@ public class AppointmentController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('citas:ver')")
     @Operation(
             summary = "Listar todas las citas",
             description = "Obtiene un listado completo de todas las citas registradas en el sistema, ordenadas por fecha."
@@ -49,6 +52,7 @@ public class AppointmentController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('citas:ver')")
     @Operation(
             summary = "Obtener detalle de cita",
             description = "Busca y retorna los detalles completos de una cita específica utilizando su ID."
@@ -60,6 +64,7 @@ public class AppointmentController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('citas:editar')")
     @Operation(
             summary = "Actualizar una cita existente",
             description = "Modifica los datos generales de una cita agendada (fecha, hora, veterinario, sala o motivo)."
@@ -73,6 +78,7 @@ public class AppointmentController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('citas:eliminar')")
     @Operation(
             summary = "Eliminar una cita",
             description = "Realiza la eliminación de una cita específica en el sistema."
@@ -84,6 +90,7 @@ public class AppointmentController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAuthority('citas:diagnosticar')")
     @Operation(
             summary = "Registrar diagnóstico de consulta",
             description = "Añade o actualiza el diagnóstico, tratamiento y costo al finalizar una consulta médica."
@@ -97,6 +104,7 @@ public class AppointmentController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('citas:editar', 'citas:cancelar')")
     @Operation(
             summary = "Cambiar estado de cita",
             description = "Actualiza el estado actual de la cita (ej. SCHEDULED, IN_PROGRESS, COMPLETED, CANCELLED)."
@@ -110,6 +118,7 @@ public class AppointmentController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('citas:ver')")
     @Operation(
             summary = "Obtener el historial médico de una mascota",
             description = "Retorna el registro completo de citas previas asociadas al ID de una mascota específica."
