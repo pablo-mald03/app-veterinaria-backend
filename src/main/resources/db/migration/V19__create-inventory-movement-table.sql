@@ -9,12 +9,12 @@ CREATE TABLE inventory_movement
     origin      VARCHAR(255),
     product_id  BIGINT,
     batch_id    BIGINT,
-    -- sale_id     BIGINT,
+    sale_id     BIGINT,
     purchase_id BIGINT,
     created_at  TIMESTAMPTZ    NOT NULL,
     updated_at  TIMESTAMPTZ,
     CONSTRAINT fk_inventory_movement_product FOREIGN KEY (product_id) REFERENCES products (id),
     CONSTRAINT fk_inventory_movement_batch FOREIGN KEY (batch_id) REFERENCES inventory_batch (id),
-    -- CONSTRAINT fk_inventory_movement_sale FOREIGN KEY (sale_id) REFERENCES sales (id),
+    CONSTRAINT fk_inventory_movement_sale FOREIGN KEY (sale_id) REFERENCES sales (id),
     CONSTRAINT fk_inventory_movement_purchase FOREIGN KEY (purchase_id) REFERENCES purchases (id)
 );

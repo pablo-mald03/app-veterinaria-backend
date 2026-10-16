@@ -3,6 +3,7 @@ package com.happypets.app_veterinaria_backend.inventoryMovement.domain.entity;
 import com.happypets.app_veterinaria_backend.inventoryBatch.domain.entity.BatchSummary;
 import com.happypets.app_veterinaria_backend.product.domain.entity.ProductSummary;
 import com.happypets.app_veterinaria_backend.purchase.domain.entity.PurchaseSummary;
+import com.happypets.app_veterinaria_backend.sale.domain.entity.SaleSummary;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +37,6 @@ public class InventoryMovement {
     private Long purchaseId;
     private PurchaseSummary purchase;
 
-//    private Long saleId;
-//    private SaleSummary sale;
+    private Long saleId;
+    private SaleSummary sale;
 }

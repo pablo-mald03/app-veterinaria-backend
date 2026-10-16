@@ -21,7 +21,7 @@ public interface InventoryMovementEntityMapper {
     @Mapping(target = "productId", source = "product.id")
     @Mapping(target = "batchId", source = "batch.id")
     @Mapping(target = "purchaseId", source = "purchase.id")
-    //@Mapping(target = "saleId", source = "sale.id")
+    @Mapping(target = "saleId", source = "sale.id")
     InventoryMovement toDomain(InventoryMovementEntity entity);
 
     /**
@@ -31,6 +31,6 @@ public interface InventoryMovementEntityMapper {
     @Mapping(target = "product", ignore = true)
     @Mapping(target = "batch", ignore = true)
     @Mapping(target = "purchase", ignore = true)
-    //@Mapping(target = "sale", ignore = true)
+    @Mapping(target = "sale", ignore = true)
     InventoryMovementEntity toEntity(InventoryMovement domain);
 }

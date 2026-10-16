@@ -5,6 +5,7 @@ import com.happypets.app_veterinaria_backend.inventoryBatch.infrastructure.datab
 import com.happypets.app_veterinaria_backend.inventoryMovement.domain.entity.MovementType;
 import com.happypets.app_veterinaria_backend.product.infrastructure.database.entity.ProductEntity;
 import com.happypets.app_veterinaria_backend.purchase.infrastructure.database.entity.PurchaseEntity;
+import com.happypets.app_veterinaria_backend.sale.infrastructure.database.entity.SaleEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -56,11 +57,9 @@ public class InventoryMovementEntity extends AuditableEntity {
     private InventoryBatchEntity batch;
 
     /*Sale relationship (nullable)*/
-/*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sale_id")
     private SaleEntity sale;
-*/
 
     /*Purchase relationship (nullable)*/
     @ManyToOne(fetch = FetchType.LAZY)
