@@ -24,11 +24,6 @@ public class RegisterAppointmentHandler implements RequestHandler<RegisterAppoin
     @Override
     public AppointmentResponseDTO handle(RegisterAppointmentCommand command) {
         Appointment appointmentToCreate = appointmentDTOMapper.toDomain(command.getData());
-        if (appointmentToCreate.getDate().equals(LocalDate.now())) {
-            if (appointmentToCreate.getHour().isBefore(LocalTime.now())) {
-                throw new TimeAppointmentRuleException("No puedes agendar una cita en una hora que ya pasó el día de hoy.");
-            }
-        }
 
         // Validar choque de horario del veterinario
         if (appointmentRepositoryPort.isVetBusyAt(
