@@ -13,10 +13,12 @@ import com.happypets.app_veterinaria_backend.product.application.query.getAll.Ge
 import com.happypets.app_veterinaria_backend.product.application.query.getAll.GetAllProductResponse;
 import com.happypets.app_veterinaria_backend.product.application.query.getAllVaccination.GetAllVaccinateRequest;
 import com.happypets.app_veterinaria_backend.product.application.query.getAllVaccination.GetAllVaccinateResponse;
+import com.happypets.app_veterinaria_backend.product.application.query.getDewormer.GetAllDewormerRequest;
+import com.happypets.app_veterinaria_backend.product.application.query.getDewormer.GetAllDewormerResponse;
 import com.happypets.app_veterinaria_backend.product.domain.entity.ProductDetail;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.CreateProductRequestDto;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.GetAllProductQueryDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.GetAllVaccinateQueryDto;
+import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.GetAllSpecificQueryDto;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.UpdateProductRequestDto;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.*;
 import org.mapstruct.Mapper;
@@ -105,23 +107,42 @@ public interface ProductMapper {
      *
      */
     @Mapping(target = "paginationQuery", source = "paginationQuery")
-    GetAllVaccinateRequest toGetAllVaccinationRequest(GetAllVaccinateQueryDto queryDto, PaginationQuery paginationQuery);
+    GetAllVaccinateRequest toGetAllVaccinationRequest(GetAllSpecificQueryDto queryDto, PaginationQuery paginationQuery);
 
     /**
      * Method to map a product detail to the vaccination response dto (only the product is used)
      */
     @Mapping(target = ".", source = "product")
-    ProductVaccinationResponseDto toVaccinationResponseDto(ProductDetail productDetail);
+    ProductSpecificResponseDto toSpecificResponseDto(ProductDetail productDetail);
+
+
+    /**
+     * Method to map the request dto to the request
+     *
+     */
+    @Mapping(target = "paginationQuery", source = "paginationQuery")
+    GetAllDewormerRequest toGetAllDewormerRequest(GetAllSpecificQueryDto queryDto, PaginationQuery paginationQuery);
 
     /**
      * Method to map the products response list to the response dto
      */
-    List<ProductVaccinationResponseDto> toVaccinationResponseDtoList(List<ProductDetail> productDetails);
+    List<ProductSpecificResponseDto> toSpecificResponseDtoList(List<ProductDetail> productDetails);
 
-    default GetAllVaccinationResponseDto toGetAllVaccinationResponseDto(GetAllVaccinateResponse response) {
+    default GetAllSpecificResponseDto toGetAllSpecificResponseDto(GetAllVaccinateResponse response) {
         PaginationResult<ProductDetail> result = response.getVaccinations();
-        return new GetAllVaccinationResponseDto(
-                toVaccinationResponseDtoList(result.getContent()),
+        return new GetAllSpecificResponseDto(
+                toSpecificResponseDtoList(result.getContent()),
+                result.getPage(),
+                result.getSize(),
+                result.getTotalPages(),
+                result.getTotalElements()
+        );
+    }
+
+    default GetAllSpecificResponseDto toGetAllSpecificResponseDto(GetAllDewormerResponse response) {
+        PaginationResult<ProductDetail> result = response.getVaccinations();
+        return new GetAllSpecificResponseDto(
+                toSpecificResponseDtoList(result.getContent()),
                 result.getPage(),
                 result.getSize(),
                 result.getTotalPages(),

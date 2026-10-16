@@ -13,8 +13,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAllVaccinationResponseDto {
-    private List<ProductVaccinationResponseDto> vaccinations;
+public class GetAllSpecificResponseDto {
+    private List<ProductSpecificResponseDto> vaccinations;
     private int page;
     private int size;
     private int totalPages;

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductVaccinationResponseDto {
+public class ProductSpecificResponseDto {
     private Long id;
     private String sku;
     private String name;

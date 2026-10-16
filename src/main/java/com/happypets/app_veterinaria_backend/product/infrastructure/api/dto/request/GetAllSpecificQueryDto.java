@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetAllVaccinateQueryDto {
+public class GetAllSpecificQueryDto {
     private Long priceFrom;
     private Long priceTo;
     private String sku;
