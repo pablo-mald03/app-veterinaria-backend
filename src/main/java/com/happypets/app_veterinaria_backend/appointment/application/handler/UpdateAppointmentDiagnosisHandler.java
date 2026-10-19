@@ -1,10 +1,13 @@
 package com.happypets.app_veterinaria_backend.appointment.application.handler;
 
+import com.happypets.app_veterinaria_backend.appointment.application.command.RegisterAppointmentCommand;
 import com.happypets.app_veterinaria_backend.appointment.application.command.UpdateAppointmentDiagnosisCommand;
 import com.happypets.app_veterinaria_backend.appointment.domain.exception.VetScheduleConflictException;
 import com.happypets.app_veterinaria_backend.appointment.domain.model.Appointment;
 import com.happypets.app_veterinaria_backend.appointment.domain.port.AppointmentRepositoryPort;
+import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentRequestDTO;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentResponseDTO;
+import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.FollowUpRequestDTO;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.mapper.AppointmentDTOMapper;
 import com.happypets.app_veterinaria_backend.common.application.mediator.Mediator;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
@@ -61,6 +64,33 @@ public class UpdateAppointmentDiagnosisHandler implements RequestHandler<UpdateA
         consultationFee.setReferenceId(savedAppointment.getId());
 
         mediator.dispatch(new AddPaymentItemCommand(savedAppointment.getId(), consultationFee));
+
+        // INTEGRACIÓN CON CITAS PERIÓDICAS Y DE SEGUIMIENTO
+        if (command.getData().getFollowUps() != null && !command.getData().getFollowUps().isEmpty()) {
+            for (FollowUpRequestDTO followUp : command.getData().getFollowUps()) {
+                AppointmentRequestDTO futureAppointment = new AppointmentRequestDTO();
+
+                futureAppointment.setPetId(appointment.getPetId());
+                futureAppointment.setUserId(appointment.getUserId());
+                futureAppointment.setRoomId(appointment.getRoomId());
+
+                futureAppointment.setDate(followUp.getDate());
+                futureAppointment.setHour(followUp.getHour());
+
+                futureAppointment.setDescription(
+                        followUp.getDescription() != null && !followUp.getDescription().isBlank()
+                                ? followUp.getDescription()
+                                : "Cita de seguimiento / Tratamiento"
+                );
+
+                // Marcamos como seguimiento de la cita actual
+                futureAppointment.setAppointmentType("FOLLOW_UP");
+                futureAppointment.setParentAppointmentId(savedAppointment.getId());
+
+                // Despachar comando para crear la nueva cita
+                mediator.dispatch(new RegisterAppointmentCommand(futureAppointment));
+            }
+        }
         return mapper.toDTO(savedAppointment);
     }
 

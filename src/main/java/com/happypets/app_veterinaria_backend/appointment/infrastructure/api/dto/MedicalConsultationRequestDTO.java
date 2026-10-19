@@ -6,6 +6,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class MedicalConsultationRequestDTO {
@@ -19,4 +20,6 @@ public class MedicalConsultationRequestDTO {
     @NotNull(message = "El costo no puede ser nulo")
     @PositiveOrZero(message = "El costo no puede ser negativo")
     private BigDecimal cost;
+
+    private List<FollowUpRequestDTO> followUps;
 }
