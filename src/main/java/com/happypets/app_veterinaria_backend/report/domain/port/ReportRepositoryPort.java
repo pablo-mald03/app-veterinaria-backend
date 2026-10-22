@@ -1,6 +1,7 @@
 package com.happypets.app_veterinaria_backend.report.domain.port;
 
 import com.happypets.app_veterinaria_backend.report.domain.model.AttendedPetRecord;
+import com.happypets.app_veterinaria_backend.report.domain.model.PendingTreatmentRecord;
 import com.happypets.app_veterinaria_backend.report.domain.model.PendingVaccineRecord;
 import com.happypets.app_veterinaria_backend.report.domain.model.TreatmentFrequency;
 
@@ -13,5 +14,5 @@ public interface ReportRepositoryPort {
 
     List<TreatmentFrequency> findFrequentTreatments(LocalDate from, LocalDate to);
 
-    List<PendingVaccineRecord> findPendingVaccines(LocalDate until);
+    List<PendingTreatmentRecord> findPendingVaccines(LocalDate until);
 }

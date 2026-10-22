@@ -39,4 +39,7 @@ public class InventoryMovement {
 
     private Long saleId;
     private SaleSummary sale;
+
+    /*AGREGADO PARA SABER A QUIEN SE APLICARA EL TRATAMIENTO*/
+    private Long treatmentApplicationId;
 }

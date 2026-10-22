@@ -3,10 +3,11 @@ package com.happypets.app_veterinaria_backend.vaccinationrecord.infrastructure.p
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "vaccination_records")
+@Table(name = "treatment_applications")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,26 +17,29 @@ public class VaccinationRecordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_application")
     private Long idRecord;
 
-    @Column(nullable = false)
+    @Column(name = "id_card", nullable = false)
     private Long idCard;
 
-    @Column(nullable = false)
-    private Long idVaccine;
+    @Column(name = "id_treatment", nullable = false)
+    private Long idTreatment;
 
-    @Column(nullable = false)
+    @Column(name = "id_doctor", nullable = false)
     private Long idDoctor;
 
-    @Column(nullable = false)
-    private Integer doseNumber;
+    @Column(name = "application_number", nullable = false)
+    private Integer applicationNumber;
 
-    @Column(nullable = false)
+    @Column(name = "application_date", nullable = false)
     private LocalDate applicationDate;
 
+    @Column(name = "next_dose_date")
     private LocalDate nextDoseDate;
 
-    private String batchNumber;
+    @Column(name = "total_cost", nullable = false, precision = 12, scale = 2)
+    private BigDecimal totalCost;
 
     @Column(length = 500)
     private String notes;

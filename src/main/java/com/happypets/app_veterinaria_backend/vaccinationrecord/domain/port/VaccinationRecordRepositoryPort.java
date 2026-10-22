@@ -11,7 +11,7 @@ public interface VaccinationRecordRepositoryPort {
 
     List<VaccinationRecord> findByIdCard(Long idCard);
 
-    int countByIdCardAndIdVaccine(Long idCard, Long idVaccine);
+    long countByIdCardAndIdTreatment(Long idCard, Long idTreatment);
 
     List<VaccinationRecord> findPending(LocalDate until);
 }

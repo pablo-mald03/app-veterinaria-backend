@@ -9,20 +9,17 @@ import java.util.List;
 
 public interface VaccinationRecordJpaRepository extends JpaRepository<VaccinationRecordEntity, Long> {
 
-    List<VaccinationRecordEntity> findByIdCardOrderByApplicationDateAsc(Long idCard);
+    long countByIdCardAndIdTreatment(Long idCard, Long idTreatment);
 
-    long countByIdCardAndIdVaccine(Long idCard, Long idVaccine);
+    List<VaccinationRecordEntity> findByIdCardOrderByApplicationNumberAsc(Long idCard);
 
+    /* Última aplicación de cada tratamiento de cada carnet cuya próxima fecha ya llegó */
     @Query("""
             SELECT r FROM VaccinationRecordEntity r
-            WHERE r.nextDoseDate IS NOT NULL
-              AND r.nextDoseDate <= :until
-              AND NOT EXISTS (
-                  SELECT 1 FROM VaccinationRecordEntity r2
-                  WHERE r2.idCard = r.idCard
-                    AND r2.idVaccine = r.idVaccine
-                    AND r2.doseNumber > r.doseNumber)
-            ORDER BY r.nextDoseDate
+            WHERE r.nextDoseDate <= :until
+              AND r.applicationNumber = (
+                  SELECT MAX(r2.applicationNumber) FROM VaccinationRecordEntity r2
+                  WHERE r2.idCard = r.idCard AND r2.idTreatment = r.idTreatment)
             """)
     List<VaccinationRecordEntity> findPending(@Param("until") LocalDate until);
 }

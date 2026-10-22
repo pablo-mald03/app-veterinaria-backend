@@ -1,6 +1,7 @@
 package com.happypets.app_veterinaria_backend.report.infrastructure.pdf;
 
 import com.happypets.app_veterinaria_backend.report.domain.model.AttendedPetRecord;
+import com.happypets.app_veterinaria_backend.report.domain.model.PendingTreatmentRecord;
 import com.happypets.app_veterinaria_backend.report.domain.model.PendingVaccineRecord;
 import com.happypets.app_veterinaria_backend.report.domain.model.TreatmentFrequency;
 import com.lowagie.text.Document;
@@ -49,17 +50,17 @@ public class PdfReportGenerator {
         return build("Reporte de tratamientos frecuentes", headers, body);
     }
 
-    public byte[] pendingVaccines(List<PendingVaccineRecord> rows) {
-        List<String> headers = List.of("Próxima dosis", "Mascota", "Especie", "Vacuna", "Última dosis aplicada");
+    public byte[] pendingTreatments(List<PendingTreatmentRecord> rows) {
+        List<String> headers = List.of("Próxima aplicación", "Mascota", "Especie", "Tratamiento", "Última aplicación #");
         List<List<String>> body = rows.stream()
                 .map(r -> List.of(
                         r.nextDoseDate() == null ? "-" : r.nextDoseDate().format(DATE_FMT),
                         nz(r.petName()),
                         nz(r.species()),
-                        nz(r.vaccineName()),
-                        r.lastDoseNumber() == null ? "-" : String.valueOf(r.lastDoseNumber())))
+                        nz(r.treatmentName()),
+                        r.applicationNumber() == null ? "-" : String.valueOf(r.applicationNumber())))
                 .toList();
-        return build("Reporte de vacunas pendientes", headers, body);
+        return build("Reporte de tratamientos pendientes", headers, body);
     }
 
     private byte[] build(String title, List<String> headers, List<List<String>> rows) {
