@@ -17,6 +17,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 @Component
 public class UpdateAppointmentDiagnosisHandler implements RequestHandler<UpdateAppointmentDiagnosisCommand, AppointmentResponseDTO> {
@@ -64,6 +66,25 @@ public class UpdateAppointmentDiagnosisHandler implements RequestHandler<UpdateA
         consultationFee.setReferenceId(savedAppointment.getId());
 
         mediator.dispatch(new AddPaymentItemCommand(savedAppointment.getId(), consultationFee));
+
+        // Definir si es fin de semana (Sábado o Domingo)
+        boolean isWeekend = appointment.getDate().getDayOfWeek() == DayOfWeek.SATURDAY ||
+                appointment.getDate().getDayOfWeek() == DayOfWeek.SUNDAY;
+
+        // Definir si está fuera del horario laboral (antes de las 08:00 o después de las 18:00)
+        boolean isAfterHours = appointment.getHour().isBefore(LocalTime.of(8, 0)) ||
+                appointment.getHour().isAfter(LocalTime.of(18, 0));
+
+        if (isWeekend || isAfterHours) {
+            PaymentItemRequestDTO surchargeFee = new PaymentItemRequestDTO();
+            surchargeFee.setDescription("Recargo por horario extraordinario (Fuera de horario o fin de semana)");
+            surchargeFee.setQuantity(1);
+            surchargeFee.setUnitPrice(new BigDecimal("100.00"));
+            surchargeFee.setReferenceType("SURCHARGE");
+            surchargeFee.setReferenceId(savedAppointment.getId());
+
+            mediator.dispatch(new AddPaymentItemCommand(savedAppointment.getId(), surchargeFee));
+        }
 
         // INTEGRACIÓN CON CITAS PERIÓDICAS Y DE SEGUIMIENTO
         if (command.getData().getFollowUps() != null && !command.getData().getFollowUps().isEmpty()) {
