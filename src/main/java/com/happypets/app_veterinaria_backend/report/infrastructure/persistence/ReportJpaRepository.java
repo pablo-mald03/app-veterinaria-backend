@@ -2,6 +2,7 @@ package com.happypets.app_veterinaria_backend.report.infrastructure.persistence;
 
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.database.entity.AppointmentJPAEntity;
 import com.happypets.app_veterinaria_backend.report.domain.model.AttendedPetRecord;
+import com.happypets.app_veterinaria_backend.report.domain.model.PendingTreatmentRecord;
 import com.happypets.app_veterinaria_backend.report.domain.model.PendingVaccineRecord;
 import com.happypets.app_veterinaria_backend.report.domain.model.TreatmentFrequency;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -42,19 +43,19 @@ public interface ReportJpaRepository extends JpaRepository<AppointmentJPAEntity,
 
     @Query("""
             SELECT new com.happypets.app_veterinaria_backend.report.domain.model.PendingVaccineRecord(
-                p.idPet, p.name, p.species, v.name, r.doseNumber, r.nextDoseDate)
+                p.idPet, p.name, p.species, t.name, r.applicationNumber, r.nextDoseDate)
             FROM VaccinationRecordEntity r
             JOIN VaccinationCardEntity c ON c.idCard = r.idCard
             JOIN PetEntity p ON p.idPet = c.idPet
-            JOIN VaccineEntity v ON v.idVaccine = r.idVaccine
+            JOIN TreatmentEntity t ON t.idTreatment = r.idTreatment
             WHERE r.nextDoseDate IS NOT NULL
               AND r.nextDoseDate <= :until
               AND NOT EXISTS (
                   SELECT 1 FROM VaccinationRecordEntity r2
                   WHERE r2.idCard = r.idCard
-                    AND r2.idVaccine = r.idVaccine
-                    AND r2.doseNumber > r.doseNumber)
+                    AND r2.idTreatment = r.idTreatment
+                    AND r2.applicationNumber > r.applicationNumber)
             ORDER BY r.nextDoseDate
             """)
-    List<PendingVaccineRecord> findPendingVaccines(@Param("until") LocalDate until);
+    List<PendingTreatmentRecord> findPendingVaccines(@Param("until") LocalDate until);
 }

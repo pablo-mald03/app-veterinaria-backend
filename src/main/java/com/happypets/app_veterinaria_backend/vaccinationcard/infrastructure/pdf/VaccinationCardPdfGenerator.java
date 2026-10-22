@@ -14,11 +14,13 @@ import org.springframework.stereotype.Component;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * Genera el carnet de vacunación en PDF con OpenPDF.
+ * Genera el carnet de tratamientos de una mascota en PDF con OpenPDF.
  */
 @Component
 public class VaccinationCardPdfGenerator {
@@ -39,36 +41,35 @@ public class VaccinationCardPdfGenerator {
             Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10);
             Font cellFont = FontFactory.getFont(FontFactory.HELVETICA, 9);
 
-            document.add(new Paragraph("Carnet de vacunación", titleFont));
+            document.add(new Paragraph("Carnet de tratamientos", titleFont));
             document.add(new Paragraph(" "));
 
-            // Datos de la mascota
             PdfPTable info = new PdfPTable(4);
             info.setWidthPercentage(100);
             addInfoRow(info, "Mascota", report.petName(), labelFont, textFont);
             addInfoRow(info, "ID mascota", String.valueOf(report.idPet()), labelFont, textFont);
-            addInfoRow(info, "Especie", nz(report.species()), labelFont, textFont);
-            addInfoRow(info, "Raza", nz(report.breed()), labelFont, textFont);
+            addInfoRow(info, "Especie", report.species(), labelFont, textFont);
+            addInfoRow(info, "Raza", report.breed(), labelFont, textFont);
             addInfoRow(info, "Edad", report.age() + " años", labelFont, textFont);
             addInfoRow(info, "Peso", report.weight() + " kg", labelFont, textFont);
-            addInfoRow(info, "Carnet creado", report.creationDate() == null ? "-" : report.creationDate().format(DATE_FMT), labelFont, textFont);
+            addInfoRow(info, "Carnet creado", formatDate(report.creationDate()), labelFont, textFont);
             addInfoRow(info, "ID carnet", String.valueOf(report.idCard()), labelFont, textFont);
             document.add(info);
 
             document.add(new Paragraph(" "));
-            document.add(new Paragraph("Historial de dosis", labelFont));
+            document.add(new Paragraph("Historial de aplicaciones", labelFont));
             document.add(new Paragraph(" "));
 
             if (report.entries().isEmpty()) {
-                document.add(new Paragraph("Esta mascota aún no tiene dosis registradas.", textFont));
+                document.add(new Paragraph("Esta mascota aún no tiene tratamientos registrados.", textFont));
             } else {
-                document.add(buildDosesTable(report.entries(), headerFont, cellFont));
+                document.add(buildApplicationsTable(report.entries(), headerFont, cellFont));
             }
 
             document.add(new Paragraph(" "));
-            document.add(new Paragraph("Total de dosis registradas: " + report.entries().size(), cellFont));
+            document.add(new Paragraph("Total de aplicaciones registradas: " + report.entries().size(), cellFont));
         } catch (Exception e) {
-            throw new IllegalStateException("No se pudo generar el PDF del carnet de vacunación", e);
+            throw new IllegalStateException("No se pudo generar el PDF del carnet de tratamientos", e);
         } finally {
             document.close();
         }
@@ -76,8 +77,8 @@ public class VaccinationCardPdfGenerator {
         return out.toByteArray();
     }
 
-    private PdfPTable buildDosesTable(List<VaccinationCardReport.Entry> entries, Font headerFont, Font cellFont) {
-        List<String> headers = List.of("Vacuna", "Dosis", "Fecha de aplicación", "Próxima dosis", "Lote", "Notas");
+    private PdfPTable buildApplicationsTable(List<VaccinationCardReport.Entry> entries, Font headerFont, Font cellFont) {
+        List<String> headers = List.of("Tratamiento", "Aplicación #", "Fecha de aplicación", "Próxima aplicación", "Costo", "Notas");
         PdfPTable table = new PdfPTable(headers.size());
         table.setWidthPercentage(100);
 
@@ -88,11 +89,12 @@ public class VaccinationCardPdfGenerator {
         }
 
         for (VaccinationCardReport.Entry e : entries) {
-            table.addCell(new PdfPCell(new Phrase(nz(e.vaccineName()), cellFont)));
-            table.addCell(new PdfPCell(new Phrase(e.doseNumber() == null ? "-" : String.valueOf(e.doseNumber()), cellFont)));
+            table.addCell(new PdfPCell(new Phrase(nz(e.treatmentName()), cellFont)));
+            table.addCell(new PdfPCell(new Phrase(
+                    e.applicationNumber() == null ? "-" : String.valueOf(e.applicationNumber()), cellFont)));
             table.addCell(new PdfPCell(new Phrase(formatDate(e.applicationDate()), cellFont)));
             table.addCell(new PdfPCell(new Phrase(formatDate(e.nextDoseDate()), cellFont)));
-            table.addCell(new PdfPCell(new Phrase(nz(e.batchNumber()), cellFont)));
+            table.addCell(new PdfPCell(new Phrase(formatCost(e.totalCost()), cellFont)));
             table.addCell(new PdfPCell(new Phrase(nz(e.notes()), cellFont)));
         }
         return table;
@@ -103,8 +105,12 @@ public class VaccinationCardPdfGenerator {
         table.addCell(new PdfPCell(new Phrase(nz(value), textFont)));
     }
 
-    private static String formatDate(java.time.LocalDate date) {
+    private static String formatDate(LocalDate date) {
         return date == null ? "-" : date.format(DATE_FMT);
+    }
+
+    private static String formatCost(BigDecimal cost) {
+        return cost == null ? "Q0.00" : String.format("Q%.2f", cost);
     }
 
     private static String nz(String value) {

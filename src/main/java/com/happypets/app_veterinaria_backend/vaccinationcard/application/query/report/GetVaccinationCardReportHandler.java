@@ -3,8 +3,8 @@ package com.happypets.app_veterinaria_backend.vaccinationcard.application.query.
 import com.happypets.app_veterinaria_backend.pets.domain.exception.PetNotFoundException;
 import com.happypets.app_veterinaria_backend.pets.domain.model.Pet;
 import com.happypets.app_veterinaria_backend.pets.domain.port.PetRepository;
-import com.happypets.app_veterinaria_backend.product.domain.port.VaccineRepository;
-import com.happypets.app_veterinaria_backend.vaccination.domain.entity.Vaccine;
+import com.happypets.app_veterinaria_backend.treatment.domain.entity.Treatment;
+import com.happypets.app_veterinaria_backend.treatment.domain.port.TreatmentRepositoryPort;
 import com.happypets.app_veterinaria_backend.vaccinationcard.domain.exception.VaccinationCardNotFoundException;
 import com.happypets.app_veterinaria_backend.vaccinationcard.domain.model.VaccinationCard;
 import com.happypets.app_veterinaria_backend.vaccinationcard.domain.model.VaccinationCardReport;
@@ -24,7 +24,7 @@ public class GetVaccinationCardReportHandler {
 
     private final VaccinationCardRepositoryPort cardPort;
     private final VaccinationRecordRepositoryPort recordPort;
-    private final VaccineRepository vaccineRepository;
+    private final TreatmentRepositoryPort treatmentPort;
     private final PetRepository petRepository;
 
     public VaccinationCardReport execute(Long idPet) {
@@ -36,14 +36,14 @@ public class GetVaccinationCardReportHandler {
 
         List<VaccinationRecord> records = recordPort.findByIdCard(card.getIdCard());
 
-        Map<Long, String> vaccineNames = new HashMap<>();
+        Map<Long, String> treatmentNames = new HashMap<>();
         List<VaccinationCardReport.Entry> entries = records.stream()
                 .map(record -> new VaccinationCardReport.Entry(
-                        vaccineNames.computeIfAbsent(record.getIdVaccine(), this::findVaccineName),
-                        record.getDoseNumber(),
+                        treatmentNames.computeIfAbsent(record.getIdTreatment(), this::findTreatmentName),
+                        record.getApplicationNumber(),
                         record.getApplicationDate(),
                         record.getNextDoseDate(),
-                        record.getBatchNumber(),
+                        record.getTotalCost(),
                         record.getNotes()))
                 .toList();
 
@@ -59,9 +59,9 @@ public class GetVaccinationCardReportHandler {
                 entries);
     }
 
-    private String findVaccineName(Long idVaccine) {
-        return vaccineRepository.findById(idVaccine)
-                .map(Vaccine::getName)
-                .orElse("Vacuna no encontrada (ID " + idVaccine + ")");
+    private String findTreatmentName(Long idTreatment) {
+        return treatmentPort.findById(idTreatment)
+                .map(Treatment::getName)
+                .orElse("Tratamiento no encontrado (ID " + idTreatment + ")");
     }
 }

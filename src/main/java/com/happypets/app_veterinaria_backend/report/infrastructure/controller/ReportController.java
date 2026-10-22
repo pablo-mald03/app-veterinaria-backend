@@ -5,6 +5,7 @@ import com.happypets.app_veterinaria_backend.report.application.attendedpets.Get
 import com.happypets.app_veterinaria_backend.report.application.pendingvaccines.GetPendingVaccinesRequest;
 import com.happypets.app_veterinaria_backend.report.application.treatments.GetFrequentTreatmentsRequest;
 import com.happypets.app_veterinaria_backend.report.domain.model.AttendedPetRecord;
+import com.happypets.app_veterinaria_backend.report.domain.model.PendingTreatmentRecord;
 import com.happypets.app_veterinaria_backend.report.domain.model.PendingVaccineRecord;
 import com.happypets.app_veterinaria_backend.report.domain.model.TreatmentFrequency;
 import com.happypets.app_veterinaria_backend.report.infrastructure.pdf.PdfReportGenerator;
@@ -60,8 +61,8 @@ public class ReportController {
             @RequestParam(defaultValue = "json") String format) {
 
         LocalDate until = LocalDate.now().plusDays(days);
-        List<PendingVaccineRecord> data = mediator.dispatch(new GetPendingVaccinesRequest(until));
-        return render(format, data, "vacunas-pendientes", () -> pdfGenerator.pendingVaccines(data));
+        List<PendingTreatmentRecord> data = mediator.dispatch(new GetPendingVaccinesRequest(until));
+        return render(format, data, "vacunas-pendientes", () -> pdfGenerator.pendingTreatments(data));
     }
 
     private ResponseEntity<?> render(String format, Object jsonBody, String fileName, Supplier<byte[]> pdfSupplier) {
