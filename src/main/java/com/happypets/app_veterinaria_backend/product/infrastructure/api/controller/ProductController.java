@@ -16,12 +16,11 @@ import com.happypets.app_veterinaria_backend.product.application.query.getById.G
 import com.happypets.app_veterinaria_backend.product.application.query.getById.GetProductByIdResponse;
 import com.happypets.app_veterinaria_backend.product.application.query.getDewormer.GetAllDewormerRequest;
 import com.happypets.app_veterinaria_backend.product.application.query.getDewormer.GetAllDewormerResponse;
+import com.happypets.app_veterinaria_backend.product.application.query.getExpiringProducts.GetExpiringProductsRequest;
+import com.happypets.app_veterinaria_backend.product.application.query.getExpiringProducts.GetExpiringProductsResponse;
 import com.happypets.app_veterinaria_backend.product.domain.api.ProductRestController;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.*;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.GetAllProductResponseDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.GetAllSpecificResponseDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.ProductDataResponseDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.ProductDetailResponseDto;
+import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.*;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.mapper.ProductMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -115,5 +114,17 @@ public class ProductController implements ProductRestController {
         GetProductByIdResponse appResponse = mediator.dispatch(appRequest);
 
         return ResponseEntity.ok(productMapper.toProductDetailResponseDto(appResponse.getProductDetail()));
+    }
+
+    @Operation(summary = "Get products about to expire", description = "List active products whose expiration")
+    @GetMapping("/expiring")
+    public ResponseEntity<GetExpiringProductsResponseDto> getExpiringProducts(
+            @ParameterObject PaginationQuery paginationQuery,
+            @ParameterObject @Valid GetExpiringProductsQueryDto queryDto) {
+
+        GetExpiringProductsRequest request = productMapper.toGetExpiringProductsRequest(queryDto, paginationQuery);
+        GetExpiringProductsResponse response = mediator.dispatch(request);
+
+        return ResponseEntity.ok(productMapper.toGetExpiringProductsResponseDto(response));
     }
 }

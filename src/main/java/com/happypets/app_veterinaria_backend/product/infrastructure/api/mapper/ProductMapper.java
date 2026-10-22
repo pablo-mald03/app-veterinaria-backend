@@ -15,11 +15,11 @@ import com.happypets.app_veterinaria_backend.product.application.query.getAllVac
 import com.happypets.app_veterinaria_backend.product.application.query.getAllVaccination.GetAllVaccinateResponse;
 import com.happypets.app_veterinaria_backend.product.application.query.getDewormer.GetAllDewormerRequest;
 import com.happypets.app_veterinaria_backend.product.application.query.getDewormer.GetAllDewormerResponse;
+import com.happypets.app_veterinaria_backend.product.application.query.getExpiringProducts.GetExpiringProductsRequest;
+import com.happypets.app_veterinaria_backend.product.application.query.getExpiringProducts.GetExpiringProductsResponse;
+import com.happypets.app_veterinaria_backend.product.domain.entity.ExpiringProductSummary;
 import com.happypets.app_veterinaria_backend.product.domain.entity.ProductDetail;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.CreateProductRequestDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.GetAllProductQueryDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.GetAllSpecificQueryDto;
-import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.UpdateProductRequestDto;
+import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request.*;
 import com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.response.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -143,6 +143,31 @@ public interface ProductMapper {
         PaginationResult<ProductDetail> result = response.getVaccinations();
         return new GetAllSpecificResponseDto(
                 toSpecificResponseDtoList(result.getContent()),
+                result.getPage(),
+                result.getSize(),
+                result.getTotalPages(),
+                result.getTotalElements()
+        );
+    }
+
+    /**
+     * Method to map the query dto and pagination to the request
+     */
+    @Mapping(target = "days", source = "queryDto.days")
+    @Mapping(target = "paginationQuery", source = "paginationQuery")
+    GetExpiringProductsRequest toGetExpiringProductsRequest(GetExpiringProductsQueryDto queryDto, PaginationQuery paginationQuery);
+
+    /**
+     * Method to map an expiring product summary to the response dto
+     */
+    ExpiringProductResponseDto toExpiringProductResponseDto(ExpiringProductSummary summary);
+
+    List<ExpiringProductResponseDto> toExpiringProductResponseDtoList(List<ExpiringProductSummary> summaries);
+
+    default GetExpiringProductsResponseDto toGetExpiringProductsResponseDto(GetExpiringProductsResponse response) {
+        PaginationResult<ExpiringProductSummary> result = response.getContent();
+        return new GetExpiringProductsResponseDto(
+                toExpiringProductResponseDtoList(result.getContent()),
                 result.getPage(),
                 result.getSize(),
                 result.getTotalPages(),

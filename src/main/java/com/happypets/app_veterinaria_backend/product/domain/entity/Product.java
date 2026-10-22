@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 /**
  * Principal domain representation entity
@@ -25,6 +26,8 @@ public class Product {
     private long minimumStock;
     private BigDecimal price;
     private int profitPercentage;
+    private int discountPercentage;
+    private LocalDateTime expirationDate;
     private String provider;
     @Builder.Default
     private boolean status = true;

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * Principal products entity representation at persistency layer
@@ -41,6 +42,12 @@ public class ProductEntity extends AuditableEntity {
 
     @Column(nullable = false)
     private int profitPercentage;
+
+    @Column(nullable = false)
+    private int discountPercentage;
+
+    @Column(nullable = false)
+    private LocalDateTime expirationDate;
 
     @Column(length = 150)
     private String provider;
