@@ -1,5 +1,6 @@
 package com.happypets.app_veterinaria_backend.vaccinationcard.domain.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,11 +16,11 @@ public record VaccinationCardReport(
         List<Entry> entries
 ) {
     public record Entry(
-            String vaccineName,
-            Integer doseNumber,
+            String treatmentName,
+            Integer applicationNumber,
             LocalDate applicationDate,
             LocalDate nextDoseDate,
-            String batchNumber,
+            BigDecimal totalCost,
             String notes
     ) {}
 }

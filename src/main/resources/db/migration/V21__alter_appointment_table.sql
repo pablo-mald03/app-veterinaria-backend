@@ -1,0 +1,1 @@
+ALTER TABLE appointments ADD COLUMN appointment_type VARCHAR(20) DEFAULT 'GENERAL', ADD COLUMN parent_appointment_id BIGINT;

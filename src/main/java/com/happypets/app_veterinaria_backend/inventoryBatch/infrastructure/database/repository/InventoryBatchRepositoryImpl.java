@@ -38,7 +38,6 @@ public class InventoryBatchRepositoryImpl implements InventoryBatchRepositoryPor
 
     private final QueryInventoryBatchRepository queryInventoryBatchRepository;
     private final InventoryBatchEntityMapper batchMapper;
-
     /**
      * Allowed sort fields for the stock summary (request field -> ProductEntity property)
      */

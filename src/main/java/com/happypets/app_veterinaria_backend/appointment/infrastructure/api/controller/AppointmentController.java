@@ -4,6 +4,7 @@ import com.happypets.app_veterinaria_backend.appointment.application.command.*;
 import com.happypets.app_veterinaria_backend.appointment.application.query.FindAllAppointmentsQuery;
 import com.happypets.app_veterinaria_backend.appointment.application.query.FindAppointmentByIdQuery;
 import com.happypets.app_veterinaria_backend.appointment.application.query.FindMedicalHistoryByPetIdQuery;
+import com.happypets.app_veterinaria_backend.appointment.application.query.FindUpcomingAppointmentsQuery;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentRequestDTO;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentResponseDTO;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentStatusRequestDTO;
@@ -132,5 +133,18 @@ public class AppointmentController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(history);
+    }
+
+    @PreAuthorize("hasAuthority('citas:ver')")
+    @Operation(summary = "Obtener próximas citas", description = "Retorna las citas en estado PENDING que están agendadas desde el momento actual en adelante.")
+    @GetMapping("/upcoming")
+    public ResponseEntity<List<AppointmentResponseDTO>> findUpcoming() {
+        var query = new FindUpcomingAppointmentsQuery();
+        List<AppointmentResponseDTO> response = mediator.dispatch(query);
+
+        if (response.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(response);
     }
 }

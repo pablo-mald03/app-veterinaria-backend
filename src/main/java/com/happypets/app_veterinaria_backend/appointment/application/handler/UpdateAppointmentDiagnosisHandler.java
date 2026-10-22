@@ -1,10 +1,13 @@
 package com.happypets.app_veterinaria_backend.appointment.application.handler;
 
+import com.happypets.app_veterinaria_backend.appointment.application.command.RegisterAppointmentCommand;
 import com.happypets.app_veterinaria_backend.appointment.application.command.UpdateAppointmentDiagnosisCommand;
 import com.happypets.app_veterinaria_backend.appointment.domain.exception.VetScheduleConflictException;
 import com.happypets.app_veterinaria_backend.appointment.domain.model.Appointment;
 import com.happypets.app_veterinaria_backend.appointment.domain.port.AppointmentRepositoryPort;
+import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentRequestDTO;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.AppointmentResponseDTO;
+import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.FollowUpRequestDTO;
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.mapper.AppointmentDTOMapper;
 import com.happypets.app_veterinaria_backend.common.application.mediator.Mediator;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
@@ -14,6 +17,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 @Component
 public class UpdateAppointmentDiagnosisHandler implements RequestHandler<UpdateAppointmentDiagnosisCommand, AppointmentResponseDTO> {
@@ -61,6 +66,52 @@ public class UpdateAppointmentDiagnosisHandler implements RequestHandler<UpdateA
         consultationFee.setReferenceId(savedAppointment.getId());
 
         mediator.dispatch(new AddPaymentItemCommand(savedAppointment.getId(), consultationFee));
+
+        // Definir si es fin de semana (Sábado o Domingo)
+        boolean isWeekend = appointment.getDate().getDayOfWeek() == DayOfWeek.SATURDAY ||
+                appointment.getDate().getDayOfWeek() == DayOfWeek.SUNDAY;
+
+        // Definir si está fuera del horario laboral (antes de las 08:00 o después de las 18:00)
+        boolean isAfterHours = appointment.getHour().isBefore(LocalTime.of(8, 0)) ||
+                appointment.getHour().isAfter(LocalTime.of(18, 0));
+
+        if (isWeekend || isAfterHours) {
+            PaymentItemRequestDTO surchargeFee = new PaymentItemRequestDTO();
+            surchargeFee.setDescription("Recargo por horario extraordinario (Fuera de horario o fin de semana)");
+            surchargeFee.setQuantity(1);
+            surchargeFee.setUnitPrice(new BigDecimal("100.00"));
+            surchargeFee.setReferenceType("SURCHARGE");
+            surchargeFee.setReferenceId(savedAppointment.getId());
+
+            mediator.dispatch(new AddPaymentItemCommand(savedAppointment.getId(), surchargeFee));
+        }
+
+        // INTEGRACIÓN CON CITAS PERIÓDICAS Y DE SEGUIMIENTO
+        if (command.getData().getFollowUps() != null && !command.getData().getFollowUps().isEmpty()) {
+            for (FollowUpRequestDTO followUp : command.getData().getFollowUps()) {
+                AppointmentRequestDTO futureAppointment = new AppointmentRequestDTO();
+
+                futureAppointment.setPetId(appointment.getPetId());
+                futureAppointment.setUserId(appointment.getUserId());
+                futureAppointment.setRoomId(appointment.getRoomId());
+
+                futureAppointment.setDate(followUp.getDate());
+                futureAppointment.setHour(followUp.getHour());
+
+                futureAppointment.setDescription(
+                        followUp.getDescription() != null && !followUp.getDescription().isBlank()
+                                ? followUp.getDescription()
+                                : "Cita de seguimiento / Tratamiento"
+                );
+
+                // Marcamos como seguimiento de la cita actual
+                futureAppointment.setAppointmentType("FOLLOW_UP");
+                futureAppointment.setParentAppointmentId(savedAppointment.getId());
+
+                // Despachar comando para crear la nueva cita
+                mediator.dispatch(new RegisterAppointmentCommand(futureAppointment));
+            }
+        }
         return mapper.toDTO(savedAppointment);
     }
 

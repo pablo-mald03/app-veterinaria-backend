@@ -1,5 +1,6 @@
 package com.happypets.app_veterinaria_backend.product.infrastructure.api.dto.request;
 
+import com.happypets.app_veterinaria_backend.common.infrastructure.annotations.NotBeforeNow;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * Principal dto class to create a new product
@@ -45,7 +47,16 @@ public class CreateProductRequestDto {
     @NotNull(message = "El porcentaje de ganancia es obligatorio")
     @Min(value = 0, message = "El porcentaje de ganancia no puede ser menor que 0")
     @Max(value = 100, message = "El porcentaje de ganancia no puede ser mayor que 100")
-    private int profitPercentage;
+    private Integer profitPercentage;
+
+    @NotNull(message = "El porcentaje de descuento es obligatorio")
+    @Min(value = 0, message = "El porcentaje de descuento no puede ser menor que 0")
+    @Max(value = 100, message = "El porcentaje de descuento no puede ser mayor que 100")
+    private Integer discountPercentage;
+
+    @NotNull(message = "La fecha de expiración es obligatoria")
+    @NotBeforeNow(message = "La fecha de expiración no puede ser anterior a la fecha y hora actual")
+    private LocalDateTime expirationDate;
 
     @NotEmpty(message = "Debes asignarle un proveedor al producto")
     private String provider;

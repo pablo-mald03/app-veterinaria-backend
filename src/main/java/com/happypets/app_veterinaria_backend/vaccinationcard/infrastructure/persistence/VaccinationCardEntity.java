@@ -7,7 +7,7 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "vaccination_cards")
+@Table(name = "treatment_cards")
 @Getter
 @Setter
 @NoArgsConstructor

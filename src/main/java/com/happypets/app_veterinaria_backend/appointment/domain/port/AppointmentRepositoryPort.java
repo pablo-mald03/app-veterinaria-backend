@@ -16,4 +16,5 @@ public interface AppointmentRepositoryPort {
 
     boolean isVetBusyAt(Long vetId, LocalDate date, LocalTime time);
     boolean isRoomOccupiedAt(Long roomId, LocalDate date, LocalTime time);
+    List<Appointment> findUpcomingAppointments(LocalDate today, LocalTime now);
 }

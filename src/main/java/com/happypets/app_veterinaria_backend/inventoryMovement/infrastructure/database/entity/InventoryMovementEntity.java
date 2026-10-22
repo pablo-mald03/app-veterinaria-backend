@@ -73,4 +73,7 @@ public class InventoryMovementEntity extends AuditableEntity {
             this.date = LocalDateTime.now(ZoneId.of("America/Guatemala"));
         }
     }
+
+    @Column(name = "treatment_application_id")
+    private Long treatmentApplicationId;
 }

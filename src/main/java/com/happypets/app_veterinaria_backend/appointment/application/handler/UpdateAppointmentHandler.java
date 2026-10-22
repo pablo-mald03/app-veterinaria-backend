@@ -12,6 +12,10 @@ import com.happypets.app_veterinaria_backend.common.application.mediator.Request
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+
 @Component
 @RequiredArgsConstructor
 public class UpdateAppointmentHandler implements RequestHandler<UpdateAppointmentCommand, AppointmentResponseDTO> {
@@ -22,6 +26,15 @@ public class UpdateAppointmentHandler implements RequestHandler<UpdateAppointmen
     public AppointmentResponseDTO handle(UpdateAppointmentCommand command) {
         Appointment existing = repositoryPort.findById(command.getId())
                 .orElseThrow(() -> new AppointmentNotFoundException("Cita no encontrada con ID: " + command.getId()));
+
+        ZoneId guatemalaZone = ZoneId.of("America/Guatemala");
+        LocalDate today = LocalDate.now(guatemalaZone);
+        LocalTime now = LocalTime.now(guatemalaZone);
+        LocalDate commandDate = command.getData().getDate();
+        LocalTime commandHour = command.getData().getHour();
+        if (commandDate.isBefore(today) || (commandDate.isEqual(today) && commandHour.isBefore(now))) {
+            throw new VetScheduleConflictException("No puedes reprogramar la cita a una fecha u hora que ya pasó.");
+        }
 
         boolean vetBusy = repositoryPort.isVetBusyAt(
                 command.getData().getUserId(),
