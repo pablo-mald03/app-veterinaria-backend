@@ -25,4 +25,6 @@ public class Appointment {
     private String treatment;
     private BigDecimal cost;
     private String status;
+    private String appointmentType;
+    private Long parentAppointmentId;
 }

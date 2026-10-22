@@ -63,4 +63,15 @@ public class AppointmentRepositoryAdapter implements AppointmentRepositoryPort{
     public void deleteById(Long id) {
         jpaRepository.deleteById(id);
     }
+
+    @Override
+    public List<Appointment> findUpcomingAppointments(LocalDate today, LocalTime now) {
+        // 1. Llamamos al método que creaste en tu AppointmentJPARepository
+        List<AppointmentJPAEntity> entities = jpaRepository.findUpcomingAppointments(today, now);
+
+        // 2. Mapeamos la lista de entidades de base de datos a modelos de dominio
+        return entities.stream()
+                .map(mapper::toDomain) // Ajusta "toDomain" si tu mapper usa otro nombre (ej. toModel)
+                .collect(Collectors.toList());
+    }
 }

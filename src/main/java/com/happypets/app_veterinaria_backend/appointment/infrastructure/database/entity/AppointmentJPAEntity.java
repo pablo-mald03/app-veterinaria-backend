@@ -53,4 +53,10 @@ public class AppointmentJPAEntity {
     private BigDecimal cost;
 
     private String status;
+
+    @Column(name = "appointment_type", length = 20)
+    private String appointmentType = "GENERAL";
+
+    @Column(name = "parent_appointment_id")
+    private Long parentAppointmentId;
 }

@@ -32,4 +32,7 @@ public class AppointmentRequestDTO {
     private String description;
 
     private String diagnosis;
+
+    private String appointmentType = "GENERAL";
+    private Long parentAppointmentId;
 }

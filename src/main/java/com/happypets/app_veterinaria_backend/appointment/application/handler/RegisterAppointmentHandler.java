@@ -14,16 +14,24 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 
 @Component
 @RequiredArgsConstructor
 public class RegisterAppointmentHandler implements RequestHandler<RegisterAppointmentCommand, AppointmentResponseDTO> {
     private final AppointmentRepositoryPort appointmentRepositoryPort;
     private final AppointmentDTOMapper appointmentDTOMapper;
+    ZoneId guatemalaZone = ZoneId.of("America/Guatemala");
+    LocalDate today = LocalDate.now(guatemalaZone);
+    LocalTime now = LocalTime.now(guatemalaZone);
 
     @Override
     public AppointmentResponseDTO handle(RegisterAppointmentCommand command) {
         Appointment appointmentToCreate = appointmentDTOMapper.toDomain(command.getData());
+
+        if (appointmentToCreate.getDate().isEqual(today) && appointmentToCreate.getHour().isBefore(now)) {
+            throw new TimeAppointmentRuleException("No puedes agendar una cita en una hora que ya pasó el día de hoy.");
+        }
 
         // Validar choque de horario del veterinario
         if (appointmentRepositoryPort.isVetBusyAt(
