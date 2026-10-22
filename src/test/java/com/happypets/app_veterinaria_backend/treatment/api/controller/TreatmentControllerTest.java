@@ -17,9 +17,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -51,7 +55,9 @@ class TreatmentControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new TestExceptionHandler())
+                .build();
         objectMapper = new ObjectMapper();
     }
 
@@ -228,5 +234,14 @@ class TreatmentControllerTest {
                 List.<TreatmentProduct>of(),
                 new BigDecimal("150.00")
         );
+    }
+
+    @ControllerAdvice
+    static class TestExceptionHandler {
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<String> handleAny(Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ex.getMessage());
+        }
     }
 }
