@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * Update product request class
@@ -25,6 +26,8 @@ public class UpdateProductRequest implements Request<UpdateProductResponse>, Aud
     private long minimumStock;
     private BigDecimal price;
     private int profitPercentage;
+    private int discountPercentage;
+    private LocalDateTime expirationDate;
     private String provider;
     private Long categoryId;
 

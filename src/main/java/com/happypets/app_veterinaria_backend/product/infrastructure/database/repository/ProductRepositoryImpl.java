@@ -53,6 +53,8 @@ public class ProductRepositoryImpl implements ProductRepositoryPort {
         entity.setBrand(domain.getBrand());
         entity.setProvider(domain.getProvider());
         entity.setProfitPercentage(domain.getProfitPercentage());
+        entity.setDiscountPercentage(domain.getDiscountPercentage());
+        entity.setExpirationDate(domain.getExpirationDate());
         entity.setMinimumStock(domain.getMinimumStock());
         entity.setPrice(domain.getPrice());
 
