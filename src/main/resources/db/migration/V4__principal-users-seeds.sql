@@ -46,20 +46,30 @@ VALUES ('usuarios', 'ver', 'Ver usuarios', NOW()),
        ('salas', 'editar', 'Editar salas', NOW()),
        ('salas', 'eliminar', 'Eliminar salas', NOW()),
 
-       ('inventario', 'ver', 'Ver inventario', NOW()),
-       ('inventario', 'crear', 'Crear items de inventario', NOW()),
-       ('inventario', 'editar', 'Editar items de inventario', NOW()),
-       ('inventario', 'eliminar', 'Eliminar items de inventario', NOW()),
-
        ('categorias', 'ver', 'Ver categorias', NOW()),
        ('categorias', 'crear', 'Crear categorias', NOW()),
        ('categorias', 'editar', 'Editar categorias', NOW()),
        ('categorias', 'eliminar', 'Eliminar categorias', NOW()),
 
+       ('productos', 'ver', 'Ver productos', NOW()),
+       ('productos', 'crear', 'Crear productos', NOW()),
+       ('productos', 'editar', 'Editar productos', NOW()),
+       ('productos', 'eliminar', 'Eliminar productos', NOW()),
+
+       ('inventario', 'ver', 'Ver inventario, lotes y movimientos', NOW()),
+       ('inventario', 'crear', 'Crear items de inventario', NOW()),
+       ('inventario', 'editar', 'Editar items de inventario', NOW()),
+       ('inventario', 'eliminar', 'Eliminar items de inventario', NOW()),
+
        ('compras', 'ver', 'Ver compras', NOW()),
        ('compras', 'crear', 'Crear compras', NOW()),
        ('compras', 'editar', 'Editar compras', NOW()),
        ('compras', 'eliminar', 'Eliminar compras', NOW()),
+
+       ('ventas', 'ver', 'Ver ventas', NOW()),
+       ('ventas', 'crear', 'Registrar ventas', NOW()),
+       ('ventas', 'editar', 'Editar ventas', NOW()),
+       ('ventas', 'eliminar', 'Eliminar ventas', NOW()),
 
        ('facturacion', 'ver', 'Ver facturas', NOW()),
        ('facturacion', 'crear', 'Crear facturas', NOW()),
@@ -69,13 +79,17 @@ VALUES ('usuarios', 'ver', 'Ver usuarios', NOW()),
        ('pagos', 'registrar', 'Registrar pagos', NOW()),
        ('pagos', 'anular', 'Anular pagos', NOW()),
 
-       ('facturacion', 'ver', 'Ver e imprimir facturas', NOW()),
-       ('facturacion', 'crear', 'Generar facturas', NOW()),
+       ('tratamientos', 'ver', 'Ver tratamientos', NOW()),
+       ('tratamientos', 'crear', 'Crear tratamientos', NOW()),
+       ('tratamientos', 'editar', 'Editar tratamientos', NOW()),
+       ('tratamientos', 'eliminar', 'Eliminar tratamientos', NOW()),
 
-       ('vacunacion', 'ver', 'Ver vacunaciones', NOW()),
-       ('vacunacion', 'crear', 'Registrar vacunaciones', NOW()),
+       ('vacunacion', 'ver', 'Ver vacunaciones y carnets', NOW()),
+       ('vacunacion', 'crear', 'Registrar vacunaciones y carnets', NOW()),
        ('vacunacion', 'editar', 'Editar vacunaciones', NOW()),
        ('vacunacion', 'eliminar', 'Eliminar vacunaciones', NOW()),
+
+       ('reportes', 'ver', 'Ver reportes estadisticos', NOW()),
 
        ('logs', 'ver', 'Ver logs de auditoria', NOW());
 
@@ -95,16 +109,18 @@ INSERT INTO role_permissions (role_id, permission_id)
 SELECT r.id, p.id
 FROM roles r
          JOIN permissions p ON (p.module, p.action) IN (
-                                                        ('clientes', 'ver'), ('clientes', 'crear'),
-                                                        ('clientes', 'editar'),
-                                                        ('mascotas', 'ver'), ('mascotas', 'crear'),
-                                                        ('mascotas', 'editar'),
-                                                        ('citas', 'ver'), ('citas', 'crear'), ('citas', 'editar'), ('citas', 'cancelar'),
-                                                        ('salas', 'ver'),
-                                                        ('inventario', 'ver'),
-                                                        ('pagos', 'ver'), ('pagos', 'registrar'),
-                                                        ('facturacion', 'ver'), ('facturacion', 'crear'),
-                                                        ('vacunacion', 'ver')
+            ('clientes', 'ver'), ('clientes', 'crear'), ('clientes', 'editar'),
+            ('mascotas', 'ver'), ('mascotas', 'crear'), ('mascotas', 'editar'),
+            ('citas', 'ver'), ('citas', 'crear'), ('citas', 'editar'), ('citas', 'cancelar'),
+            ('salas', 'ver'),
+            ('categorias', 'ver'),
+            ('productos', 'ver'),
+            ('inventario', 'ver'),
+            ('ventas', 'ver'), ('ventas', 'crear'),
+            ('pagos', 'ver'), ('pagos', 'registrar'),
+            ('facturacion', 'ver'), ('facturacion', 'crear'),
+            ('tratamientos', 'ver'),
+            ('vacunacion', 'ver')
     )
 WHERE r.name = 'RECEPCIONISTA';
 
@@ -113,13 +129,15 @@ INSERT INTO role_permissions (role_id, permission_id)
 SELECT r.id, p.id
 FROM roles r
          JOIN permissions p ON (p.module, p.action) IN (
-                                                        ('clientes', 'ver'),
-                                                        ('mascotas', 'ver'), ('mascotas', 'editar'),
-                                                        ('citas', 'ver'), ('citas', 'diagnosticar'), ('citas', 'agregar_insumos'),
-                                                        ('salas', 'ver'),
-                                                        ('inventario', 'ver'),
-                                                        ('vacunacion', 'ver'), ('vacunacion', 'crear'),
-                                                        ('vacunacion', 'editar')
+            ('clientes', 'ver'),
+            ('mascotas', 'ver'), ('mascotas', 'editar'),
+            ('citas', 'ver'), ('citas', 'editar'), ('citas', 'cancelar'), ('citas', 'diagnosticar'), ('citas', 'agregar_insumos'),
+            ('salas', 'ver'),
+            ('categorias', 'ver'),
+            ('productos', 'ver'),
+            ('inventario', 'ver'),
+            ('tratamientos', 'ver'), ('tratamientos', 'crear'), ('tratamientos', 'editar'),
+            ('vacunacion', 'ver'), ('vacunacion', 'crear'), ('vacunacion', 'editar')
     )
 WHERE r.name = 'VETERINARIO';
 

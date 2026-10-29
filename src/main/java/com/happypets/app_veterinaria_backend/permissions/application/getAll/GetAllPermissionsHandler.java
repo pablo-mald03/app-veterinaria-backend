@@ -1,6 +1,5 @@
 package com.happypets.app_veterinaria_backend.permissions.application.getAll;
 
-import com.happypets.app_veterinaria_backend.auth.domain.port.AuthenticatedUserPort;
 import com.happypets.app_veterinaria_backend.common.application.mediator.RequestHandler;
 import com.happypets.app_veterinaria_backend.common.domain.pagination.PaginationResult;
 import com.happypets.app_veterinaria_backend.permissions.domain.entity.Permission;
@@ -19,13 +18,13 @@ public class GetAllPermissionsHandler implements RequestHandler<GetAllPermission
 
     //Attributes
     private final PermissionRepositoryPort permissionRepositoryPort;
-    private final AuthenticatedUserPort authenticatedUserPort;
 
     @Override
     public GetAllPermissionsResponse handle(GetAllPermissionsRequest request) {
+
         PermissionFilter filter = PermissionFilter.builder()
-                .module(request.getModule())
-                .action(request.getAction())
+                .module(request.getModuleTarget())
+                .action(request.getActionTarget())
                 .build();
 
         PaginationResult<Permission> permissions = permissionRepositoryPort.findAll(filter, request.getPaginationQuery());

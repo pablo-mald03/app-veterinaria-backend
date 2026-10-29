@@ -26,6 +26,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -45,6 +46,7 @@ public class RoomController implements RoomRestController {
      * Endpoint to create a new room
      *
      */
+    @PreAuthorize("hasAuthority('salas:crear')")
     @Operation(summary = "Create a new room", description = "Create a new room for the clinic")
     @PostMapping
     public ResponseEntity<CreateRoomResponseDto> createRoom(@RequestBody @Valid CreateRoomRequestDto dto) {
@@ -57,6 +59,7 @@ public class RoomController implements RoomRestController {
      * Endpoint to get room by id
      *
      */
+    @PreAuthorize("hasAuthority('salas:ver')")
     @Operation(summary = "Get room by id", description = "Get complete detail of any room")
     @GetMapping("/{id}")
     public ResponseEntity<RoomDetailResponseDto> getById(@PathVariable Long id) {
@@ -69,6 +72,7 @@ public class RoomController implements RoomRestController {
      * Endpoint to update an existing room
      *
      */
+    @PreAuthorize("hasAuthority('salas:editar')")
     @Operation(summary = "Update room information", description = "Replace the room name, location, description and number")
     @PutMapping("/{id}")
     public ResponseEntity<UpdateRoomResponseDto> updateRoom(@PathVariable Long id, @RequestBody @Valid UpdateRoomRequestDto dto) {
@@ -81,6 +85,7 @@ public class RoomController implements RoomRestController {
      * Get all rooms with pageable params and filters endpoint
      *
      */
+    @PreAuthorize("hasAuthority('salas:ver')")
     @Operation(summary = "Get all rooms", description = "Get all pageable rooms, with filters by name, location, number and status")
     @GetMapping
     public ResponseEntity<GetAllRoomsResponseDto> getAll(@ParameterObject PaginationQuery paginationQuery, @ParameterObject @Valid GetAllRoomQueryDto queryDto) {
@@ -93,6 +98,7 @@ public class RoomController implements RoomRestController {
      * Endpoint to change the room status
      *
      */
+    @PreAuthorize("hasAuthority('salas:eliminar')")
     @Operation(summary = "Change room status", description = "Activate or deactivate a room")
     @PatchMapping("/{id}/status")
     public ResponseEntity<ChangeRoomStatusResponseDto> changeStatus(@PathVariable Long id, @RequestBody @Valid ChangeRoomStatusRequestDto dto) {

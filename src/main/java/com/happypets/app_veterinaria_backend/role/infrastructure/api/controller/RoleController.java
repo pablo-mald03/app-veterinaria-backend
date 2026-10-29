@@ -30,6 +30,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -45,6 +46,7 @@ public class RoleController implements RoleRestController {
     //Mapper
     private final RoleMapper roleMapper;
 
+    @PreAuthorize("hasAuthority('roles:crear')")
     @Operation(summary = "Create a new role", description = "Crea un rol con un combo específico de permisos")
     @PostMapping
     public ResponseEntity<CreateRoleResponseDto> createRole(@RequestBody @Valid CreateRoleRequestDto dto) {
@@ -57,6 +59,7 @@ public class RoleController implements RoleRestController {
      * Get all roles pagination
      *
      */
+    @PreAuthorize("hasAuthority('roles:ver')")
     @Operation(summary = "Get all roles", description = "Get all roles with pagination")
     @GetMapping
     public ResponseEntity<GetAllRoleResponseDto> getAll(@ParameterObject PaginationQuery paginationQuery) {
@@ -69,6 +72,7 @@ public class RoleController implements RoleRestController {
      * Endpoint to get the permissions of any role by id
      *
      */
+    @PreAuthorize("hasAuthority('roles:ver')")
     @Operation(summary = "Get permissions of a role", description = "El subrecurso que hablamos antes")
     @GetMapping("/{id}/permissions")
     public ResponseEntity<RolePermissionsResponseDto> getRolePermissions(@PathVariable Long id) {
@@ -77,6 +81,7 @@ public class RoleController implements RoleRestController {
         return ResponseEntity.ok(roleMapper.toRolePermissionDto(response.getRole()));
     }
 
+    @PreAuthorize("hasAuthority('permisos:asignar')")
     @Operation(summary = "Update role permissions", description = "Reemplaza el combo completo de permisos de un rol")
     @PutMapping("/{id}/permissions")
     public ResponseEntity<UpdateRolePermissionsResponseDto> updatePermissions(
@@ -92,6 +97,7 @@ public class RoleController implements RoleRestController {
      * Find role by id endpoint request
      *
      */
+    @PreAuthorize("hasAuthority('roles:ver')")
     @Operation(summary = "Get role by id", description = "Get complete detail of any role")
     @GetMapping("/{id}")
     public ResponseEntity<RoleDetailResponseDto> getById(@PathVariable Long id) {
@@ -100,6 +106,7 @@ public class RoleController implements RoleRestController {
         return ResponseEntity.ok(roleMapper.toRoleDetailResponseDto(response));
     }
 
+    @PreAuthorize("hasAuthority('roles:editar')")
     @Operation(summary = "Update role information", description = "Change role information")
     @PatchMapping("/{id}/role")
     public ResponseEntity<PatchRoleResponseDto> updateRole(@PathVariable Long id, @RequestBody @Valid PatchRoleRequestDto dto) {
@@ -109,6 +116,7 @@ public class RoleController implements RoleRestController {
     }
 
 
+    @PreAuthorize("hasAuthority('roles:eliminar')")
     @Operation(summary = "Change role status", description = "Change rol status")
     @PatchMapping("/{id}/status")
     public ResponseEntity<ChangeStatusRoleResponseDto> changeStatus(@PathVariable Long id, @RequestBody @Valid ChangeStatusRoleRequestDto dto) {
