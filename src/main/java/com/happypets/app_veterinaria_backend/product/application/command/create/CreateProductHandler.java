@@ -39,6 +39,7 @@ public class CreateProductHandler implements RequestHandler<CreateProductRequest
             throw new CategoryDisabledException("No se puede asignar una categoría inactiva a un producto nuevo.");
         }
 
+
         Product product = Product.builder()
                 .sku(request.getSku())
                 .name(request.getName())
@@ -48,6 +49,8 @@ public class CreateProductHandler implements RequestHandler<CreateProductRequest
                 .price(request.getPrice())
                 .categoryId(request.getCategoryId())
                 .profitPercentage(request.getProfitPercentage())
+                .discountPercentage(request.getDiscountPercentage())
+                .expirationDate(request.getExpirationDate())
                 .provider(request.getProvider())
                 .status(true)
                 .build();
