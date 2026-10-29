@@ -6,11 +6,13 @@ import com.happypets.app_veterinaria_backend.vaccinationrecord.application.query
 import com.happypets.app_veterinaria_backend.vaccinationrecord.domain.model.VaccinationRecord;
 import com.happypets.app_veterinaria_backend.vaccinationrecord.infrastructure.dto.VaccinationRecordRequestDTO;
 import com.happypets.app_veterinaria_backend.vaccinationrecord.infrastructure.dto.VaccinationRecordResponseDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/vaccination-records")
 @Tag(name = "Treatment Applications", description = "Aplicación de tratamientos a mascotas")
+@SecurityRequirement(name = "cookieAuth")
 @RequiredArgsConstructor
 public class VaccinationRecordController {
 
@@ -25,18 +28,21 @@ public class VaccinationRecordController {
     private final GetVaccinationRecordsByCardHandler getByCardHandler;
     private final GetPendingVaccinationRecordsHandler pendingHandler;
 
+    @PreAuthorize("hasAuthority('vacunacion:crear')")
     @PostMapping
     public ResponseEntity<VaccinationRecordResponseDTO> register(@Valid @RequestBody VaccinationRecordRequestDTO request) {
         VaccinationRecord record = registerHandler.execute(request.toCommand());
         return ResponseEntity.status(HttpStatus.CREATED).body(VaccinationRecordResponseDTO.from(record));
     }
 
+    @PreAuthorize("hasAuthority('vacunacion:ver')")
     @GetMapping("/{idCard}")
     public ResponseEntity<List<VaccinationRecordResponseDTO>> getByCard(@PathVariable Long idCard) {
         return ResponseEntity.ok(getByCardHandler.execute(idCard).stream()
                 .map(VaccinationRecordResponseDTO::from).toList());
     }
 
+    @PreAuthorize("hasAuthority('vacunacion:ver')")
     @GetMapping("/pending")
     public ResponseEntity<List<VaccinationRecordResponseDTO>> pending(@RequestParam(defaultValue = "7") int days) {
         return ResponseEntity.ok(pendingHandler.execute(days).stream()

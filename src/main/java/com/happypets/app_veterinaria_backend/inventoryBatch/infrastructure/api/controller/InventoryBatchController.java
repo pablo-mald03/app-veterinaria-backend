@@ -24,6 +24,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ public class InventoryBatchController implements InventoryBatchRestController {
     private final Mediator mediator;
     private final InventoryBatchMapper batchMapper;
 
+    @PreAuthorize("hasAuthority('inventario:ver')")
     @Operation(summary = "Get inventory batch by id", description = "Fetch a single inventory batch by its unique ID")
     @GetMapping("/{id}")
     @Override
@@ -51,6 +53,7 @@ public class InventoryBatchController implements InventoryBatchRestController {
     /**
      * Endpoint to get all inventory batches with filters and pagination
      */
+    @PreAuthorize("hasAuthority('inventario:ver')")
     @Operation(summary = "Get all inventory batches", description = "List all inventory batches using criteria filters and pagination")
     @GetMapping
     @Override
@@ -67,6 +70,7 @@ public class InventoryBatchController implements InventoryBatchRestController {
      * Get all product stock summary with pageable params endpoint
      *
      */
+    @PreAuthorize("hasAuthority('inventario:ver')")
     @Operation(summary = "Get product stock summary", description = "Get the pageable stock summary of the products")
     @GetMapping("/stock-summary")
     @Override
@@ -76,6 +80,7 @@ public class InventoryBatchController implements InventoryBatchRestController {
         return ResponseEntity.ok(batchMapper.toGetAllProductStockSummaryResponseDto(response));
     }
 
+    @PreAuthorize("hasAuthority('inventario:ver')")
     @Operation(summary = "Get low stock product alerts", description = "List all products where total active batch stock is below or equal to the minimum stock threshold using pagination")
     @GetMapping("/lower")
     public ResponseEntity<GetLowStockProductsResponseDto> getLowStockAlerts(@ParameterObject PaginationQuery paginationQuery) {

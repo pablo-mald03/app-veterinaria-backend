@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +42,7 @@ public class PermissionController implements PermissionRestController {
      * Get all permissions with pageable params and filters endpoint
      *
      */
+    @PreAuthorize("hasAuthority('permisos:ver')")
     @Operation(summary = "Get all permissions", description = "Get all pageable permissions,with filters by module and actions")
     @GetMapping
     @Override
@@ -54,6 +56,7 @@ public class PermissionController implements PermissionRestController {
      * Get the permission catalog (distinct modules and actions) endpoint
      *
      */
+    @PreAuthorize("hasAuthority('permisos:ver')")
     @Operation(summary = "Get permission catalog", description = "Get the distinct modules and actions available in the permissions")
     @GetMapping("/catalog")
     @Override

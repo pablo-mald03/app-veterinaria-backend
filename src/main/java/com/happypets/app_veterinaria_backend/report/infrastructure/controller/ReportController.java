@@ -9,6 +9,7 @@ import com.happypets.app_veterinaria_backend.report.domain.model.PendingTreatmen
 import com.happypets.app_veterinaria_backend.report.domain.model.PendingVaccineRecord;
 import com.happypets.app_veterinaria_backend.report.domain.model.TreatmentFrequency;
 import com.happypets.app_veterinaria_backend.report.infrastructure.pdf.PdfReportGenerator;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,8 +30,9 @@ import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("/reports")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAnyAuthority('reportes:ver', 'ROLE_ADMIN')")
 @Tag(name = "Reports", description = "Module to manage the application reports")
+@SecurityRequirement(name = "cookieAuth")
 @RequiredArgsConstructor
 public class ReportController {
 

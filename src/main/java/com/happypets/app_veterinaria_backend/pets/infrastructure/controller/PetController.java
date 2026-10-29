@@ -22,6 +22,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -38,6 +39,7 @@ public class PetController implements PetRestController {
     private final Mediator mediator;
     private final PetMapper petMapper;
 
+    @PreAuthorize("hasAuthority('mascotas:ver')")
     @Override
     @GetMapping("/all-pets")
     public ResponseEntity<PaginationResult<PetResponseDTO>> getAllPets(
@@ -66,6 +68,7 @@ public class PetController implements PetRestController {
         return ResponseEntity.ok(petsDtoPage);
     }
 
+    @PreAuthorize("hasAuthority('mascotas:ver')")
     @Operation(summary = "Get product by id", description = "Get product by id")
     @GetMapping("/{id}")
     @Override
@@ -82,6 +85,7 @@ public class PetController implements PetRestController {
         return ResponseEntity.ok(pet);
     }
 
+    @PreAuthorize("hasAuthority('mascotas:crear')")
     @Operation(summary = "Save pet", description = "Save pet create")
     @PostMapping("/create")
     @Override
@@ -96,6 +100,7 @@ public class PetController implements PetRestController {
         return ResponseEntity.created(URI.create("/pets/".concat(savedPet.getIdPet().toString()))).build();
     }
 
+    @PreAuthorize("hasAuthority('mascotas:editar')")
     @Operation(summary = "Update pet", description = "Update an existing pet")
     @PutMapping("/{id}")
     @Override
@@ -109,6 +114,7 @@ public class PetController implements PetRestController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAuthority('mascotas:eliminar')")
     @Operation(summary = "Delete pet", description = "Delete a pet by id")
     @DeleteMapping("/{id}")
     @Override

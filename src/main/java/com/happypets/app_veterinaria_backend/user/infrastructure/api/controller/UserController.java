@@ -30,6 +30,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -51,6 +52,7 @@ public class UserController implements UserRestController {
      * Create user base endpoint request
      *
      */
+    @PreAuthorize("hasAuthority('usuarios:crear')")
     @Operation(summary = "Register new user", description = "Endpoint to register a new user")
     @SecurityRequirement(name = "cookieAuth")
     @PostMapping("/register")
@@ -64,6 +66,7 @@ public class UserController implements UserRestController {
     }
 
 
+    @PreAuthorize("hasAuthority('usuarios:ver')")
     @Operation(summary = "Get all users", description = "Endpoint to Get all users with pagination")
     @SecurityRequirement(name = "cookieAuth")
     @GetMapping
@@ -91,7 +94,9 @@ public class UserController implements UserRestController {
      * Find user by id endpoint request
      *
      */
+    @PreAuthorize("hasAuthority('usuarios:ver')")
     @Operation(summary = "Get user by id", description = "Get complete detail of any user")
+    @SecurityRequirement(name = "cookieAuth")
     @GetMapping("/{id}")
     public ResponseEntity<UserDetailResponseDto> getById(@PathVariable Long id) {
         GetUserByIdRequest request = GetUserByIdRequest.builder().userId(id).build();
@@ -103,6 +108,8 @@ public class UserController implements UserRestController {
      * Recover password endpoint request
      *
      */
+    @PreAuthorize("hasAuthority('usuarios:editar')")
+    @SecurityRequirement(name = "cookieAuth")
     @Operation(summary = "Update user", description = "Update the user information")
     @PatchMapping("/{id}")
     public ResponseEntity<UpdateUserResponseDto> update(@PathVariable Long id, @RequestBody @Valid UpdateUserRequestDto dto) {
@@ -116,6 +123,8 @@ public class UserController implements UserRestController {
      * Assignation roles endpoint
      *
      */
+    @PreAuthorize("hasAuthority('usuarios:editar')")
+    @SecurityRequirement(name = "cookieAuth")
     @Operation(summary = "Assign roles to user", description = "Modify the user permissions")
     @PutMapping("/{id}/roles")
     public ResponseEntity<AssignRolesToUserResponseDto> assignRoles(@PathVariable Long id, @RequestBody @Valid AssignRolesToUserRequestDto dto) {
@@ -129,6 +138,8 @@ public class UserController implements UserRestController {
      * Get Roles by user id endpoint
      *
      */
+    @PreAuthorize("hasAuthority('usuarios:ver')")
+    @SecurityRequirement(name = "cookieAuth")
     @Operation(summary = "Get user roles with permissions", description = "Payload of role and permissions")
     @GetMapping("/{id}/roles")
     public ResponseEntity<UserRolesResponseDto> getUserRoles(@PathVariable Long id) {
@@ -142,6 +153,8 @@ public class UserController implements UserRestController {
      *
      */
     @Operation(summary = "Change user status", description = "Activate or deactivate users")
+    @SecurityRequirement(name = "cookieAuth")
+    @PreAuthorize("hasAuthority('usuarios:eliminar')")
     @PatchMapping("/{id}/status")
     public ResponseEntity<ChangeStatusUserResponseDto> changeStatus(@PathVariable Long id, @RequestBody @Valid ChangeStatusUserRequestDto dto) {
         ChangeUserStatusRequest request = userMapper.toChangeUserStatusRequest(id, dto);
@@ -153,6 +166,7 @@ public class UserController implements UserRestController {
      * Find user profile endpoint request
      *
      */
+    @SecurityRequirement(name = "cookieAuth")
     @Operation(summary = "Get user profile", description = "Get all the user profile data")
     @GetMapping("/profile")
     public ResponseEntity<UserDetailResponseDto> getProfile() {

@@ -10,6 +10,7 @@ import com.happypets.app_veterinaria_backend.payment.infrastructure.api.dto.Paym
 import com.happypets.app_veterinaria_backend.payment.infrastructure.api.dto.PaymentResponseDTO;
 import com.happypets.app_veterinaria_backend.payment.infrastructure.api.dto.ProcessPaymentRequestDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/payments")
 @Tag(name = "Cobros y Facturación", description = "Gestión de cuentas y cargos de citas médicas")
+@SecurityRequirement(name = "cookieAuth")
 public class PaymentController {
 
     private final Mediator mediator;
