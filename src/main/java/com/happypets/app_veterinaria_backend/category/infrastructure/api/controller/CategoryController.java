@@ -28,6 +28,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,6 +42,7 @@ public class CategoryController implements CategoryRestController {
 
     private final CategoryMapper categoryMapper;
 
+    @PreAuthorize("hasAuthority('categorias:crear')")
     @Operation(summary = "Create category", description = "Create a new category")
     @PostMapping
     @Override
@@ -50,6 +52,7 @@ public class CategoryController implements CategoryRestController {
         return ResponseEntity.ok(categoryMapper.toUpdateResponseDto(dispatch));
     }
 
+    @PreAuthorize("hasAuthority('categorias:editar')")
     @Operation(summary = "Update category", description = "Update category properties")
     @PutMapping("/{id}")
     @Override
@@ -61,6 +64,7 @@ public class CategoryController implements CategoryRestController {
         return ResponseEntity.ok(categoryMapper.toUpdateResponseDto(appResponse));
     }
 
+    @PreAuthorize("hasAuthority('categorias:eliminar')")
     @Operation(summary = "Change category status", description = "Change category status")
     @PatchMapping("/{id}/status")
     @Override
@@ -72,6 +76,7 @@ public class CategoryController implements CategoryRestController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAuthority('categorias:ver')")
     @Operation(summary = "Get category by id", description = "Get category by id")
     @GetMapping("/{id}")
     @Override
@@ -83,6 +88,7 @@ public class CategoryController implements CategoryRestController {
         return ResponseEntity.ok(categoryMapper.toCategoryResponseDto(appResponse));
     }
 
+    @PreAuthorize("hasAuthority('categorias:ver')")
     @Operation(summary = "Get all categories", description = "List all registered categories")
     @GetMapping
     @Override

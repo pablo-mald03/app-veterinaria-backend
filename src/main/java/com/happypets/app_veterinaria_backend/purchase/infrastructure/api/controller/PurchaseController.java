@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,6 +41,7 @@ public class PurchaseController implements PurchaseRestController {
     /**
      * Endpoint to register a new purchase (creates inventory batch & movement via Mediator)
      */
+    @PreAuthorize("hasAuthority('compras:crear')")
     @Operation(summary = "Create purchase", description = "Register a new purchase and auto-generate UEPS inventory batch and entry movement")
     @PostMapping
     @Override
@@ -52,6 +54,7 @@ public class PurchaseController implements PurchaseRestController {
     /**
      * Endpoint to update purchase description
      */
+    @PreAuthorize("hasAuthority('compras:editar')")
     @Operation(summary = "Update purchase description", description = "Update the description of an existing purchase")
     @PatchMapping("/{id}/description")
     @Override
@@ -64,6 +67,7 @@ public class PurchaseController implements PurchaseRestController {
     /**
      * Endpoint to get purchase by id
      */
+    @PreAuthorize("hasAuthority('compras:ver')")
     @Operation(summary = "Get purchase by id", description = "Fetch a single purchase by its unique ID")
     @GetMapping("/{id}")
     @Override
@@ -76,6 +80,7 @@ public class PurchaseController implements PurchaseRestController {
     /**
      * Endpoint to get all purchases with filters and pagination
      */
+    @PreAuthorize("hasAuthority('compras:ver')")
     @Operation(summary = "Get all purchases", description = "List all purchases using criteria filters and pagination")
     @GetMapping
     @Override

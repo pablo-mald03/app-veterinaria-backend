@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -42,6 +43,7 @@ public class SaleController implements SaleRestController {
     /**
      * Endpoint to register a new sale (deducts UEPS inventory & records movements)
      */
+    @PreAuthorize("hasAuthority('ventas:crear')")
     @Operation(summary = "Create sale", description = "Register a new sale and automatically deduct UEPS inventory batches")
     @PostMapping
     public ResponseEntity<SaleResponseDto> create(@Valid @RequestBody SaleCreateRequestDto request) {
@@ -53,6 +55,7 @@ public class SaleController implements SaleRestController {
     /**
      * Endpoint to get sale by id
      */
+    @PreAuthorize("hasAuthority('ventas:ver')")
     @Operation(summary = "Get sale by id", description = "Fetch a single sale by its unique ID")
     @GetMapping("/{id}")
     public ResponseEntity<SaleResponseDto> findById(@PathVariable Long id) {
@@ -64,6 +67,7 @@ public class SaleController implements SaleRestController {
     /**
      * Endpoint to get all sales with criteria filters and pagination
      */
+    @PreAuthorize("hasAuthority('ventas:ver')")
     @Operation(summary = "Get all sales", description = "List all sales using criteria filters and pagination")
     @GetMapping
     public ResponseEntity<GetAllSaleResponseDto> findAll(

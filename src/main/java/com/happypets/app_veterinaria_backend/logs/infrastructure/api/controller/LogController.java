@@ -43,6 +43,7 @@ public class LogController implements LogRestController {
      * Get all modules of logs endpoint
      *
      */
+    @PreAuthorize("hasAuthority('logs:ver')")
     @Operation(summary = "Get log modules", description = "Lista all distinct modules registerd at logs")
     @GetMapping("/modules")
     @Override

@@ -17,6 +17,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.List;
 public class ClientController implements ClientRestController {
     private final Mediator mediator;
 
+    @PreAuthorize("hasAuthority('clientes:crear')")
     @Operation(summary = "Registrar un nuevo cliente", description = "Valida y guarda un cliente en la base de datos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Cliente registrado exitosamente"),
@@ -43,6 +45,7 @@ public class ClientController implements ClientRestController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('clientes:ver')")
     @Operation(summary = "Consultar cliente por ID", description = "Obtiene los detalles de un cliente específico")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Cliente encontrado"),
@@ -57,6 +60,7 @@ public class ClientController implements ClientRestController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('clientes:ver')")
     @Operation(summary = "Obtener todos los clientes", description = "Retorna una lista completa de todos los clientes registrados")
     @ApiResponse(responseCode = "200", description = "Lista de clientes obtenida exitosamente")
     @SecurityRequirement(name = "cookieAuth")
@@ -68,6 +72,7 @@ public class ClientController implements ClientRestController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('clientes:editar')")
     @Operation(summary = "Actualizar un cliente", description = "Sobrescribe los datos de un cliente existente buscando por su ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Cliente actualizado exitosamente"),
@@ -83,6 +88,7 @@ public class ClientController implements ClientRestController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('clientes:eliminar')")
     @Operation(summary = "Eliminar un cliente", description = "Elimina físicamente a un cliente de la base de datos mediante su ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Cliente eliminado correctamente (Sin contenido)"),

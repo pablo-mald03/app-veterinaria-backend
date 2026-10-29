@@ -11,6 +11,7 @@ import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.
 import com.happypets.app_veterinaria_backend.appointment.infrastructure.api.dto.MedicalConsultationRequestDTO;
 import com.happypets.app_veterinaria_backend.common.application.mediator.Mediator;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/appointments")
 @Tag(name = "Gestión de Citas", description = "Endpoints para agendar y manejar consultas médicas")
+@SecurityRequirement(name = "cookieAuth")
 public class AppointmentController {
 
     private final Mediator mediator;

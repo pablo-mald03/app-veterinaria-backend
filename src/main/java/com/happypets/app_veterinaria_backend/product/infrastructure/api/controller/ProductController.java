@@ -29,6 +29,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -43,6 +44,7 @@ public class ProductController implements ProductRestController {
     private final ProductMapper productMapper;
 
 
+    @PreAuthorize("hasAuthority('productos:crear')")
     @Operation(summary = "Create product", description = "Create a new product")
     @PostMapping
     @Override
@@ -52,6 +54,7 @@ public class ProductController implements ProductRestController {
         return ResponseEntity.ok(productMapper.toCreateProductResponse(dispatch));
     }
 
+    @PreAuthorize("hasAuthority('productos:editar')")
     @Operation(summary = "Update product", description = "Update product properties")
     @PutMapping("/{id}")
     @Override
@@ -62,6 +65,7 @@ public class ProductController implements ProductRestController {
         return ResponseEntity.ok(productMapper.toUpdateProductResponse(appResponse));
     }
 
+    @PreAuthorize("hasAuthority('productos:ver')")
     @Operation(summary = "Get all products", description = "List all registered products")
     @GetMapping
     @Override
@@ -73,6 +77,7 @@ public class ProductController implements ProductRestController {
     }
 
 
+    @PreAuthorize("hasAuthority('productos:ver')")
     @Operation(summary = "Get all vaccinates", description = "List all registered vaccinates")
     @GetMapping("/vaccines")
     @Override
@@ -83,6 +88,7 @@ public class ProductController implements ProductRestController {
         return ResponseEntity.ok(productMapper.toGetAllSpecificResponseDto(response));
     }
 
+    @PreAuthorize("hasAuthority('productos:ver')")
     @Operation(summary = "Get all dewormers", description = "List all registered dewormers")
     @GetMapping("/dewormers")
     @Override
@@ -94,6 +100,7 @@ public class ProductController implements ProductRestController {
     }
 
 
+    @PreAuthorize("hasAuthority('productos:eliminar')")
     @Operation(summary = "Change product status", description = "Change product status")
     @PatchMapping("/{id}/status")
     @Override
@@ -105,6 +112,7 @@ public class ProductController implements ProductRestController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAuthority('productos:ver')")
     @Operation(summary = "Get product by id", description = "Get product detail by id")
     @GetMapping("/{id}")
     @Override
@@ -116,6 +124,7 @@ public class ProductController implements ProductRestController {
         return ResponseEntity.ok(productMapper.toProductDetailResponseDto(appResponse.getProductDetail()));
     }
 
+    @PreAuthorize("hasAuthority('productos:ver')")
     @Operation(summary = "Get products about to expire", description = "List active products whose expiration")
     @GetMapping("/expiring")
     public ResponseEntity<GetExpiringProductsResponseDto> getExpiringProducts(
