@@ -1,107 +1,316 @@
-# 🩺 Veterinary Management System - Backend
+# 🩺 HappyPets — Sistema de Gestion Veterinaria · Backend
 
-Backend del sistema de gestión integral para clínicas veterinarias, desarrollado con **Spring Boot**. Este proyecto proporciona la lógica de negocio, seguridad, persistencia de datos y servicios REST necesarios para soportar todas las operaciones del sistema.
+Backend del sistema de gestión integral para clínicas veterinarias, desarrollado con **Spring Boot 4.1.0** y desplegado automáticamente en **AWS EC2** mediante un pipeline de CI/CD con GitHub Actions.
 
-La arquitectura está diseñada para ofrecer un backend robusto, escalable y mantenible, siguiendo las mejores prácticas del ecosistema Spring y una estructura orientada al crecimiento del proyecto.
-
----
-
-# 📖 Descripción
-
-El sistema centraliza la administración de los procesos de una clínica veterinaria mediante una API REST que permitirá la comunicación con distintas aplicaciones cliente, principalmente el frontend desarrollado en React.
-
-Su objetivo es proporcionar una plataforma confiable para la gestión de expedientes médicos, clientes, mascotas, citas, consultas, productos, inventario, facturación, pagos y control administrativo, garantizando la integridad de la información y la seguridad de los usuarios.
-
-Este repositorio representa únicamente la capa **Backend** del sistema.
+La arquitectura está diseñada para ser robusta, escalable y mantenible, siguiendo principios de arquitectura limpia, SOLID y las mejores prácticas del ecosistema Spring.
 
 ---
 
-# ✨ Funcionalidades generales
+## 📖 Descripción
 
-* Gestión de clientes y mascotas.
-* Administración de usuarios, roles y permisos.
-* API REST preparada para integraciones futuras.
+El sistema centraliza la administración de los procesos de una clínica veterinaria mediante una **API REST** que se comunica con el frontend desarrollado en React.
+
+Proporciona una plataforma confiable para la gestión de:
+
+- Expedientes médicos, clientes y mascotas
+- Citas y consultas médicas
+- Productos, inventario y lotes
+- Facturación y pagos (con generación de PDF)
+- Administración de usuarios, roles y permisos
 
 ---
 
-# 🚀 Stack Tecnológico
+## ✅ Estado del proyecto
 
-* Spring Boot
-* Spring Security
-* Spring Data JPA
-* Hibernate
-* PostgreSQL
-* Lombok
-* MapStruct
-* OpenAPI / Swagger
+> ** Proyecto finalizado y en producción.**
+
+El backend se encuentra completamente implementado, probado y desplegado en AWS EC2 con despliegue continuo automatizado.
 
 ---
 
 
-# 🔒 Seguridad
+## 📋 Documentacion Oficial de la aplicacion
 
-La autenticación y autorización estarán basadas en **JSON Web Tokens (JWT)**, permitiendo un acceso seguro a los recursos de la aplicación mediante un esquema stateless.
-
-Entre las características contempladas se encuentran:
-
-* Autorización basada en roles.
-* Validación de permisos.
-* Manejo centralizado de excepciones.
+- [Documentacion](https://drive.google.com/drive/folders/1rjmpRQp0Czfnl6KVu8TuPqDf1islL4gg?usp=sharing)
 
 ---
 
-# 🛠️ Buenas prácticas
+## 🚀 Stack Tecnológico
 
-Durante el desarrollo se seguirán principios y estándares ampliamente utilizados en aplicaciones empresariales con Spring.
-
-* Arquitectura limpia y modular.
-* Principios SOLID.
-* Validación de datos.
-* Documentación automática de la API.
+| Tecnología | Versión |
+|---|---|
+| Java | **21** (Eclipse Temurin) |
+| Spring Boot | **4.1.0** |
+| Apache Maven | **3.9.6** |
+| Spring Security + JWT (JJWT) | `0.12.6` |
+| Spring Data JPA + Hibernate | — |
+| PostgreSQL | — |
+| Flyway (migraciones) | — |
+| MapStruct | `1.6.3` |
+| Lombok | — |
+| SpringDoc OpenAPI / Swagger UI | `3.1.0` |
+| Spring Shell | `4.0.3` |
+| OpenPDF | `2.0.3` |
+| Spring Boot Actuator | — |
+| springboot4-dotenv | `5.0.1` |
+| Docker / Docker Compose | — |
 
 ---
 
-# 📂 Estado del proyecto
+## ✨ Funcionalidades
 
-> 🚧 En desarrollo.
+- Gestión de clientes y mascotas
+- Administración de usuarios, roles y permisos
+- Gestión de citas y consultas veterinarias
+- Control de inventario y lotes
+- Catálogo de productos y categorías
+- Facturación y generación de reportes en PDF
+- Procesamiento de pagos
+- Autenticación y autorización basada en JWT
+- Documentación automática de la API con Swagger UI
+- Migraciones de base de datos con Flyway
+
+---
+
+## 🛠️ Requisitos previos
+
+Asegúrate de tener instalado lo siguiente antes de levantar el proyecto:
+
+- **Java 21** (Eclipse Temurin recomendado)
+- **Apache Maven 3.9+** *(o usa el wrapper `./mvnw` incluido en el repositorio)*
+- **PostgreSQL** — instancia local o remota accesible
+- **Git**
+
+> **Nota sobre Maven Wrapper**: El repositorio incluye `mvnw` y `mvnw.cmd`. Puedes usarlos directamente sin tener Maven instalado globalmente:
+> ```bash
+> chmod +x ./mvnw   # Solo en Linux/macOS
+> ./mvnw --version
+> ```
+
+---
+
+## 💻 Levantar el proyecto en local
+
+### 1. Clona el repositorio
+
+```bash
+git clone https://github.com/pablo-mald03/app-veterinaria-backend.git
+cd app-veterinaria-backend
+```
+
+### 2. Crea tu archivo `.env`
+
+Copia el archivo de ejemplo y ajusta los valores según tu entorno local:
+
+```bash
+cp .env-example .env
+```
+
+Edita `.env` con tus credenciales de PostgreSQL y los demás valores. Ver la sección [Variables de entorno](#-variables-de-entorno) para el detalle de cada variable.
+
+### 3. Crea la base de datos en PostgreSQL
+
+```sql
+CREATE DATABASE veterinarydb;
+CREATE USER adminvet WITH PASSWORD 'admin1234';
+GRANT ALL PRIVILEGES ON DATABASE veterinarydb TO adminvet;
+```
+
+> Las migraciones de esquema son gestionadas automáticamente por **Flyway** al iniciar la aplicación. No es necesario ejecutar scripts SQL manualmente.
+
+### 4. Compila el proyecto
+
+```bash
+# Con Maven Wrapper (recomendado)
+./mvnw clean compile
+
+# O con Maven instalado globalmente
+mvn clean compile
+```
+
+### 5. Ejecuta la aplicación
+
+```bash
+# Con Maven Wrapper
+./mvnw spring-boot:run
+
+# O con Maven global
+mvn spring-boot:run
+```
+
+La aplicación estará disponible en: **`http://localhost:8080`**
+
+### 6. Accede a la documentación de la API (Swagger UI)
+
+Una vez en ejecución, abre en tu navegador:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+---
+
+## 🔑 Variables de entorno
+
+El proyecto usa **springboot4-dotenv** para leer las variables desde un archivo `.env` en la raíz del proyecto. Crea tu archivo copiando el ejemplo:
+
+```bash
+cp .env-example .env
+```
+
+### Referencia completa de variables
+
+```env
+##########################################
+# SPRING
+##########################################
+# Perfil activo: dev | test | prod
+SPRING_PROFILES_ACTIVE=dev
+
+# Puerto en el que escucha el servidor
+SERVER_PORT=8080
 
 
-# Read Me First
-The following was discovered as part of building this project:
+##########################################
+# DATABASE — PostgreSQL
+##########################################
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=veterinarydb
 
-* The original package name 'com.happypets.app-veterinaria-backend' is invalid and this project uses 'com.happypets.app_veterinaria_backend' instead.
-
-# Getting Started
-
-### Reference Documentation
-For further reference, please consider the following sections:
-
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/4.1.0/maven-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/4.1.0/maven-plugin/build-image.html)
-* [Spring Web](https://docs.spring.io/spring-boot/4.1.0/reference/web/servlet.html)
-* [Spring Security](https://docs.spring.io/spring-boot/4.1.0/reference/web/spring-security.html)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/4.1.0/reference/using/devtools.html)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/4.1.0/reference/data/sql.html#data.sql.jpa-and-spring-data)
-* [Validation](https://docs.spring.io/spring-boot/4.1.0/reference/io/validation.html)
-
-### Guides
-The following guides illustrate how to use some features concretely:
-
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
-* [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-* [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-* [Validation](https://spring.io/guides/gs/validating-form-input/)
-
-### Maven Parent overrides
-
-Due to Maven's design, elements are inherited from the parent POM to the project POM.
-While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the parent.
-To prevent this, the project POM contains empty overrides for these elements.
-If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
+DB_USERNAME=adminvet
+DB_PASSWORD=admin1234
 
 
+##########################################
+# JWT
+##########################################
+# Clave secreta para firmar los tokens (usa una cadena larga y aleatoria en prod)
+JWT_SECRET=secret
+
+# Tiempo de expiración del token de acceso en milisegundos (ej: 300000 = 5 min)
+JWT_EXPIRATION=300000
+
+# Ventana de refresco del token en milisegundos (ej: 172800000 = 48 h)
+JWT_REFRESH_WINDOW=172800000
+
+
+##########################################
+# CORS
+##########################################
+# URL del frontend permitida en CORS
+URL_ALLOWED=http://localhost:3000
+
+
+##########################################
+# ROLES RESERVADOS
+##########################################
+RESERVED_ROLE1=ADMIN
+```
+
+> ⚠️ **Nunca subas tu archivo `.env` real al repositorio.** El archivo `.gitignore` ya lo excluye. Usa `.env-example` como plantilla.
+
+---
+
+## 🐳 Ejecución con Docker (opcional, local)
+
+El `Dockerfile` utiliza una **build multi-etapa** con Maven 3.9.6 + Eclipse Temurin 21:
+
+```bash
+# Construir la imagen
+docker build -t app-veterinaria-backend .
+
+# Ejecutar el contenedor pasando el archivo .env
+docker run --env-file .env -p 8080:8080 app-veterinaria-backend
+```
+
+---
+
+## ⚙️ CI/CD — GitHub Actions
+
+El proyecto cuenta con un pipeline completo de integración y despliegue continuo.
+
+### Flujo de trabajo
+
+```
+Push a main / develop
+        │
+        ▼
+ ┌─────────────────┐
+ │  CI: ci.yml     │  → Compila + ejecuta pruebas unitarias
+ └────────┬────────┘
+          │  (solo en push a main)
+          ▼
+ ┌─────────────────┐
+ │  CD: cd.yml     │  → Build imagen Docker → push a GHCR → deploy en EC2
+ └─────────────────┘
+```
+
+### CI (`ci.yml`) — Integración Continua
+
+Se ejecuta en cada **push o pull request** a `main` o `develop`:
+
+1. **Compilación** — `./mvnw clean compile`
+2. **Pruebas unitarias** — `./mvnw test` con perfil `test`
+3. Publica reportes Surefire como artefacto de GitHub Actions (retención 7 días)
+
+### CD (`cd.yml`) — Despliegue Continuo
+
+Se ejecuta únicamente en **push a `main`**:
+
+1. Inicia sesión en **GitHub Container Registry (GHCR)**
+2. Construye y publica la imagen Docker con tags `latest` y `<sha>`
+3. Conecta por SSH a la instancia **AWS EC2**
+4. Ejecuta `docker compose pull && docker compose up -d` y limpia imágenes antiguas
+
+### Secrets de GitHub necesarios
+
+| Secret | Descripción |
+|---|---|
+| `GITHUB_TOKEN` | Generado automáticamente por GitHub Actions |
+| `EC2_HOST` | IP pública o DNS de la instancia EC2 |
+| `EC2_USERNAME` | Usuario SSH de la instancia (ej: `ubuntu`) |
+| `VETERINARIA_SERVER` | Clave privada SSH para acceder al servidor |
+
+---
+
+## 🔒 Seguridad
+
+La autenticación y autorización están basadas en **JWT (JSON Web Tokens)** con un esquema completamente stateless:
+
+- Tokens de acceso con expiración configurable
+- Ventana de refresco de token
+- Autorización basada en roles y permisos
+- Manejo centralizado de excepciones de seguridad
+- Usuario no-root en el contenedor Docker
+- Validación de datos en todos los endpoints
+
+---
+
+## 🛠️ Buenas prácticas implementadas
+
+- **Arquitectura limpia y modular** — separación por capas (domain, application, infrastructure)
+- **Principios SOLID**
+- **Migraciones versionadas** con Flyway
+- **Documentación automática** de la API con SpringDoc OpenAPI
+- **Build multi-etapa** en Docker para imágenes ligeras
+- **Maven Wrapper** (`mvnw`) incluido — no se requiere Maven instalado globalmente
+- **Variables de entorno** externalizadas vía `.env`
+- **Spring Boot Actuator** para health checks y monitoreo
+
+---
+
+## 📚 Referencias
+
+- [Documentación oficial de Apache Maven](https://maven.apache.org/guides/index.html)
+- [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/4.1.0/maven-plugin)
+- [Spring Web (Servlet)](https://docs.spring.io/spring-boot/4.1.0/reference/web/servlet.html)
+- [Spring Security](https://docs.spring.io/spring-boot/4.1.0/reference/web/spring-security.html)
+- [Spring Data JPA](https://docs.spring.io/spring-boot/4.1.0/reference/data/sql.html#data.sql.jpa-and-spring-data)
+- [SpringDoc OpenAPI](https://springdoc.org/)
+- [JJWT](https://github.com/jwtk/jjwt)
+- [Flyway](https://flywaydb.org/documentation/)
+
+---
+
+> **Nota**: El package base del proyecto es `com.happypets.app_veterinaria_backend` (con guion bajo) ya que `com.happypets.app-veterinaria-backend` es un nombre de paquete Java inválido.
