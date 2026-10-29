@@ -57,6 +57,8 @@ public class UpdateProductHandler implements RequestHandler<UpdateProductRequest
                 .minimumStock(request.getMinimumStock())
                 .price(request.getPrice())
                 .profitPercentage(request.getProfitPercentage())
+                .discountPercentage(request.getDiscountPercentage())
+                .expirationDate(request.getExpirationDate())
                 .categoryId(request.getCategoryId())
                 .provider(request.getProvider())
                 .build();
