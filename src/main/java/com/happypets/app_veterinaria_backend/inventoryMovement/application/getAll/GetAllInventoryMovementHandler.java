@@ -6,6 +6,7 @@ import com.happypets.app_veterinaria_backend.inventoryMovement.domain.entity.Inv
 import com.happypets.app_veterinaria_backend.inventoryMovement.domain.filter.InventoryMovementFilter;
 import com.happypets.app_veterinaria_backend.inventoryMovement.domain.port.InventoryMovementRepositoryPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GetAllInventoryMovementHandler implements RequestHandler<GetAllInventoryMovementRequest, GetAllInventoryMovementResponse> {
 
     private final InventoryMovementRepositoryPort inventoryMovementRepositoryPort;
@@ -32,6 +34,7 @@ public class GetAllInventoryMovementHandler implements RequestHandler<GetAllInve
                 .dateFrom(request.getDateFrom())
                 .dateTo(request.getDateTo())
                 .build();
+        log.info("hola desde backend");
 
         PaginationResult<InventoryMovement> domainResult = inventoryMovementRepositoryPort.findAll(filter, request.getPaginationQuery());
 
